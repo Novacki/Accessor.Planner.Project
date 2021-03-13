@@ -1,4 +1,5 @@
-﻿using Accessor.Planner.Domain.Model;
+﻿using Accessor.Planner.Domain.Data;
+using Accessor.Planner.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace Accessor.Planner.Infrastructure.Data
 {
-    public class ApplicationDataContext : DbContext
+    public class ApplicationDataContext : DbContext, IUnitOfWork
     {
         public ApplicationDataContext(DbContextOptions<ApplicationDataContext> options) : base(options) { }
 
