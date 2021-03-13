@@ -1,4 +1,9 @@
+using Accessor.Planner.Domain.Data;
+using Accessor.Planner.Domain.Data.Repository;
+using Accessor.Planner.Domain.Interface;
+using Accessor.Planner.Domain.Service;
 using Accessor.Planner.Infrastructure.Data;
+using Accessor.Planner.Infrastructure.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,6 +42,9 @@ namespace Accessor.Planner.API
 
             services.AddDbContext<ApplicationDataContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
+
+            DataInject(services);
+            ServicesInject(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +67,19 @@ namespace Accessor.Planner.API
             {
                 endpoints.MapControllers();
             });
+        }
+
+
+        public void DataInject(IServiceCollection services)
+        {
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUserRepository, UserRepository>();
+        }
+
+        public void ServicesInject(IServiceCollection services)
+        {
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

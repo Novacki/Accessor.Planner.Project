@@ -1,5 +1,6 @@
 ﻿using Accessor.Planner.Domain.Data;
 using Accessor.Planner.Domain.Model;
+using Accessor.Planner.Infrastructure.Data.EntityConfiguration;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,5 +18,15 @@ namespace Accessor.Planner.Infrastructure.Data
         public DbSet<Provider> Providers { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Client> Clients { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new UserEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ProviderEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new SolicitationEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new ClientEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new RoomEntityConfiguration());
+            modelBuilder.ApplyConfiguration(new AddressEntityConfiguration());
+        }
     }
 }

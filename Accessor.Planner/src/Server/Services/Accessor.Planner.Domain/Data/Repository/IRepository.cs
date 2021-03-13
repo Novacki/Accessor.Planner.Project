@@ -11,7 +11,8 @@ namespace Accessor.Planner.Domain.Data.Repository
         IQueryable<T> GetAll();
         T GetById(Guid id);
         Task<T> GetByIdAsync(Guid id);
-        Task Create(T entity);
+        Task CreateAsync(T entity);
+        void Create(T entity);
         void Update(T entity);
         public IUnitOfWork UnitOfWork { get; }
     }

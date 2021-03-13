@@ -18,6 +18,7 @@ namespace Accessor.Planner.Domain.Model
             Phone = phone;
             Address = address;
             CreatedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
             Solicitations = new List<Solicitation>();
         }
 

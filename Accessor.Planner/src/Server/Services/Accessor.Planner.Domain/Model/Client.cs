@@ -20,6 +20,7 @@ namespace Accessor.Planner.Domain.Model
             Type = type;
             Addresses = new List<Address>();
             CreatedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
             Activate = true;
             Solicitations = new List<Solicitation>();
         }

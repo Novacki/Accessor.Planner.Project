@@ -1,4 +1,5 @@
-﻿using Accessor.Planner.Domain.Model.Commom;
+﻿using Accessor.Planner.Domain.Exceptions;
+using Accessor.Planner.Domain.Model.Commom;
 using Accessor.Planner.Domain.Model.Enum;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,14 @@ namespace Accessor.Planner.Domain.Model
             Email = email;
             Password = password;
             CreatedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
             Activate = true;
         }
 
         public string UserName { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
+
+
     }
 }
