@@ -24,7 +24,9 @@ namespace Accessor.Planner.Domain.Service
 
         public async Task Create(User user)
         {
-            UserExist(user.UserName);
+            if(_userRepository.UserExist(user.UserName))
+                throw new UserServiceException("UserName already Exist");
+
             ValidEmail(user.Email);
 
              _userRepository.Create(user);
@@ -58,22 +60,15 @@ namespace Accessor.Planner.Domain.Service
             if (result == null)
                 throw new UserServiceException("User is Not Found");
 
-            if(user.Email != result.Email)
-                ValidEmail(user.Email);
+            if (user.Email != result.Email)
+                ValidEmail(user.Email);    
 
-            if (user.UserName != result.UserName)
-                UserExist(user.UserName);
+            if (user.UserName != result.UserName && _userRepository.UserExist(user.UserName))
+                throw new UserServiceException("UserName already Exist");
 
             result.Update(user.UserName, user.Email, user.Password);
 
             await _userRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        private void UserExist(string user)
-        {
-            if(_userRepository.UserExist(user))
-                throw new UserServiceException("UserName already Exist");
-           
         }
 
         private void ValidEmail(string email)
