@@ -42,6 +42,7 @@ namespace Accessor.Planner.Domain.Service
                 throw new UserServiceException("User is Not Found");
 
             user.Delete();
+            _userRepository.Update(user);
 
             await _userRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
