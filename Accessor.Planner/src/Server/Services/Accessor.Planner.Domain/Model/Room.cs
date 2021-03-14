@@ -12,6 +12,7 @@ namespace Accessor.Planner.Domain.Model
             Name = name;
             Metreage = metreage;
             CreatedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
             Activate = true;
         }
 

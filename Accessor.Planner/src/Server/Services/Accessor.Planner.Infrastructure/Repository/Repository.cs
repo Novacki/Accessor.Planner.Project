@@ -12,21 +12,26 @@ namespace Accessor.Planner.Infrastructure.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationDataContext _context;
-        private readonly DbSet<T> _entities;
+        protected readonly ApplicationDataContext _context;
+        protected readonly DbSet<T> _entities;
 
         public Repository(ApplicationDataContext context)
         {
-            _context = context;
+            _context = context ?? throw new NullReferenceException(nameof(context));
             _entities = context.Set<T>();
         }
 
 
         public virtual IUnitOfWork UnitOfWork => _context;
 
-        public virtual async Task Create(T entity)
+        public virtual async Task CreateAsync(T entity)
         {
             await _context.AddAsync(entity).ConfigureAwait(false);
+        }
+
+        public virtual void Create(T entity)
+        {
+            _context.Add(entity);
         }
 
         public virtual IQueryable<T> GetAll()
@@ -48,5 +53,6 @@ namespace Accessor.Planner.Infrastructure.Repository
         {
             _entities.Update(entity);
         }
+
     }
 }

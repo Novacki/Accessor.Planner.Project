@@ -9,12 +9,14 @@ namespace Accessor.Planner.Domain.Model
     public class Solicitation : DefaultValues<Guid>
     {
         private Solicitation() { }
-        public Solicitation(List<Room> rooms)
+        public Solicitation(Client client)
         {
             Id = Guid.NewGuid();
             Status = StatusSolicitation.OnHold;
-            Rooms = rooms;
+            Client = client;
+            Rooms = new List<Room>();
             CreatedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
             Activate = true;
         }
 

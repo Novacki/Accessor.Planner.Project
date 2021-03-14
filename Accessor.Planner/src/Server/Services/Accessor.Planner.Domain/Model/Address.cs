@@ -17,6 +17,7 @@ namespace Accessor.Planner.Domain.Model
             Number = number;
             Street = street;
             CreatedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
             Activate = true;
         }
 
@@ -24,6 +25,7 @@ namespace Accessor.Planner.Domain.Model
         {
             Complement = complement;
             CreatedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
         }
 
         public string Cep { get; private set; }
