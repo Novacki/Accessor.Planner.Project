@@ -12,8 +12,8 @@ namespace Accessor.Planner.Infrastructure.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly ApplicationDataContext _context;
-        private readonly DbSet<T> _entities;
+        protected readonly ApplicationDataContext _context;
+        protected readonly DbSet<T> _entities;
 
         public Repository(ApplicationDataContext context)
         {

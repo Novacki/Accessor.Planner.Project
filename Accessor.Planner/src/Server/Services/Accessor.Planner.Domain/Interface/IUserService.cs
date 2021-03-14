@@ -9,9 +9,9 @@ namespace Accessor.Planner.Domain.Interface
     public interface IUserService
     {
         Task Create(User user);
-        Task Update(User user);
-        Task<List<User>> GetUserByIdAsync(Guid id);
+        Task Update(Guid id, User user);
+        Task<User> GetUserByIdAsync(Guid id);
         List<User> GetAll();
-        void Delete(Guid id);
+        Task Delete(Guid id);
     }
 }
