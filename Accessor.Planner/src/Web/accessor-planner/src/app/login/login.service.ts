@@ -8,7 +8,7 @@ import { HttpService } from "../shared/service/http.service";
 export class LoginService{
     constructor(private http: HttpService){}
 
-    url: string = "";
+    url: string = "Login";
 
     public get(id: number): Observable<Login>{
         return this.http.get<Login>(this.url, id);

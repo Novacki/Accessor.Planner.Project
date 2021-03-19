@@ -1,21 +1,14 @@
-<body class="text-center">
-    
+<div class="form">
     <main class="form-signin">
-      <form>
-        <!-- <img class="logo" src="../assets/logo-brown.png" alt="Logotipo"> -->
-        <h1 class="h1">Login</h1>
-        <label for="inputEmail" class="visually-hidden">Endereço de Email</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email" #email required autofocus>
-        <br/>
-      
-        <label for="inputPassword" class="visually-hidden">Senha</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Senha" #senha required>
+      <!-- <img class="logo" src="../assets/logo-brown.png" alt="Logotipo"> -->
+      <h1 class="h1">Login</h1>
+      <label for="inputEmail" class="visually-hidden">Endereço de Email</label>
+      <input type="email" id="inputEmail" class="form-control" placeholder="Email" #email required autofocus>
+      <br />
 
-        <button class="btn btn-lg btn-primary"  (onclick)="loginUser(email.value, senha.value)">Entrar</button>
-        
-      </form>
+      <label for="inputPassword" class="visually-hidden">Senha</label>
+      <input type="password" id="inputPassword" class="form-control" placeholder="Senha" #senha required>
+
+      <button class="btn btn-lg btn-primary" (click)="loginUser(email.value, senha.value)">Entrar</button>
     </main>
-    
-    
-        
-</body>
+</div>

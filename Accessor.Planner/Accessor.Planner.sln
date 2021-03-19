@@ -11,12 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{7A93E43B-F10
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{EA5D6775-2965-4904-B772-AE5E753D141B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accessor.Planner.API", "src\Server\Services\Accessor.Planner.API\Accessor.Planner.API.csproj", "{C0E96C54-96EF-4664-B1FF-17FDCCE7F0DF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accessor.Planner.Domain", "src\Server\Services\Accessor.Planner.Domain\Accessor.Planner.Domain.csproj", "{7D029A2C-D88B-4B9D-BB3A-92C5C38FA8B4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accessor.Planner.Infrastructure", "src\Server\Services\Accessor.Planner.Infrastructure\Accessor.Planner.Infrastructure.csproj", "{50E687A4-2B16-4279-A91F-C1B9CAF17BFD}"
-EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "accessor-planner", "src\Web\accessor-planner\", "{911D9477-2218-42E1-8C75-E30D369A4A00}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
@@ -35,7 +29,18 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "accessor-planner", "src\Web
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "54811"
+		SlnRelativePath = "src\Web\accessor-planner\"
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Accessor.Planner.Service", "Accessor.Planner.Service", "{327AA39B-65E0-46C7-A522-98E28CA87B72}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accessor.Planner.API", "src\Server\Services\Accessor.Planner.Service\Accessor.Planner.API\Accessor.Planner.API.csproj", "{4AFBA4A2-2917-4B85-AFED-8DD633D280F7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accessor.Planner.Domain", "src\Server\Services\Accessor.Planner.Service\Accessor.Planner.Domain\Accessor.Planner.Domain.csproj", "{23D6510E-5F8F-4962-8020-D23B7E16613B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accessor.Planner.Infrastructure", "src\Server\Services\Accessor.Planner.Service\Accessor.Planner.Infrastructure\Accessor.Planner.Infrastructure.csproj", "{5D40E225-04D1-489E-937F-0F651C9DAEE5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity.Service", "Identity.Service", "{018CDAFC-CB66-41AA-8BA6-3DB05A492D4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,22 +48,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C0E96C54-96EF-4664-B1FF-17FDCCE7F0DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0E96C54-96EF-4664-B1FF-17FDCCE7F0DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0E96C54-96EF-4664-B1FF-17FDCCE7F0DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0E96C54-96EF-4664-B1FF-17FDCCE7F0DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D029A2C-D88B-4B9D-BB3A-92C5C38FA8B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D029A2C-D88B-4B9D-BB3A-92C5C38FA8B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D029A2C-D88B-4B9D-BB3A-92C5C38FA8B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D029A2C-D88B-4B9D-BB3A-92C5C38FA8B4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{50E687A4-2B16-4279-A91F-C1B9CAF17BFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{50E687A4-2B16-4279-A91F-C1B9CAF17BFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{50E687A4-2B16-4279-A91F-C1B9CAF17BFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{50E687A4-2B16-4279-A91F-C1B9CAF17BFD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{911D9477-2218-42E1-8C75-E30D369A4A00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{911D9477-2218-42E1-8C75-E30D369A4A00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{911D9477-2218-42E1-8C75-E30D369A4A00}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{911D9477-2218-42E1-8C75-E30D369A4A00}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{4AFBA4A2-2917-4B85-AFED-8DD633D280F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AFBA4A2-2917-4B85-AFED-8DD633D280F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AFBA4A2-2917-4B85-AFED-8DD633D280F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AFBA4A2-2917-4B85-AFED-8DD633D280F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23D6510E-5F8F-4962-8020-D23B7E16613B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23D6510E-5F8F-4962-8020-D23B7E16613B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23D6510E-5F8F-4962-8020-D23B7E16613B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23D6510E-5F8F-4962-8020-D23B7E16613B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D40E225-04D1-489E-937F-0F651C9DAEE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D40E225-04D1-489E-937F-0F651C9DAEE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D40E225-04D1-489E-937F-0F651C9DAEE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D40E225-04D1-489E-937F-0F651C9DAEE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,10 +72,12 @@ Global
 		{3A34F44D-DC39-4A66-8934-8DB413A1603B} = {7B854B48-A7DC-4D8F-91FA-F0A385CED821}
 		{7A93E43B-F101-4BE4-8971-347937FB47C7} = {7B854B48-A7DC-4D8F-91FA-F0A385CED821}
 		{EA5D6775-2965-4904-B772-AE5E753D141B} = {3A34F44D-DC39-4A66-8934-8DB413A1603B}
-		{C0E96C54-96EF-4664-B1FF-17FDCCE7F0DF} = {EA5D6775-2965-4904-B772-AE5E753D141B}
-		{7D029A2C-D88B-4B9D-BB3A-92C5C38FA8B4} = {EA5D6775-2965-4904-B772-AE5E753D141B}
-		{50E687A4-2B16-4279-A91F-C1B9CAF17BFD} = {EA5D6775-2965-4904-B772-AE5E753D141B}
 		{911D9477-2218-42E1-8C75-E30D369A4A00} = {7A93E43B-F101-4BE4-8971-347937FB47C7}
+		{327AA39B-65E0-46C7-A522-98E28CA87B72} = {EA5D6775-2965-4904-B772-AE5E753D141B}
+		{4AFBA4A2-2917-4B85-AFED-8DD633D280F7} = {327AA39B-65E0-46C7-A522-98E28CA87B72}
+		{23D6510E-5F8F-4962-8020-D23B7E16613B} = {327AA39B-65E0-46C7-A522-98E28CA87B72}
+		{5D40E225-04D1-489E-937F-0F651C9DAEE5} = {327AA39B-65E0-46C7-A522-98E28CA87B72}
+		{018CDAFC-CB66-41AA-8BA6-3DB05A492D4E} = {EA5D6775-2965-4904-B772-AE5E753D141B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {560403B3-F43B-42C4-A73C-BDBE0AFB4AA7}

@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 export class HttpService{
     constructor(private http: HttpClient){}
 
-    baseUrl: string = "";
+    baseUrl: string = "https://localhost:5001/api/v1";
 
     public get<T>(url: string, id: number): Observable<T>{
         return this.http.get<T>(`${this.baseUrl}/${url}/${id}`);
