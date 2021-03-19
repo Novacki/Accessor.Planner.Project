@@ -75,11 +75,14 @@ namespace Accessor.Planner.API
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IProviderRepository, ProviderRepository>();
+
         }
 
         public void ServicesInject(IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProviderService, ProviderService>();
         }
     }
 }
