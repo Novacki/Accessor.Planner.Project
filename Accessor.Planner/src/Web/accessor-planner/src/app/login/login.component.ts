@@ -17,16 +17,18 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  loginUser(email: string, senha: string): void{
+  loginUser(email: string, senha: string): boolean{
     console.log(email);
     console.log(senha);
-    // this.service.login({email: email, senha: senha}).subscribe(value=>{
-    //   this.login= value;
-    // });
-    // if(this.login)
-    //   return true;
+    this.service.login(new Login(email, senha)).subscribe(value=>{
+      this.login= value;
+      console.log(this.login)
+    });
 
-    // return false;
+    if(this.login)
+      return true;
+
+    return false;
   }
 
 
