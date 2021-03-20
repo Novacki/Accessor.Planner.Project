@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace Accessor.Planner.API.Controllers
 {
     [Route("api/v1/[controller]")]
+    [ApiController]
     public class ProvidersController : Controller
     {
         private readonly IProviderService _providerService;
