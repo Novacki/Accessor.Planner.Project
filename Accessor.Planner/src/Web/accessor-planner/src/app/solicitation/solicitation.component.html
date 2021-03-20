@@ -1,25 +1,178 @@
-<div class="mat-elevation-z8">
-  <table mat-table class="full-width-table" matSort aria-label="Elements">
-    <!-- Id Column -->
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let row">{{row.id}}</td>
-    </ng-container>
+<h1>Solicitações</h1>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let row">{{row.name}}</td>
-    </ng-container>
+<mat-tab-group>
+  <mat-tab label="Novas">
+    <div class="mat-elevation-z8">
+      <table mat-table class="full-width-table" matSort aria-label="Elements">
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+          <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
 
-  <mat-paginator #paginator
-      [length]="dataSource?.data?.length"
-      [pageIndex]="0"
-      [pageSize]="10"
-      [pageSizeOptions]="[5, 10, 20]">
-  </mat-paginator>
-</div>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataInicio">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Inicio</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataFim">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Fim</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="opcoes1">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Opções</th>
+          <td class="col-bnt" mat-cell *matCellDef="let row">
+            <button mat-raised-button>Visualizar</button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="opcoes2">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td class="col-bnt" mat-cell *matCellDef="let row">
+            <button mat-raised-button>Histórico</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        #paginator
+        [length]="dataSource?.data?.length"
+        [pageIndex]="0"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20]"
+      >
+      </mat-paginator>
+    </div>
+  </mat-tab>
+  <mat-tab label="Em Andamento">
+    <div class="mat-elevation-z8">
+      <table mat-table class="full-width-table" matSort aria-label="Elements">
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+          <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataInicio">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Inicio</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataFim">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Fim</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="opcoes1">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Opções</th>
+          <td class="col-bnt" mat-cell *matCellDef="let row">
+            <button mat-raised-button>Visualizar</button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="opcoes2">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td class="col-bnt" mat-cell *matCellDef="let row">
+            <button mat-raised-button>Histórico</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        #paginator
+        [length]="dataSource?.data?.length"
+        [pageIndex]="0"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20]"
+      >
+      </mat-paginator>
+    </div>
+  </mat-tab>
+  <mat-tab label="Todas">
+    <div class="mat-elevation-z8">
+      <table mat-table class="full-width-table" matSort aria-label="Elements">
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+          <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataInicio">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Inicio</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataFim">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Fim</th>
+          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="opcoes1">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Opções</th>
+          <td class="col-bnt" mat-cell *matCellDef="let row">
+            <button mat-raised-button>Visualizar</button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="opcoes2">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td class="col-bnt" mat-cell *matCellDef="let row">
+            <button mat-raised-button>Histórico</button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+        #paginator
+        [length]="dataSource?.data?.length"
+        [pageIndex]="0"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20]"
+      >
+      </mat-paginator>
+    </div>
+  </mat-tab>
+</mat-tab-group>

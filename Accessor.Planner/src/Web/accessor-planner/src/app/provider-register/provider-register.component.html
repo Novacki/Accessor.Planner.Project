@@ -84,27 +84,17 @@
               </div>
             </div>
 
-            <div class="col-12">
-              <label for="username" class="form-label">Nome de Usuário</label>
-              <div class="input-group has-validation">
-                <span class="input-group-text">@</span>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="username"
-                  placeholder="Username"
-                  required
-                />
-                <div class="invalid-feedback">
-                  O campo Nome de Usuário é obrigatório.
-                </div>
+            <div class="col-3">
+              <label for="email" class="form-label">CNPJ</label>
+              <input type="email" class="form-control" id="number" />
+              <div class="invalid-feedback">
+                Por favor, insira um número de telefone válido para envio de
+                atualizações.
               </div>
             </div>
 
-            <div class="col-8">
-              <label for="email" class="form-label"
-                >Email <span class="text-muted">(Opcional)</span></label
-              >
+            <div class="col-6">
+              <label for="email" class="form-label">Email</label>
               <input
                 type="email"
                 class="form-control"
@@ -117,22 +107,34 @@
               </div>
             </div>
 
-            <div class="col-4">
+            <div class="col-3">
               <label for="email" class="form-label">Telefone</label>
-              <input type="email" class="form-control" id="email" />
+              <input type="email" class="form-control" id="number" />
               <div class="invalid-feedback">
                 Por favor, insira um número de telefone válido para envio de
                 atualizações.
               </div>
             </div>
 
-            <div class="col-10">
+            <div class="col-3">
+              <label for="zip" class="form-label">CEP</label>
+              <input
+                type="text"
+                class="form-control"
+                id="zip"
+                placeholder=""
+                required
+              />
+              <div class="invalid-feedback">O campo CEP á obrigatório.</div>
+            </div>
+
+            <div class="col-7">
               <label for="address" class="form-label">Endereço</label>
               <input
                 type="text"
                 class="form-control"
                 id="address"
-                placeholder="1234 Main St"
+                placeholder="Avenida, Rua..."
                 required
               />
               <div class="invalid-feedback">
@@ -169,18 +171,6 @@
                 <option>São Paulo</option>
               </select>
               <div class="invalid-feedback">Please provide a valid state.</div>
-            </div>
-
-            <div class="col-md-3">
-              <label for="zip" class="form-label">CEP</label>
-              <input
-                type="text"
-                class="form-control"
-                id="zip"
-                placeholder=""
-                required
-              />
-              <div class="invalid-feedback">O campo CEP á obrigatório.</div>
             </div>
           </div>
 
@@ -251,7 +241,7 @@
 
             <div class="col-md-6">
               <label for="cc-number" class="form-label"
-                >N�mero do Cartão de Crédito</label
+                >Número do Cartão de Crédito</label
               >
               <input
                 type="text"

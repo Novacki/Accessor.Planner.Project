@@ -21,6 +21,7 @@ import { SolicitationComponent } from './solicitation/solicitation.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -58,6 +59,7 @@ import { MatInputModule } from '@angular/material/input';
     FormsModule,
     ReactiveFormsModule,    
     MatInputModule
+    MatTabsModule
   ],
   providers: [HttpService],
   bootstrap: [AppComponent],

@@ -16,7 +16,7 @@ export class SolicitationComponent implements AfterViewInit {
   dataSource: SolicitationDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
+  displayedColumns = ['id', 'name', 'status', 'dataInicio', 'dataFim', 'opcoes1', 'opcoes2'];
 
   constructor() {
     this.dataSource = new SolicitationDataSource();

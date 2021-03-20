@@ -15,3 +15,11 @@
   top: 0;
   z-index: 1;
 }
+
+mat-toolbar {
+  background-color: brown;
+}
+
+.logo {
+  max-width: 20%;
+}

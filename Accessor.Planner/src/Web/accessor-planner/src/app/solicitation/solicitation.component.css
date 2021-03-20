@@ -1,3 +1,19 @@
 .full-width-table {
   width: 100%;
 }
+
+mat-tab-group {
+  max-width: 95%;
+  margin-top: 2%;
+  margin-left: 3%;
+}
+
+h1 {
+  margin-top: 2%;
+  margin-left: 2%;
+  font-size: 250%;
+}
+
+.col-bnt {
+  width: 10%;
+}
