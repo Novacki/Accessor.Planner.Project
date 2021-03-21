@@ -1,7 +1,9 @@
 using AutoMapper;
+using IdentityServer.API.Application.Extentions;
 using IdentityServer.API.Application.Resources;
 using IdentityServer.API.Infrastructure.Data;
 using IdentityServer.API.Infrastructure.Model;
+using IdentityServer.API.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,10 +36,7 @@ namespace IdentityServer.API
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "IdentityServer.API", Version = "v1" });
-            });
+            ConfigureSwagger(services);
 
             services.AddDbContext<ApplicationDataContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("Default")));
@@ -61,8 +60,7 @@ namespace IdentityServer.API
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
+            app.UseAuth();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -71,7 +69,7 @@ namespace IdentityServer.API
 
         public void IdentityConfiguration(IServiceCollection services)
         {
-            services.AddIdentity<User, Role>()
+            services.AddIdentityCore<User>().AddRoles<Role>()
                 .AddEntityFrameworkStores<ApplicationDataContext>()
                     .AddDefaultTokenProviders();
 
@@ -83,6 +81,10 @@ namespace IdentityServer.API
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1d);
                 options.Lockout.MaxFailedAccessAttempts = 5;
             });
+
+            services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
+            var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
+            services.AddAuth(jwtSettings);
         }
 
         public void MapperConfiguration(IServiceCollection services)
@@ -94,6 +96,38 @@ namespace IdentityServer.API
             });
             IMapper mapper = config.CreateMapper();
             services.AddSingleton(mapper);
+        }
+
+
+        public void ConfigureSwagger(IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "IdentityServer.API", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT containing userid claim",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                });
+                var security = new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                                {
+                                    Reference = new OpenApiReference
+                                        {
+                                            Id = "Bearer",
+                                            Type = ReferenceType.SecurityScheme
+                                        },
+                                    UnresolvedReference = true
+                                },
+                            new List<string>()
+                        }
+                    };
+                c.AddSecurityRequirement(security);
+            });
         }
     }
 }
