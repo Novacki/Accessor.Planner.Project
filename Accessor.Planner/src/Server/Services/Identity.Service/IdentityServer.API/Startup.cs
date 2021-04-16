@@ -36,8 +36,10 @@ namespace IdentityServer.API
         {
 
             services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             ConfigureSwagger(services);
 
+         
             services.AddDbContext<ApplicationDataContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
@@ -57,7 +59,7 @@ namespace IdentityServer.API
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors("CorsAccess");
             app.UseRouting();
 
             app.UseAuth();

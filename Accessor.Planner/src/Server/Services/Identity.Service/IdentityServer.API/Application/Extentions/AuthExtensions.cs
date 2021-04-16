@@ -17,6 +17,17 @@ namespace IdentityServer.API.Application.Extentions
             this IServiceCollection services,
             JwtSettings jwtSettings)
         {
+            services.AddCors(option =>
+            {
+                option.AddPolicy("CorsAccess",
+                    builder => builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                               .AllowAnyMethod());
+            });
+
+            services.AddCors();
+
+
             services
                 .AddAuthorization()
                 .AddAuthentication(options =>
