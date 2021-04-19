@@ -1,4 +1,5 @@
-﻿using Accessor.Planner.Domain.Model.Commom;
+﻿using Accessor.Planner.Domain.Exceptions.Core;
+using Accessor.Planner.Domain.Model.Commom;
 using Accessor.Planner.Domain.Model.Enum;
 using System;
 using System.Collections.Generic;
@@ -28,5 +29,21 @@ namespace Accessor.Planner.Domain.Model
         public Guid? AcessorId { get; private set; }
         public Provider Provider { get; private set; }
         public Guid? ProviderId { get; private set; }
+
+
+        public void AddRooms(Room room) => Rooms.Add(room);
+
+        public void RemoveRooms(Room room) => Rooms.Remove(room);
+
+
+        public void Cancel()
+        {
+            if (Status == StatusSolicitation.Done || Status == StatusSolicitation.Canceled)
+                throw new DomainException("Status Solicitation is Invalid");
+
+            Status = StatusSolicitation.Canceled;
+            Activate = false;
+        }
+          
     }
 }

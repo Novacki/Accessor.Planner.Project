@@ -5,12 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Accessor.Planner.Domain.Interface {
-    public interface IProviderService 
-    {  
-        Task Create(Provider provider);
-        Task Update(Guid id, Provider provider);
-        Task<Provider> GetUserByIdAsync(Guid id);
-        List<Provider> GetAll();
+    public interface IProviderService : IBaseService<Provider>
+    {
+        Task Update(Guid id, Provider entity);
         Task Delete(Guid id);
     }
 }

@@ -33,7 +33,7 @@ namespace Accessor.Planner.API.Controllers
             if (!id.HasValue)
                 return BadRequest();
 
-            var user = await _userService.GetUserByIdAsync(id.Value);
+            var user = await _userService.GetByIdAsync(id.Value);
 
             if (user == null)
                 return NoContent();

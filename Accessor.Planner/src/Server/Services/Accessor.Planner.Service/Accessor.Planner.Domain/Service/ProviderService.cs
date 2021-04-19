@@ -37,7 +37,8 @@ namespace Accessor.Planner.Domain.Service
 
         public List<Provider> GetAll() => _providerRepository.GetAll().ToList();
 
-        public async Task<Provider> GetUserByIdAsync(Guid id) => await _providerRepository.GetByIdAsync(id).ConfigureAwait(false);
+     
+        public async Task<Provider> GetByIdAsync(Guid id) => await _providerRepository.GetByIdAsync(id).ConfigureAwait(false);
 
         public async Task Update(Guid id, Provider provider)
         {
