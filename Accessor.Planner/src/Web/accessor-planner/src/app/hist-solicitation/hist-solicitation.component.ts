@@ -2,24 +2,24 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
-import { SolicitationDataSource, SolicitationItem } from './solicitation-datasource';
+import { HistSolicitationDataSource, HistSolicitationItem } from './hist-solicitation-datasource';
 
 @Component({
-  selector: 'app-solicitation',
-  templateUrl: './solicitation.component.html',
-  styleUrls: ['./solicitation.component.css']
+  selector: 'app-hist-solicitation',
+  templateUrl: './hist-solicitation.component.html',
+  styleUrls: ['./hist-solicitation.component.css']
 })
-export class SolicitationComponent implements AfterViewInit {
+export class HistSolicitationComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<SolicitationItem>;
-  dataSource: SolicitationDataSource;
+  @ViewChild(MatTable) table!: MatTable<HistSolicitationItem>;
+  dataSource: HistSolicitationDataSource;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['nome', 'status', 'data', 'opcoes1', 'opcoes2'];
+  displayedColumns = ['datadeAlteracao', 'status', 'nomeFornecedor', 'orcamento'];
 
   constructor() {
-    this.dataSource = new SolicitationDataSource();
+    this.dataSource = new HistSolicitationDataSource();
   }
 
   ngAfterViewInit(): void {

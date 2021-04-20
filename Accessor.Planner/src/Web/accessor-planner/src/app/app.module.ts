@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { HomeComponent } from './home/home.component';
 import { ProviderRegisterComponent } from './provider-register/provider-register.component';
 import { UserRegisterComponent } from './user-register/user-register.component';
 import { MenuComponent } from './menu/menu.component';
@@ -22,6 +21,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTabsModule } from '@angular/material/tabs';
+import { ConfigComponent } from './config/config.component';
+import { HistSolicitationComponent } from './hist-solicitation/hist-solicitation.component';
+import { NewSolicitationComponent } from './new-solicitation/new-solicitation.component';
+import { RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { routes } from './app.routes';
+
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -38,6 +44,10 @@ import { MatInputModule } from '@angular/material/input';
     UserRegisterComponent,
     MenuComponent,
     SolicitationComponent,
+    ConfigComponent,
+    HistSolicitationComponent,
+    NewSolicitationComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -52,6 +62,7 @@ import { MatInputModule } from '@angular/material/input';
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
+    RouterModule.forRoot(routes),
     MatSortModule,
 
     AppRoutingModule,    

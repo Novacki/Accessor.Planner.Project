@@ -1,0 +1,26 @@
+.container {
+  margin-top: 1%;
+  max-width: 960px;
+}
+
+.logo {
+  max-width: 20%;
+}
+
+.navbar {
+  background-color: brown;
+}
+
+.btn {
+  color: white;
+  border-color: white;
+  background-color: brown;
+}
+
+.btn:hover {
+  background-color: rgb(70, 65, 65);
+}
+
+.imgIcons {
+  max-width: 40%;
+}
