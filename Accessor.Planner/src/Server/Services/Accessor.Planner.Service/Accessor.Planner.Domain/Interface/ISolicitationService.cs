@@ -9,5 +9,7 @@ namespace Accessor.Planner.Domain.Interface
     public interface ISolicitationService : IBaseService<Solicitation>
     {
         public Task Cancel(Guid id);
+
+        public Solicitation GetById(Guid id);
     }
 }

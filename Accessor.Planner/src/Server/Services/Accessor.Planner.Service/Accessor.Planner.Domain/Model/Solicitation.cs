@@ -38,11 +38,28 @@ namespace Accessor.Planner.Domain.Model
 
         public void Cancel()
         {
-            if (Status == StatusSolicitation.Done || Status == StatusSolicitation.Canceled)
+            if (Status != StatusSolicitation.InReview)
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Canceled;
+            DeletedAt = DateTime.Now;
             Activate = false;
+        }
+
+        public void Approve()
+        {
+            if (Status != StatusSolicitation.InReview)
+                throw new DomainException("Status Solicitation is Invalid");
+
+            Status = StatusSolicitation.Approve;
+        }
+
+        public void Accept(string accessorName)
+        {
+            if (Status != StatusSolicitation.OnHold && string.IsNullOrEmpty(accessorName))
+                throw new DomainException("Status Solicitation is Invalid");
+
+            Status = StatusSolicitation.InReview;
         }
           
     }

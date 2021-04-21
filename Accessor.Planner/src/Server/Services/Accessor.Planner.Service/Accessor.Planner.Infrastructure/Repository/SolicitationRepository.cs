@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Accessor.Planner.Infrastructure.Repository
 {
@@ -20,6 +21,18 @@ namespace Accessor.Planner.Infrastructure.Repository
                 .Include(s => s.Provider)
                 .Include(s => s.Client)
                 .Include(s => s.Rooms);
+        }
+
+        public override async Task<Solicitation> GetByIdAsync(Guid id)
+        {
+            return await _entities.Include(s => s.Provider).Include(s => s.Client)
+                .Include(s => s.Rooms).FirstOrDefaultAsync(s => s.Id == id);
+        }
+
+        public override Solicitation GetById(Guid id)
+        {
+            return  _entities.Include(s => s.Provider).Include(s => s.Client)
+               .Include(s => s.Rooms).FirstOrDefault(s => s.Id == id);
         }
     }
 }

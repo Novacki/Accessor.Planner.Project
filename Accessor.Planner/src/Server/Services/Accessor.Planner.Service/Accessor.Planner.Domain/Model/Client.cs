@@ -1,4 +1,5 @@
-﻿using Accessor.Planner.Domain.Model.Commom;
+﻿using Accessor.Planner.Domain.Exceptions.Core;
+using Accessor.Planner.Domain.Model.Commom;
 using Accessor.Planner.Domain.Model.Enum;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,12 @@ namespace Accessor.Planner.Domain.Model
     {
         private Client() { }
 
-        public Client(string cpf, int age, char sex, string phone, UserType type)
+        public Client(string name, string cpf, DateTime birthDate, char sex, string phone, UserType type)
         {
             Id = Guid.NewGuid();
+            Name = name;
             Cpf = cpf;
-            Age = age;
+            BirthDate = birthDate;
             Sex = sex;
             Phone = phone;
             Type = type;
@@ -25,13 +27,57 @@ namespace Accessor.Planner.Domain.Model
             Solicitations = new List<Solicitation>();
         }
 
+        public string Name { get; private set; }
         public string Cpf { get; private set; }
-        public int Age { get; private set; }
+        public DateTime BirthDate { get; private set; }
         public char Sex { get; private set; }
         public string Phone { get; private set; }
         public UserType Type { get; private set; }
         public List<Address> Addresses { get; private set; }
         public User User { get; private set; }
         public List<Solicitation> Solicitations { get; private set; }
+
+
+        public void AddAddress(Address address) => Addresses.Add(address);
+        public void RemoveAddress(Address address) => Addresses.Remove(address);
+
+        public void Update(DateTime birthDate, string phone, string name)
+        {
+            if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(name) || birthDate == null)
+                throw new DomainException("Phone or Birth Date or Name is Null");
+
+            BirthDate = birthDate;
+            Phone = phone;
+            Name = name;
+        }
+
+        public void Delete()
+        {
+            Activate = false;
+            DeletedAt = DateTime.Now;
+        }
+        public void CreateSolicitation(Solicitation solicitation)
+        {
+            if (Type != UserType.Client)
+                throw new DomainException("Accessor Can't Create Solicitation");
+
+            Solicitations.Add(solicitation);
+        }
+
+        public void CancelSolicitation(Solicitation solicitation)
+        {
+            if (Type != UserType.Client)
+                throw new DomainException("Accessor Can't Create Solicitation");
+
+            solicitation.Cancel();
+        }
+
+        public void Approve(Solicitation solicitation)
+        {
+            if (Type != UserType.Client)
+                throw new DomainException("Accessor Can't Create Solicitation");
+
+            solicitation.Cancel();
+        }
     }
 }

@@ -21,8 +21,8 @@ namespace Accessor.Planner.Domain.Service
 
         public async Task Create(Solicitation solicitation)
         {
-           await _solicitationRepository.CreateAsync(solicitation).ConfigureAwait(false);
-           _solicitationRepository.UnitOfWork.SaveChanges();
+            await _solicitationRepository.CreateAsync(solicitation).ConfigureAwait(false);
+            _solicitationRepository.UnitOfWork.SaveChanges();
         }
 
         public async Task Cancel(Guid id)
@@ -35,12 +35,22 @@ namespace Accessor.Planner.Domain.Service
 
             solicitation.Cancel();
 
-           await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public List<Solicitation> GetAll() => _solicitationRepository.GetAll().ToList();
 
         public async Task<Solicitation> GetByIdAsync(Guid id) => await _solicitationRepository.GetByIdAsync(id).ConfigureAwait(false);
 
+        public Solicitation GetById(Guid id) 
+        {
+            var solicitation = _solicitationRepository.GetById(id);
+
+            if (solicitation == null)
+                throw new SolicitationServiceException("Solicitation Not Found");
+
+            return solicitation;
+        } 
+        
     }
 }
