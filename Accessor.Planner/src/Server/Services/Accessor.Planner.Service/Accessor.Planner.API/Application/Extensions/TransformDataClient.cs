@@ -1,0 +1,31 @@
+﻿using Accessor.Planner.API.Application.Model.DTO;
+using Accessor.Planner.API.Application.Model.ViewModel;
+using Accessor.Planner.Domain.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Accessor.Planner.API.Application.Extensions
+{
+    public static class TransformDataClient
+    {
+        public static Client ToClient(this ClientDTO client) => new Client(client.Name, client.Cpf, client.BirthDate, client.Sex, 
+            client.Phone,client.Type, client.Addresses.ToAddress());
+
+        public static ClientViewModel ToViewModel(this Client client)
+        {
+            return new ClientViewModel()
+            {
+                Id = client.Id,
+                Name = client.Name,
+                Phone = client.Phone,
+                Cpf = client.Cpf,
+                Sex = client.Sex,
+                BirthDate = client.BirthDate,
+                Type = client.Type,
+                Addresses = client.Addresses.ToViewModel()
+            };
+        }
+    }
+}

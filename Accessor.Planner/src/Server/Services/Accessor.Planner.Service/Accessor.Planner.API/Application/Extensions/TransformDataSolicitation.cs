@@ -20,5 +20,19 @@ namespace Accessor.Planner.API.Application.Extensions
                 Rooms = solicitation.Rooms.ToViewModel()
             };
         }
+
+        public static List<SolicitationViewModel> ToViewModel(this List<Solicitation> solicitations)
+        {
+            return solicitations.Select(s => new SolicitationViewModel()
+            {
+                Id = s.Id,
+                ClientId = s.ClientId,
+                ProviderId = s.ProviderId,
+                Status = (int)s.Status,
+                Rooms = s.Rooms.ToViewModel()
+
+            }).ToList();
+            
+        }
     }
 }

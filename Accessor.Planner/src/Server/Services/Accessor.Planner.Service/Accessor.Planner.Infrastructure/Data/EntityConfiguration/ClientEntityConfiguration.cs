@@ -15,6 +15,10 @@ namespace Accessor.Planner.Infrastructure.Data.EntityConfiguration
                 .ValueGeneratedOnAdd()
                 .HasColumnType("uniqueidentifier");
 
+            builder.Property(client => client.Name)
+                .ValueGeneratedOnAdd()
+                .HasColumnType("nvarchar(50)");
+
             builder.Property(client => client.BirthDate)
                 .HasColumnType("datetime2");
 

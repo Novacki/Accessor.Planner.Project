@@ -11,7 +11,7 @@ namespace Accessor.Planner.Domain.Model
     {
         private Client() { }
 
-        public Client(string name, string cpf, DateTime birthDate, char sex, string phone, UserType type)
+        public Client(string name, string cpf, DateTime birthDate, char sex, string phone, UserType type, List<Address> addresses)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -20,11 +20,11 @@ namespace Accessor.Planner.Domain.Model
             Sex = sex;
             Phone = phone;
             Type = type;
-            Addresses = new List<Address>();
             CreatedAt = DateTime.Now;
             UpdatedAt = DateTime.Now;
             Activate = true;
             Solicitations = new List<Solicitation>();
+            AddAddresses(addresses);
         }
 
         public string Name { get; private set; }
@@ -78,6 +78,12 @@ namespace Accessor.Planner.Domain.Model
                 throw new DomainException("Accessor Can't Create Solicitation");
 
             solicitation.Cancel();
+        }
+
+        private void AddAddresses(List<Address> addresses)
+        {
+            Addresses = new List<Address>();
+            Addresses.AddRange(addresses);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Accessor.Planner.API.Application.Model.ViewModel {
     public class AddressViewModel {
+        public int Id { get; set; }
         public string Cep { get; set; }
         public string State { get; set; }
         public string City { get; set; }

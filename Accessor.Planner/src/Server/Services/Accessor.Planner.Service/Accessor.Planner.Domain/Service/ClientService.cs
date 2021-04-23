@@ -22,12 +22,26 @@ namespace Accessor.Planner.Domain.Service
             _solicitationService = solicitationService ?? throw new ArgumentNullException(nameof(solicitationService));
         }
 
+
+        public List<Client> GetAll() => _clientRepository.GetAll().ToList();
+
+        public async Task<Client> GetByIdAsync(Guid id) => await _clientRepository.GetByIdAsync(id).ConfigureAwait(false);
+
+        public async Task<Solicitation> GetSolicitationById(Guid id) => await _solicitationService.GetByIdAsync(id).ConfigureAwait(false);
+
+        public List<Solicitation> GetSolicitationsByUser(Guid userId) => GetClientByUserId(userId).Solicitations;
+
         public async Task AcceptSolicitation(Guid userId, Guid solicitationId)
         {
             var client = GetClientByUserId(userId);
-            var solicitation = _solicitationService.GetById(solicitationId);
+            _solicitationService.Accept(client, solicitationId);
+            await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        }
 
-            solicitation.Accept(client.Name);
+        public async Task SendSolicitation(Guid userId, Guid solicitationId)
+        {
+            var client = GetClientByUserId(userId);
+            _solicitationService.Send(solicitationId);
             await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
@@ -45,6 +59,15 @@ namespace Accessor.Planner.Domain.Service
             var solicitation = _solicitationService.GetById(solicitationId);
 
             solicitation.Approve();
+            await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task RejectSolicitation(Guid userId, Guid solicitationId, string reason)
+        {
+            var client = GetClientByUserId(userId);
+            var solicitation = _solicitationService.GetById(solicitationId);
+
+            solicitation.Reject(reason);
             await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
@@ -66,9 +89,12 @@ namespace Accessor.Planner.Domain.Service
             await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public Task CreateSolicitation(Guid userId, Solicitation solicitation)
+        public async Task CreateSolicitation(Guid userId, List<Room> rooms)
         {
-            throw new NotImplementedException();
+            var client = GetClientByUserId(userId);
+            client.CreateSolicitation(new Solicitation(client, rooms));
+
+            await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task Delete(Guid id)
@@ -78,16 +104,6 @@ namespace Accessor.Planner.Domain.Service
             client.Delete();
             await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
-
-        public List<Client> GetAll() => _clientRepository.GetAll().ToList();
-
-
-        public async Task<Client> GetByIdAsync(Guid id) => await _clientRepository.GetByIdAsync(id).ConfigureAwait(false);
-
-        public async Task<Solicitation> GetSolicitationById(Guid id) => await _solicitationService.GetByIdAsync(id).ConfigureAwait(false);
-
-        public List<Solicitation> GetSolicitationsByUser(Guid userId) => GetClientByUserId(userId).Solicitations;
-        
 
         public void RemoveAddress(Guid id, Address address)
         {
@@ -125,6 +141,7 @@ namespace Accessor.Planner.Domain.Service
 
             return client;
         }
+
        
     }
 }

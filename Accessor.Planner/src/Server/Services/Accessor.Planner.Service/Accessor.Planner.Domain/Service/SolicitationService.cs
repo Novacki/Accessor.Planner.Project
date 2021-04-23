@@ -50,7 +50,19 @@ namespace Accessor.Planner.Domain.Service
                 throw new SolicitationServiceException("Solicitation Not Found");
 
             return solicitation;
-        } 
-        
+        }
+
+        public void Accept(Client client, Guid solicitationId)
+        {
+            var solicitation = GetById(solicitationId);
+            solicitation.Accept(client.Name);
+
+        }
+
+        public void Send(Guid id)
+        {
+            var solicitation = GetById(id);
+            solicitation.Send();
+        }
     }
 }
