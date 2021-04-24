@@ -15,7 +15,7 @@ namespace Accessor.Planner.Infrastructure.Data.EntityConfiguration
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-            builder.Property(solicitation => solicitation.AcessorId)
+            builder.Property(solicitation => solicitation.AccessorId)
                 .HasColumnType("uniqueidentifier");
 
             builder.Property(solicitation => solicitation.ClientId)

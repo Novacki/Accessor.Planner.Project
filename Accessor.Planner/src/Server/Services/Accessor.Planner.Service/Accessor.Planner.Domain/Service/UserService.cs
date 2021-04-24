@@ -49,7 +49,7 @@ namespace Accessor.Planner.Domain.Service
 
         public List<User> GetAll() => _userRepository.GetAll().ToList();
         
-        public async Task<User> GetUserByIdAsync(Guid id)
+        public async Task<User> GetByIdAsync(Guid id)
         {
           return await _userRepository.GetByIdAsync(id).ConfigureAwait(false);
         }
@@ -87,5 +87,6 @@ namespace Accessor.Planner.Domain.Service
                 throw new UserServiceException("E-mail already Exist");
 
         }
+
     }
 }

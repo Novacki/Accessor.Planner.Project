@@ -88,6 +88,8 @@ namespace Accessor.Planner.API
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProviderRepository, ProviderRepository>();
+            services.AddScoped<ISolicitationRepository, SolicitationRepository>();
+            services.AddScoped<IClientRepository, ClientRepository>();
 
         }
 
@@ -95,6 +97,8 @@ namespace Accessor.Planner.API
         {
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProviderService, ProviderService>();
+            services.AddScoped<ISolicitationService, SolicitationService>();
+            services.AddScoped<IClientService, ClientService>();
         }
     }
 }

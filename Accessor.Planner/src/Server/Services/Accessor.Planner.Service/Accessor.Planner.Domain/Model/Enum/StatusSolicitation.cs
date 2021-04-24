@@ -8,7 +8,10 @@ namespace Accessor.Planner.Domain.Model.Enum
     {
         OnHold = 1,
         InReview = 2,
-        Done = 3,
-        Canceled = 4
+        Accept = 3,
+        Approve = 4,
+        Done = 5,
+        Reject = 6,
+        Canceled = 7
     }
 }

@@ -13,11 +13,21 @@ namespace Accessor.Planner.Domain.Service
     public class ProviderService : IProviderService
     {
         private readonly IProviderRepository _providerRepository;
+        private readonly ISolicitationService _solicitationService;
 
-        public ProviderService(IProviderRepository providerRepository)
+        public ProviderService(IProviderRepository providerRepository, ISolicitationService solicitationService)
         {
             _providerRepository = providerRepository ?? throw new ArgumentNullException(nameof(providerRepository));
+            _solicitationService = solicitationService ?? throw new ArgumentNullException(nameof(solicitationService));
         }
+
+        public async Task AcceptSolicitation(Guid userId, Guid solicitationId)
+        {
+            var provider = GetProviderByUserId(userId);
+            _solicitationService.Accept(provider, solicitationId);
+            await _providerRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public async Task Create(Provider provider)
         {
             _providerRepository.Create(provider);
@@ -37,7 +47,13 @@ namespace Accessor.Planner.Domain.Service
 
         public List<Provider> GetAll() => _providerRepository.GetAll().ToList();
 
-        public async Task<Provider> GetUserByIdAsync(Guid id) => await _providerRepository.GetByIdAsync(id).ConfigureAwait(false);
+     
+        public async Task<Provider> GetByIdAsync(Guid id) => await _providerRepository.GetByIdAsync(id).ConfigureAwait(false);
+
+        public Task SendSolicitation(Guid userId, Guid solicitationId)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task Update(Guid id, Provider provider)
         {
@@ -48,6 +64,17 @@ namespace Accessor.Planner.Domain.Service
 
             result.Update(provider.Name, provider.FantasyName, provider.Phone);
             await _providerRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+
+        private Provider GetProviderByUserId(Guid id)
+        {
+            var provider = GetAll().Where(c => c.User.Id == id).FirstOrDefault();
+
+            if (provider == null)
+                throw new ProviderServiceException("Provider Not Found");
+
+            return provider;
         }
     }
 }

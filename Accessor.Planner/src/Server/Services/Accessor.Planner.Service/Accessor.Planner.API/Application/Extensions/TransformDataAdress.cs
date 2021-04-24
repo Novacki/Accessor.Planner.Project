@@ -15,10 +15,16 @@ namespace Accessor.Planner.API.Application.Extensions
             return new Address(address.Cep, address.State, address.City, address.Number, address.Street, address.Complement);
         }
 
+        public static List<Address> ToAddress(this List<AddressDTO> addresses)
+        {
+            return addresses.Select(address => new Address(address.Cep, address.State, address.City, address.Number, address.Street)).ToList();
+        }
+
         public static AddressViewModel ToViewModel(this Address address)
         {
             return new AddressViewModel()
             {
+                Id = address.Id,
                 Cep = address.Cep,
                 City = address.City,
                 Complement = address.Complement,
@@ -26,6 +32,22 @@ namespace Accessor.Planner.API.Application.Extensions
                 State = address.State,
                 Street = address.Street
             };
+        }
+
+        public static List<AddressViewModel> ToViewModel(this List<Address> addresses)
+        {
+            return addresses.Select(a => new AddressViewModel() 
+            {
+                Id = a.Id,
+                Cep = a.Cep,
+                City = a.City,
+                Complement = a.Complement,
+                Number = a.Number,
+                State = a.State,
+                Street = a.Street
+
+            }).ToList();
+           
         }
     }
 }
