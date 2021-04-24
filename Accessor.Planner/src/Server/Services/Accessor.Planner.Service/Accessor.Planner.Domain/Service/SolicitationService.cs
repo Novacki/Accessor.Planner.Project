@@ -52,10 +52,10 @@ namespace Accessor.Planner.Domain.Service
             return solicitation;
         }
 
-        public void Accept(Client client, Guid solicitationId)
+        public void Accept<T>(T entity, Guid solicitationId)
         {
             var solicitation = GetById(solicitationId);
-            solicitation.Accept(client.Name);
+            solicitation.Accept(entity.GetType().Name);
 
         }
 

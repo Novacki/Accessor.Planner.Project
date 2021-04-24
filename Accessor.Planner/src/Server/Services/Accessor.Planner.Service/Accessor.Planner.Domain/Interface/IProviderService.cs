@@ -9,5 +9,8 @@ namespace Accessor.Planner.Domain.Interface {
     {
         Task Update(Guid id, Provider entity);
         Task Delete(Guid id);
+        Task AcceptSolicitation(Guid userId, Guid solicitationId);
+        Task SendSolicitation(Guid userId, Guid solicitationId);
+
     }
 }
