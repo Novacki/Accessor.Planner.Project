@@ -22,7 +22,12 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { AppRoutingModule } from './app-routing.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,9 +51,17 @@ import { MatSortModule } from '@angular/material/sort';
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+
+    AppRoutingModule,    
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,    
+    MatInputModule
   ],
   providers: [HttpService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }

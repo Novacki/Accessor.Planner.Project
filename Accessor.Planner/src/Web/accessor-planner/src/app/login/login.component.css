@@ -1,4 +1,56 @@
+.page-login{
+  height: 100%;
+  display: flex;
+  align-items: center;
 
+  background-color: rgb(197, 196, 196);
+}
+
+.geral{
+width: 100%;
+max-width: 330px;
+padding: 15px;
+margin: auto;
+background-color: white;
+border-radius: 10px;
+}
+
+.principal{
+font-size: 200%;
+text-align: center;
+padding: 15px;
+margin: auto;
+}
+
+.secundario{
+font-size: 100%;
+text-align: center;
+padding: 15px;
+margin: auto;
+}
+
+.button{
+font-size: 180%;
+border-style: outset;
+}
+
+.link{
+font-size: 80%;  
+text-align: end;  
+}
+a{
+font-style: italic;
+}
+
+.olho :active{
+color: red;
+}
+
+.olho[attr.aria-pressed]="hide"{
+color: red;
+}
+
+/*
 .form {
   margin-top: 10%;
   display: flex;
@@ -56,3 +108,4 @@ h1{
   background-color: brown;
   border-color: brown;
 }
+*/
