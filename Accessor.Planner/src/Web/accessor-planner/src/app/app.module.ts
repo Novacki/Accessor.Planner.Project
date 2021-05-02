@@ -5,9 +5,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ProviderRegisterComponent } from './provider-register/provider-register.component';
-import { UserRegisterComponent } from './user-register/user-register.component';
 import { MenuComponent } from './menu/menu.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -36,7 +35,6 @@ import { HomeModule } from './modules/home/home.module';
   declarations: [
     AppComponent,
     ProviderRegisterComponent,
-    UserRegisterComponent,
     MenuComponent,
     SolicitationComponent,
     ConfigComponent,

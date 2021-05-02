@@ -1,6 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormUserComponent } from './pages/form-user/form-user.component';
 import { FormProviderComponent } from './pages/form-provider/form-provider.component';
 import { FormLoginComponent } from './pages/form-login/form-login.component';
 import { IndexComponent } from './pages/index/index.component';
@@ -16,12 +15,18 @@ import {ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { ClientFormComponent } from './components/client-form/client-form.component';
+import { UserFormComponent } from './components/user-form/user-form.component';
+import { ProviderFormComponent } from './components/provider-form/provider-form.component';
+import { FormClientComponent } from './pages/form-client/form-client.component';
+import { ChooseRegisterComponent } from './components/choose-register/choose-register.component';
+import { ChooseComponent } from './pages/choose/choose.component';
 
 
 
 @NgModule({
-  declarations: [FormLoginComponent, FormUserComponent, FormProviderComponent, IndexComponent, 
-    HeaderComponent, BottomComponent, HomeContentComponent, LoginComponent],
+  declarations: [FormLoginComponent, FormProviderComponent, IndexComponent, 
+    HeaderComponent, BottomComponent, HomeContentComponent, LoginComponent, ClientFormComponent, UserFormComponent, ProviderFormComponent, FormClientComponent, ChooseRegisterComponent, ChooseComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
