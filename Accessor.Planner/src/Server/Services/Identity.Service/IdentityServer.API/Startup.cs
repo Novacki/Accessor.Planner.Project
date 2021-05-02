@@ -1,6 +1,5 @@
 using AutoMapper;
 using IdentityServer.API.Application.Extentions;
-using IdentityServer.API.Application.Integration;
 using IdentityServer.API.Application.Resources;
 using IdentityServer.API.Infrastructure.Data;
 using IdentityServer.API.Infrastructure.Model;
@@ -16,7 +15,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Proxy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,8 +45,8 @@ namespace IdentityServer.API
 
             IdentityConfiguration(services);
             MapperConfiguration(services);
-            services.AddScoped<IProxyApplication, ProxyApplication>();
-            services.AddScoped<IUserIntegrationProxyService, UserIntegrationProxyService>();
+            //services.AddScoped<IProxyApplication, ProxyApplication>();
+            //services.AddScoped<IUserIntegrationProxyService, UserIntegrationProxyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

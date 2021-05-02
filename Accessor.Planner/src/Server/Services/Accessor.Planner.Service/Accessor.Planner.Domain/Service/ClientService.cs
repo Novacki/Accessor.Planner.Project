@@ -1,5 +1,6 @@
 ﻿using Accessor.Planner.Domain.Data.Repository;
 using Accessor.Planner.Domain.Exceptions.Service;
+using Accessor.Planner.Domain.IntegrationRequest;
 using Accessor.Planner.Domain.Interface;
 using Accessor.Planner.Domain.Model;
 using System;
@@ -13,15 +14,17 @@ namespace Accessor.Planner.Domain.Service
 {
     public class ClientService : IClientService
     {
-        public readonly IClientRepository _clientRepository;
-        public readonly ISolicitationService _solicitationService;
-        public readonly IUserService _userService;
+        private readonly IClientRepository _clientRepository;
+        private readonly ISolicitationService _solicitationService;
+        private readonly IUserService _userService;
+        private readonly IIntegrationService _integrationService;
 
-        public ClientService(IClientRepository clientRepository, ISolicitationService solicitationService, IUserService userService)
+        public ClientService(IClientRepository clientRepository, ISolicitationService solicitationService, IUserService userService, IIntegrationService integrationService)
         {
             _clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
             _solicitationService = solicitationService ?? throw new ArgumentNullException(nameof(solicitationService));
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            _integrationService = integrationService ?? throw new ArgumentNullException(nameof(integrationService));
         }
 
 
@@ -33,6 +36,8 @@ namespace Accessor.Planner.Domain.Service
             _userService.ValidateUser(client.User);
 
             _clientRepository.Create(client);
+
+            await  _integrationService.Send(new UserIntegrationRequest(client), "Auth/signup").ConfigureAwait(false);
 
             await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }

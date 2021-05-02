@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Proxy;
+using Proxy.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +59,7 @@ namespace Accessor.Planner.API
 
             DataInject(services);
             ServicesInject(services);
+            IntegrationInject(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,6 +102,17 @@ namespace Accessor.Planner.API
             services.AddScoped<IProviderService, ProviderService>();
             services.AddScoped<ISolicitationService, SolicitationService>();
             services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IIntegrationService, IntegrationService>();
+        }
+
+        public void IntegrationInject(IServiceCollection services)
+        {
+            var proxySettings = new ProxySettings();
+            Configuration.GetSection(nameof(ProxySettings)).Bind(proxySettings);
+
+            var application = new ProxyApplication(proxySettings);
+
+            services.AddSingleton<IProxyApplication>(application);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using IdentityServer.API.Application.Integration;
 using IdentityServer.API.Application.Resources;
 using IdentityServer.API.Infrastructure.Model;
 using IdentityServer.API.Settings;
@@ -7,7 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Proxy;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -27,14 +25,12 @@ namespace IdentityServer.API.Controllers
         private readonly IMapper _mapper;
         private readonly RoleManager<Role> _roleManager;
         private readonly JwtSettings _jwtSettings;
-        private readonly IUserIntegrationProxyService _userIntegration;
-        public AuthController(IMapper mapper, UserManager<User> userManager, RoleManager<Role> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings, IUserIntegrationProxyService userIntegration)
+        public AuthController(IMapper mapper, UserManager<User> userManager, RoleManager<Role> roleManager, IOptionsSnapshot<JwtSettings> jwtSettings)
         {
             _mapper = mapper;
             _userManager = userManager;
             _roleManager = roleManager;
             _jwtSettings = jwtSettings.Value;
-            _userIntegration = userIntegration;
         }
 
         [HttpPost("signup")]
@@ -46,7 +42,6 @@ namespace IdentityServer.API.Controllers
 
             if (userCreateResult.Succeeded)
             {
-                _userIntegration.Send(user);
                 return Created(string.Empty, string.Empty);
             }
 
