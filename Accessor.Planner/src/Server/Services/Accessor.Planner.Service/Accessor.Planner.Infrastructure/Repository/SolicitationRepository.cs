@@ -34,5 +34,10 @@ namespace Accessor.Planner.Infrastructure.Repository
             return  _entities.Include(s => s.Provider).Include(s => s.Client)
                .Include(s => s.Rooms).FirstOrDefault(s => s.Id == id);
         }
+
+        public async  Task<List<Solicitation>> GetByUserAsync(Guid id)
+        {
+            return await _entities.Where(s => s.ClientId == id).Include(s => s.Rooms).Include(s => s.Provider).Include(s => s.Client).ToListAsync();
+        }
     }
 }

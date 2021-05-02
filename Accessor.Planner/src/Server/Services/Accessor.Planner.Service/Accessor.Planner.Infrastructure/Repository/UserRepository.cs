@@ -19,6 +19,5 @@ namespace Accessor.Planner.Infrastructure.Repository
 
         public bool UserExist(string user) =>  _entities.Any(value => value.UserName == user);
 
-        public async Task<User> Login(string email, string password) => await _entities.Where(user => user.Email == email && user.Password == password).FirstOrDefaultAsync();
     }
 }

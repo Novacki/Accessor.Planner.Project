@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using IdentityServer.API.Infrastructure.Model.Enum;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace IdentityServer.API.Infrastructure.Model
         public string FirstName { get; set; }
 
         public string LastName { get;  set; }
+
+        public UserType Type { get; set; }
     }
 }

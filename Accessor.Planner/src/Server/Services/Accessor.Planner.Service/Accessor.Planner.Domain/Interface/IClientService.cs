@@ -8,12 +8,11 @@ namespace Accessor.Planner.Domain.Interface
 {
     public interface IClientService : IBaseService<Client>
     {
-        Task Update(Guid id, Client entity);
+        Task Create(Client client);
+        Task Update(Guid id, string name, string phone, DateTime birthDate);
         Task Delete(Guid id);
-        void RemoveAddress(Guid id, Address address);
+        void RemoveAddress(Guid id, int addressId);
         void AddAddress(Guid id, Address address);
-        Task<Solicitation> GetSolicitationById(Guid id);
-        List<Solicitation> GetSolicitationsByUser(Guid userId);
         Task CreateSolicitation(Guid userId, List<Room> rooms);
         Task AcceptSolicitation(Guid userId, Guid solicitationId);
         Task SendSolicitation(Guid userId, Guid solicitationId);

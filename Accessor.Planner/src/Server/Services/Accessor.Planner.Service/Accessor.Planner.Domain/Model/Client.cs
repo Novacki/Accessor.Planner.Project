@@ -11,7 +11,7 @@ namespace Accessor.Planner.Domain.Model
     {
         private Client() { }
 
-        public Client(string name, string cpf, DateTime birthDate, char sex, string phone, UserType type, List<Address> addresses)
+        public Client(string name, string cpf, DateTime birthDate, char sex, string phone, UserType type, List<Address> addresses, User user)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -25,6 +25,7 @@ namespace Accessor.Planner.Domain.Model
             Activate = true;
             Solicitations = new List<Solicitation>();
             AddAddresses(addresses);
+            User = user;
         }
 
         public string Name { get; private set; }
@@ -41,7 +42,7 @@ namespace Accessor.Planner.Domain.Model
         public void AddAddress(Address address) => Addresses.Add(address);
         public void RemoveAddress(Address address) => Addresses.Remove(address);
 
-        public void Update(DateTime birthDate, string phone, string name)
+        public void Update(string name, string phone, DateTime birthDate)
         {
             if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(name) || birthDate == null)
                 throw new DomainException("Phone or Birth Date or Name is Null");
@@ -56,7 +57,7 @@ namespace Accessor.Planner.Domain.Model
             Activate = false;
             DeletedAt = DateTime.Now;
         }
-        public void CreateSolicitation(Solicitation solicitation)
+        public void AddSolicitation(Solicitation solicitation)
         {
             if (Type != UserType.Client)
                 throw new DomainException("Accessor Can't Create Solicitation");

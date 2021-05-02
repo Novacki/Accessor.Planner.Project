@@ -12,6 +12,5 @@ namespace Accessor.Planner.Domain.Data.Repository
 
         bool EmailExist(string email);
 
-        Task<User> Login(string email, string password);
     }
 }

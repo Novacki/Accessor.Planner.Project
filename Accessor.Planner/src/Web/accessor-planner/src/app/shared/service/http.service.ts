@@ -17,6 +17,13 @@ export class HttpService{
         return this.http.post<T>(`${this.baseUrl}/${url}`, value);
     }
 
+    public put<T>(url: string, obj: T): Observable<T> {
+        return this.http.put<T>(`${this.baseUrl}${url}`, obj);
+      }
+    
+      public delete<T>(url: string, obj: T): Observable<T> {
+        return this.http.put<T>(`${this.baseUrl}${url}`, obj);
+      }
     // public login(login: Login): Observable<boolean> {
 
     //     return 

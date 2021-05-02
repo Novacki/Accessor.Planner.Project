@@ -15,33 +15,41 @@ namespace Accessor.Planner.Domain.Service
     {
         public readonly IClientRepository _clientRepository;
         public readonly ISolicitationService _solicitationService;
+        public readonly IUserService _userService;
 
-        public ClientService(IClientRepository clientRepository, ISolicitationService solicitationService)
+        public ClientService(IClientRepository clientRepository, ISolicitationService solicitationService, IUserService userService)
         {
             _clientRepository = clientRepository ?? throw new ArgumentNullException(nameof(clientRepository));
             _solicitationService = solicitationService ?? throw new ArgumentNullException(nameof(solicitationService));
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
 
-        public List<Client> GetAll() => _clientRepository.GetAll().ToList();
-
-        public async Task<Client> GetByIdAsync(Guid id) => await _clientRepository.GetByIdAsync(id).ConfigureAwait(false);
-
-        public async Task<Solicitation> GetSolicitationById(Guid id) => await _solicitationService.GetByIdAsync(id).ConfigureAwait(false);
-
-        public List<Solicitation> GetSolicitationsByUser(Guid userId) => GetClientByUserId(userId).Solicitations;
-
-        public async Task AcceptSolicitation(Guid userId, Guid solicitationId)
+        public async Task Create(Client client)
         {
-            var client = GetClientByUserId(userId);
-            _solicitationService.Accept(client, solicitationId);
+            if (ExistCpf(client.Cpf))
+                throw new ClientServiceException("CPF already Exist");
+
+            _userService.ValidateUser(client.User);
+
+            _clientRepository.Create(client);
+
             await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task SendSolicitation(Guid userId, Guid solicitationId)
+        public async Task Update(Guid id, string name, string phone, DateTime birthDate)
         {
-            var client = GetClientByUserId(userId);
-            _solicitationService.Send(solicitationId);
+            var result = GetById(id);
+
+            result.Update(name, phone, birthDate);
+            await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task Delete(Guid id)
+        {
+            var client = GetById(id);
+
+            client.Delete();
             await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
@@ -51,6 +59,44 @@ namespace Accessor.Planner.Domain.Service
 
             client.AddAddress(address);
             _clientRepository.UnitOfWork.SaveChanges();
+        }
+
+        public void RemoveAddress(Guid id, int addressId)
+        {
+            var client = GetById(id);
+            var address = client.Addresses.Where(a => a.Id == addressId).FirstOrDefault();
+
+            if (address == null)
+                throw new ClientServiceException("Address Not Found");
+
+            client.RemoveAddress(address);
+            _clientRepository.UnitOfWork.SaveChanges();
+        }
+
+        public async Task CreateSolicitation(Guid userId, List<Room> rooms)
+        {
+            var client = GetClientByUserId(userId);
+            var solicitation = _solicitationService.CreateSolicitation(new Solicitation(client, rooms));
+            client.AddSolicitation(solicitation);
+
+            await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+        }
+
+        public async Task AcceptSolicitation(Guid userId, Guid solicitationId)
+        {
+            var client = GetClientByUserId(userId);
+            var solicitation = _solicitationService.GetById(solicitationId);
+
+            solicitation.ClientAccept(client.Id, client.Type);
+            await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task SendSolicitation(Guid userId, Guid solicitationId)
+        {
+            var client = GetClientByUserId(userId);
+            _solicitationService.Send(solicitationId);
+            await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task ApproveSolicitation(Guid userId, Guid solicitationId)
@@ -80,46 +126,9 @@ namespace Accessor.Planner.Domain.Service
             await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task Create(Client entity)
-        {
-            if (ExistCpf(entity.Cpf))
-                throw new ClientServiceException("CPF already Exist");
+        public List<Client> GetAll() => _clientRepository.GetAll().ToList();
 
-            _clientRepository.Create(entity);
-            await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        public async Task CreateSolicitation(Guid userId, List<Room> rooms)
-        {
-            var client = GetClientByUserId(userId);
-            client.CreateSolicitation(new Solicitation(client, rooms));
-
-            await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        public async Task Delete(Guid id)
-        {
-            var client = GetById(id);
-
-            client.Delete();
-            await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
-        }
-
-        public void RemoveAddress(Guid id, Address address)
-        {
-            var client = GetById(id);
-
-            client.RemoveAddress(address);
-            _clientRepository.UnitOfWork.SaveChanges();
-        }
-
-        public async Task Update(Guid id, Client client)
-        {
-            var result = GetById(id);
-
-            result.Update(client.BirthDate, client.Phone, client.Name);
-            await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
-        }
+        public async Task<Client> GetByIdAsync(Guid id) => await _clientRepository.GetByIdAsync(id).ConfigureAwait(false);
 
         private bool ExistCpf(string cpf) => _clientRepository.ExistCpf(cpf);
         private Client GetById(Guid id)

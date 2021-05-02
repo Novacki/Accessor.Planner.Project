@@ -24,7 +24,9 @@ namespace Accessor.Planner.Domain.Service
         public async Task AcceptSolicitation(Guid userId, Guid solicitationId)
         {
             var provider = GetProviderByUserId(userId);
-            _solicitationService.Accept(provider, solicitationId);
+            var solicitation = _solicitationService.GetById(solicitationId);
+
+            solicitation.ProviderAccept(provider);
             await _providerRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 

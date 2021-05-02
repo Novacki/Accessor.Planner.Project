@@ -12,7 +12,7 @@ namespace Accessor.Planner.API.Application.Extensions
     {
         public static User ToUser(this UserDTO user)
         {
-            return new User(user.Id, user.UserName, user.Email, user.Password);
+            return new User(user.UserName, user.Email, user.Password);
         }
 
         public static UserViewModel ToViewModel(this User user)

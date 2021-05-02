@@ -52,17 +52,20 @@ namespace Accessor.Planner.Domain.Service
             return solicitation;
         }
 
-        public void Accept<T>(T entity, Guid solicitationId)
-        {
-            var solicitation = GetById(solicitationId);
-            solicitation.Accept(entity.GetType().Name);
-
-        }
-
         public void Send(Guid id)
         {
             var solicitation = GetById(id);
             solicitation.Send();
         }
+
+        public Solicitation CreateSolicitation(Solicitation solicitation)
+        {
+             _solicitationRepository.Create(solicitation);
+            return solicitation;
+        }
+
+        public async Task<List<Solicitation>> GetByUserAsync(Guid userId) => await _solicitationRepository.GetByUserAsync(userId).ConfigureAwait(false);
+        
+   
     }
 }

@@ -10,8 +10,8 @@ namespace Accessor.Planner.API.Application.Extensions
 {
     public static class TransformDataClient
     {
-        public static Client ToClient(this ClientDTO client) => new Client(client.Name, client.Cpf, client.BirthDate, client.Sex, 
-            client.Phone,client.Type, client.Addresses.ToAddress());
+        public static Client ToClient(this FullDataClientDTO client) => new Client(client.Name, client.Cpf, client.BirthDate, client.Sex, 
+            client.Phone,client.Type, client.Addresses.ToAddress(), client.User.ToUser());
 
         public static ClientViewModel ToViewModel(this Client client)
         {

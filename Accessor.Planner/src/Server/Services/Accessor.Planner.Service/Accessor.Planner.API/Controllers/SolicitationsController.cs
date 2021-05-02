@@ -1,4 +1,5 @@
-﻿using Accessor.Planner.API.Application.Model.ViewModel;
+﻿using Accessor.Planner.API.Application.Extensions;
+using Accessor.Planner.API.Application.Model.ViewModel;
 using Accessor.Planner.Domain.Interface;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,16 +22,30 @@ namespace Accessor.Planner.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<SolicitationViewModel>), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public IActionResult Get()
+        [Route("{userId:Guid}/solicitations")]
+        public async Task<IActionResult> GetSolicitations(Guid? userId)
         {
-            var solicitations = _solicitationService.GetAll();
+            if (userId == null)
+                return BadRequest();
 
-            if (solicitations == null)
-                return NoContent();
+            var solicitations = await _solicitationService.GetByUserAsync(userId.Value);
 
-            return Ok(solicitations);
+            return Ok(solicitations.ToViewModel());
+        }
+
+        [HttpGet]
+        [Route("solicitation/{id:Guid}")]
+        public async Task<IActionResult> GetSolicitation(Guid? id)
+        {
+            if (id == null)
+                return BadRequest();
+
+            var solicitation = await _solicitationService.GetByIdAsync(id.Value);
+
+            if (solicitation == null)
+                return NotFound();
+
+            return Ok(solicitation.ToViewModel());
         }
     }
 }

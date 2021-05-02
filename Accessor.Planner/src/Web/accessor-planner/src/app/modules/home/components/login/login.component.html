@@ -1,0 +1,30 @@
+<div class="page-login">
+
+	<div class="geral">
+		<p class="principal">Já possui cadastro?</p>
+		<p class="secundario">Digite as informações abaixo para entrar.</p>
+		<div>
+			<mat-form-field appearance="outline">
+				<mat-label>Digite seu email.</mat-label>
+				<input matInput placeholder="nome@exemplo.com.br" [formControl]="email" #email required>
+				<mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+			</mat-form-field>
+		</div>
+
+		<div>
+			<mat-form-field appearance="outline">
+				<mat-label>Digite sua senha.</mat-label>
+				<input matInput [type]="hide ? 'password' : 'text'" #senha required>
+				<button class="olho" mat-icon-button matSuffix (click)="hide = !hide"
+					[attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+					<mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+				</button>
+			</mat-form-field><br />
+			<button mat-button class="button">Entrar</button>
+			<!-- <div class="link">Esqueceu sua senha? <a href=""><strong>Clique aqui.</strong></a></div> -->
+			<br />
+			<!-- <div class="link">Ainda não tem cadastro? <a routerLink="/login" routerLinkActive="selected"><strong>Clique aqui.</strong></a></div> -->
+		</div>
+
+	</div>
+</div>
