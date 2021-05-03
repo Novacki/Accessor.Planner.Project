@@ -1,32 +1,57 @@
 <div class="main">
-    <div class="content">   
+    <div class="content">
         <div class="header">
-            <span>FAÇA PARTE </span>
-            <span class="text-muted">COM QUALQUER PERFIL!</span>  
+            <span>Faça Parte </span>
+            <span class="text-muted">Com Qualquer Perfil!</span>
         </div>
         <div class="botton">
-            <app-accessor-details 
-                [title]="'Você Sonha, '"
-                [complement]="'nós construimos'"
+            <app-accessor-details [title]="'Você Sonha, '" [complement]="'nós construimos'"
                 [content]="'Suas ideias aplicadas e contruidas idepentente de seu perfil.'"
-                [image]="'../../../../../assets/home/chose-register/inovacao-ideia.png'"
-            ></app-accessor-details>
+                [image]="'../../../../../assets/home/chose-register/inovacao-ideia.png'"></app-accessor-details>
         </div>
-        <div class="row">
-            <div class="col-md-4">
+        <div class="row line-card d-flex justify-content-center">
+            <div class="col-md-5">
                 <app-card [image]="acessorImage" [content]="content" [title]="'Acessor'">
-                    <button type="button" routerLink="/client-register" class="btn btn-outline-danger form-control">Faça Parte</button>
+                    <button type="button" routerLink="/client-register" class="btn btn-outline-danger form-control">Faça
+                        Parte</button>
                 </app-card>
             </div>
-            <div class="col-md-4">
-                <app-card [image]="clientImage" [content]="content"  [title]="'Cliente'">
-                    <button type="button" routerLink="/client-register" class="btn btn-outline-danger form-control">Faça Parte</button>
+            <div class="col-md-5 text-detail">
+                <p class="text-muted">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci non cum numquam, enim eligendi
+                    tempore voluptate iste, porro iure magnam eum accusamus repellat ut incidunt repudiandae quae sunt
+                    temporibus alias!
+                </p>
+            </div>
+        </div>
+        <div class="row line-card justify-content-center">
+            <div class="col-md-5  text-detail">
+                <p class="text-muted">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci non cum numquam, enim eligendi
+                    tempore voluptate iste, porro iure magnam eum accusamus repellat ut incidunt repudiandae quae sunt
+                    temporibus alias!
+                </p>
+            </div>
+            <div class="col-md-5">
+                <app-card [image]="clientImage" [content]="content" [title]="'Cliente'">
+                    <button type="button" routerLink="/client-register" class="btn btn-outline-danger form-control">Faça
+                        Parte</button>
                 </app-card>
             </div>
-            <div class="col-md-4">
-                <app-card [image]="providerImage" [content]="content"  [title]="'Fornecedor'">
-                    <button type="button" routerLink="/provider-register" class="btn btn-outline-danger form-control">Faça Parte</button>
+        </div>
+        <div class="row line-card justify-content-center">
+            <div class="col-md-5">
+                <app-card [image]="providerImage" [content]="content" [title]="'Fornecedor'">
+                    <button type="button" routerLink="/provider-register"
+                        class="btn btn-outline-danger form-control">Faça Parte</button>
                 </app-card>
+            </div>
+            <div class="col-md-5 text-detail">
+                <p class="text-muted">
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci non cum numquam, enim eligendi
+                    tempore voluptate iste, porro iure magnam eum accusamus repellat ut incidunt repudiandae quae sunt
+                    temporibus alias!
+                </p>
             </div>
         </div>
     </div>

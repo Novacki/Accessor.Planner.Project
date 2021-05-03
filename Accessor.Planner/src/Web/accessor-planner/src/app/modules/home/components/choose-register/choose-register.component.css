@@ -3,8 +3,8 @@
 }
 
 .header {
-    margin-bottom: 4%;
-    font-size: 3rem;
+    margin: 4% 0;
+    font-size: 3em;
     text-align: center;
 }
 
@@ -22,4 +22,16 @@
     line-height: 100%;
     text-align: center;
     margin-bottom: 3%;
+}
+
+.line-card {
+    margin-top: 6%;
+    padding: 4%;
+    border-top: brown solid 2px;
+}
+
+.text-detail {
+    text-align: center;
+    line-height: 70px;
+    font-size: 30px;
 }
