@@ -102,7 +102,7 @@
             expectativas para essa proposta, aliando conforto e beleza.
           </p>
           <p>
-            <a class="btn btn-secondary" href="#">View details &raquo;</a>
+            <a class="btn btn-secondary" href="#">Conferir &raquo;</a>
           </p>
         </div>
   
@@ -117,7 +117,7 @@
             prático, funcional e sofisticado.
           </p>
           <p>
-            <a class="btn btn-secondary" href="#">View details &raquo;</a>
+            <a class="btn btn-secondary" href="#">Conferir &raquo;</a>
           </p>
         </div>
   
@@ -132,71 +132,23 @@
             é investir em móveis planejado e sob medida.
           </p>
           <p>
-            <a class="btn btn-secondary" href="#">View details &raquo;</a>
+            <a class="btn btn-secondary" href="#">Conferir &raquo;</a>
           </p>
         </div>
       </div>
   
       <hr class="featurette-divider" />
-  
-      <div class="row featurette">
-        <div class="col-md-7">
-          <h2 class="featurette-heading">
-            Consultoria
-            <span class="text-muted">de qualidade</span>
-          </h2>
-          <p class="lead">
-            A Accessor Planner é uma empresa de consultoria que visa facilitar a
-            vida do cliente que está planejando adquirir móveis planejados para
-            sua residência ou estabelecimento.
-          </p>
-        </div>
-        <div class="col-md-5">
-          <img
-            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-            src="assets/page (1).jpg"
-          />
-        </div>
+
+      <div *ngFor="let details of accessorDetails">
+        <app-accessor-details 
+          [title]="details.title"
+          [complement]="details.complement"
+          [content]="details.content"
+          [image]="details.image"
+          [order]="accessorDetails.indexOf(details) % 2 == 0 ? '' : 'order-md-2'">
+        </app-accessor-details>
+      
+        <hr class="featurette-divider" />
       </div>
-  
-      <hr class="featurette-divider" />
-      <div class="row featurette">
-        <div class="col-md-7 order-md-2">
-          <h2 class="featurette-heading">
-            Integrando visões
-            <span class="text-muted">com o mesmo propósito</span>
-          </h2>
-          <p class="lead">
-            Trata-se de um site que visa interligar o cliente e os fornecedores de
-            moveis planejados facilitando o processo de solicitação de serviços
-          </p>
-        </div>
-        <div class="col-md-5 order-md-1">
-          <img
-            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-            src="assets/page (2).jpg"
-          />
-        </div>
-      </div>
-  
-      <hr class="featurette-divider" />
-      <div class="row featurette">
-        <div class="col-md-7">
-          <h2 class="featurette-heading">
-            Maneira prática <span class="text-muted">e segura</span>
-          </h2>
-          <p class="lead">
-            Orçamentos padronizados que serão enviados para diversos fornecedores,
-            focando qualidade e o melhor preço.
-          </p>
-        </div>
-        <div class="col-md-5">
-          <img
-            class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-            src="assets/page (3).jpg"
-          />
-        </div>
-      </div>
-      <hr class="featurette-divider" />
     </div>
   </main>

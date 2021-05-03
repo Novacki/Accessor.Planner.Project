@@ -21,12 +21,14 @@ import { ProviderFormComponent } from './components/provider-form/provider-form.
 import { FormClientComponent } from './pages/form-client/form-client.component';
 import { ChooseRegisterComponent } from './components/choose-register/choose-register.component';
 import { ChooseComponent } from './pages/choose/choose.component';
+import { SharedModule } from '../shared/shared.module';
+import { AccessorDetailsComponent } from './components/accessor-details/accessor-details.component';
 
 
 
 @NgModule({
   declarations: [FormLoginComponent, FormProviderComponent, IndexComponent, 
-    HeaderComponent, BottomComponent, HomeContentComponent, LoginComponent, ClientFormComponent, UserFormComponent, ProviderFormComponent, FormClientComponent, ChooseRegisterComponent, ChooseComponent],
+    HeaderComponent, BottomComponent, HomeContentComponent, LoginComponent, ClientFormComponent, UserFormComponent, ProviderFormComponent, FormClientComponent, ChooseRegisterComponent, ChooseComponent, AccessorDetailsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -34,9 +36,10 @@ import { ChooseComponent } from './pages/choose/choose.component';
     MatIconModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    SharedModule
   ],
-  exports:[IndexComponent],
+  exports:[],
 
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
