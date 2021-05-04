@@ -1,3 +1,13 @@
  .featurette-divider {
     margin: 5rem 0; /* Space out the Bootstrap <hr> more */
   }
+
+  .btn {
+    color: white;
+    border-color: white;
+    background-color: brown;
+  }
+  
+  .btn:hover {
+    background-color: rgb(70, 65, 65);
+  }

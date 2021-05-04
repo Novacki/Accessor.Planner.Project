@@ -7,7 +7,6 @@ namespace Accessor.Planner.Domain.Model.Enum
     public enum UserType
     {
         Accessor = 1,
-        Client = 2,
-        Provider = 3
+        Client = 2
     }
 }
