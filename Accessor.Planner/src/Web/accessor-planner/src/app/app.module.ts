@@ -1,4 +1,4 @@
-import { HttpService } from './shared/service/http.service';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -64,7 +64,7 @@ import { HomeModule } from './modules/home/home.module';
     MatInputModule,
     MatTabsModule
   ],
-  providers: [HttpService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

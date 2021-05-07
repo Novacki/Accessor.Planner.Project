@@ -16,7 +16,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ClientFormComponent } from './components/client-form/client-form.component';
-import { UserFormComponent } from './components/user-form/user-form.component';
 import { ProviderFormComponent } from './components/provider-form/provider-form.component';
 import { FormClientComponent } from './pages/form-client/form-client.component';
 import { ChooseRegisterComponent } from './components/choose-register/choose-register.component';
@@ -31,7 +30,7 @@ import { AccountService } from './services/account.service';
 
 @NgModule({
   declarations: [FormLoginComponent, FormProviderComponent, IndexComponent, 
-    HeaderComponent, BottomComponent, HomeContentComponent, LoginComponent, ClientFormComponent, UserFormComponent, ProviderFormComponent, FormClientComponent, ChooseRegisterComponent, ChooseComponent, AccessorDetailsComponent],
+    HeaderComponent, BottomComponent, HomeContentComponent, LoginComponent, ClientFormComponent, ProviderFormComponent, FormClientComponent, ChooseRegisterComponent, ChooseComponent, AccessorDetailsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

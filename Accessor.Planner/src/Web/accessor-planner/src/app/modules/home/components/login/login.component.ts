@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Login } from 'src/app/shared/model/login.model';
+import { AccountService } from '../../services/account.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +11,7 @@ import { Login } from 'src/app/shared/model/login.model';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) { }
 
   public form: FormGroup;
 
@@ -25,6 +27,9 @@ export class LoginComponent implements OnInit {
   }
 
   public loginAccount() {
-    
+    this.accountService.singIn(this.form.value).subscribe(response => {
+      localStorage.setItem('token', response);
+      this.router.navigate(['/home'])
+    });
   }
 }
