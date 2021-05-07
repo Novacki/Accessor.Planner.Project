@@ -30,6 +30,8 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { HomeModule } from './modules/home/home.module';
+import { MenuModule } from './modules/menu/menu.module';
+import { PoModule } from '@po-ui/ng-components';
 
 @NgModule({
   declarations: [
@@ -46,23 +48,16 @@ import { HomeModule } from './modules/home/home.module';
     BrowserAnimationsModule,
     NgbModule,
     HomeModule,
+    MenuModule,
     HttpClientModule,
-    LayoutModule,
     MatToolbarModule,
-    MatButtonModule,
     MatSidenavModule,
-    MatIconModule,
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule,
-
     AppRoutingModule,    
-    MatFormFieldModule,
-    FormsModule,
     ReactiveFormsModule,    
-    MatInputModule,
-    MatTabsModule
+    MatTabsModule, PoModule
   ],
   providers: [],
   bootstrap: [AppComponent]
