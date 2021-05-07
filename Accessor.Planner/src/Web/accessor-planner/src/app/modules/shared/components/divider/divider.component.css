@@ -1,0 +1,12 @@
+.main {
+    font-size: 20px;
+    font-weight: bolder;
+    color: #6c757d;
+    margin: 2% 0;
+}
+
+.divider {
+    height: 5px;
+    border-radius: 6px;
+    margin: 0.3% 0;
+}
