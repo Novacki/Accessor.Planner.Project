@@ -1,6 +1,7 @@
 ﻿using Accessor.Planner.API.Application.Model.DTO;
 using Accessor.Planner.API.Application.Model.ViewModel;
 using Accessor.Planner.Domain.Model;
+using Accessor.Planner.Domain.Model.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Accessor.Planner.API.Application.Extensions
     public static class TransformDataClient
     {
         public static Client ToClient(this FullDataClientDTO client) => new Client(client.Name, client.Cpf, client.BirthDate, client.Sex, 
-            client.Phone,client.Type, client.Addresses.ToAddress(), client.User.ToUser());
+            client.Phone, TransformDataEnums.GetTypeUser(client.Type), client.Address.ToAddress(), client.User.ToUser());
 
         public static ClientViewModel ToViewModel(this Client client)
         {

@@ -4,19 +4,24 @@
             <span>Faça Parte </span>
             <span class="text-muted">Com Qualquer Perfil!</span>
         </div>
-        <div class="botton">
-            <app-accessor-details [title]="'Você Sonha, '" [complement]="'nós construimos'"
-                [content]="'Suas ideias aplicadas e contruidas idepentente de seu perfil.'"
-                [image]="'../../../../../assets/home/chose-register/inovacao-ideia.png'"></app-accessor-details>
+        <div class="row d-flex justify-content-center">
+            <div class="col-9">
+                <div class="slogan">
+                    <app-accessor-details [title]="'Você Sonha, '" [complement]="'nós construimos'"
+                        [content]="'Suas ideias aplicadas e contruidas idepentente de seu perfil.'"
+                        [image]="'../../../../../assets/home/chose-register/inovacao-ideia.png'"></app-accessor-details>
+                </div>
+            </div>
         </div>
-        <div class="row line-card d-flex justify-content-center">
-            <div class="col-md-5">
+        <app-divider [title]="'Acessores'"></app-divider>
+        <div class="row line-card d-flex justify-content-between">
+            <div class="col-md-4">
                 <app-card [image]="acessorImage" [content]="content" [title]="'Acessor'">
                     <button type="button" routerLink="/client-register" class="btn btn-outline-danger form-control">Faça
                         Parte</button>
                 </app-card>
             </div>
-            <div class="col-md-5 text-detail">
+            <div class="col-md-8 text-detail">
                 <p class="text-muted">
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci non cum numquam, enim eligendi
                     tempore voluptate iste, porro iure magnam eum accusamus repellat ut incidunt repudiandae quae sunt
@@ -24,29 +29,31 @@
                 </p>
             </div>
         </div>
-        <div class="row line-card justify-content-center">
-            <div class="col-md-5  text-detail">
+        <app-divider [title]="'Clientes'"></app-divider>
+        <div class="row line-card d-flex justify-content-between">
+            <div class="col-md-8  text-detail">
                 <p class="text-muted">
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci non cum numquam, enim eligendi
                     tempore voluptate iste, porro iure magnam eum accusamus repellat ut incidunt repudiandae quae sunt
                     temporibus alias!
                 </p>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <app-card [image]="clientImage" [content]="content" [title]="'Cliente'">
                     <button type="button" routerLink="/client-register" class="btn btn-outline-danger form-control">Faça
                         Parte</button>
                 </app-card>
             </div>
         </div>
-        <div class="row line-card justify-content-center">
-            <div class="col-md-5">
+        <app-divider [title]="'Fornecedores'"></app-divider>
+        <div class="row line-card d-flex justify-content-between">
+            <div class="col-md-4">
                 <app-card [image]="providerImage" [content]="content" [title]="'Fornecedor'">
                     <button type="button" routerLink="/provider-register"
                         class="btn btn-outline-danger form-control">Faça Parte</button>
                 </app-card>
             </div>
-            <div class="col-md-5 text-detail">
+            <div class="col-md-8 text-detail">
                 <p class="text-muted">
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci non cum numquam, enim eligendi
                     tempore voluptate iste, porro iure magnam eum accusamus repellat ut incidunt repudiandae quae sunt

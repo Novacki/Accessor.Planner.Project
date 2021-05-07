@@ -1,51 +1,48 @@
-.page-login{
-  height: 100%;
-  display: flex;
-  align-items: center;
- 
-  background-color: rgb(197, 196, 196);
+.header {
+  margin-top: 4%;
 }
- 
-.geral{
-width: 100%;
-max-width: 330px;
-padding: 15px;
-margin: auto;
-background-color: white;
-border-radius: 10px;
+
+.form-container {
+  width: 50%;
+  font-size: 18px;
+  margin: auto;
+  padding: 4%;
+  box-shadow: 5px 5px 5px 5px rgb(68 68 68 / 70%);
+  border-radius: 6px;
 }
- 
-.principal{
-font-size: 200%;
-text-align: center;
-padding: 15px;
-margin: auto;
+
+.content {
+  margin: 5% 0 12% 0;
 }
- 
-.secundario{
-font-size: 100%;
-text-align: center;
-padding: 15px;
-margin: auto;
+
+.restaured-password button{
+  font-size: 12px;
 }
- 
-.button{
-font-size: 180%;
-border-style: outset;
+
+.restaured-password {
+  width: 25%;
+  margin: 1.4% 0 0 8%;
 }
- 
-.link{
-font-size: 80%;  
-text-align: end;  
+
+.btn-login {
+  background-color:white;
+  border-color: brown; 
+  color: brown;
 }
-a{
-font-style: italic;
+
+.btn-register {
+  background-color: white;
+  border-color: grey; 
+  color: grey;
 }
- 
-.olho :active{
-color: red;
+
+.btn-register:hover {
+  background-color:grey;
+  color: white;
 }
- 
-.olho[attr.aria-pressed]="hide"{
-color: red;
+
+.btn-login:hover {
+  background-color:brown;
+  color:white;
 }
+

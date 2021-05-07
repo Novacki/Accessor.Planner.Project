@@ -14,7 +14,7 @@
     margin: 1%;
 }
 
-.botton {
+.slogan {
     box-shadow: 0px 5px 5px 0px rgb(68 68 68 / 70%);
     padding: 4%;
     margin-top: 2%;
@@ -25,13 +25,12 @@
 }
 
 .line-card {
-    margin-top: 6%;
+    margin-top: 1%;
     padding: 4%;
-    border-top: #6c757d solid 2px;
 }
 
 .text-detail {
     text-align: center;
     line-height: 70px;
-    font-size: 30px;
+    font-size: 25px;
 }

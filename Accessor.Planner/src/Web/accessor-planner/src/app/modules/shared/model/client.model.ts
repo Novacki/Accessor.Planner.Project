@@ -10,6 +10,6 @@ export interface Client {
     cpf: string;
     type: UserType;
     user: User;
-    addresses: Addess[];
+    address: Addess;
 }
 

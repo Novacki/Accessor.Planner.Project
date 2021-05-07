@@ -11,7 +11,7 @@ namespace Accessor.Planner.Domain.Model
     {
         private Client() { }
 
-        public Client(string name, string cpf, DateTime birthDate, char sex, string phone, UserType type, List<Address> addresses, User user)
+        public Client(string name, string cpf, DateTime birthDate, char sex, string phone, UserType type, Address address, User user)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -24,7 +24,7 @@ namespace Accessor.Planner.Domain.Model
             UpdatedAt = DateTime.Now;
             Activate = true;
             Solicitations = new List<Solicitation>();
-            AddAddresses(addresses);
+            AddAddresses(address);
             User = user;
         }
 
@@ -81,10 +81,10 @@ namespace Accessor.Planner.Domain.Model
             solicitation.Cancel();
         }
 
-        private void AddAddresses(List<Address> addresses)
+        private void AddAddresses(Address address)
         {
             Addresses = new List<Address>();
-            Addresses.AddRange(addresses);
+            Addresses.Add(address);
         }
     }
 }

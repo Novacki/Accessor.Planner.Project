@@ -16,9 +16,9 @@ namespace Accessor.Planner.API.Application.Model.DTO
     {
         public char Sex { get;  set; }
         public string Cpf { get; set; }
-        public UserType Type { get; set; }
+        public int Type { get; set; }
         public UserDTO User { get; set; }
-        public List<AddressDTO> Addresses { get; set; }
+        public AddressDTO Address { get; set; }
 
     }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Login } from 'src/app/shared/model/login.model';
 
 @Component({
@@ -9,24 +9,22 @@ import { Login } from 'src/app/shared/model/login.model';
 })
 export class LoginComponent implements OnInit {
 
-  email = new FormControl('', [Validators.required, Validators.email]);
+  constructor(private fb: FormBuilder) { }
 
-  hide = true;
-
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'Você deve inserir um e-mail.';
-    }
-
-    return this.email.hasError('email') ? 'Formato de e-mail não válido.' : '';
-  }
-
-  constructor() { }
-
-  public login: Login;
+  public form: FormGroup;
 
   ngOnInit(): void {
+    this.generateForm();
   }
 
+  private generateForm(): void {
+    this.form = this.fb.group({
+      email: [ '', Validators.required ],
+      password: ['', Validators.required ]
+    });
+  }
 
+  public loginAccount() {
+    
+  }
 }
