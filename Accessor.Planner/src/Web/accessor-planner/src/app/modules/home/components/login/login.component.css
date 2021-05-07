@@ -1,0 +1,48 @@
+.header {
+  margin-top: 4%;
+}
+
+.form-container {
+  width: 50%;
+  font-size: 18px;
+  margin: auto;
+  padding: 4%;
+  box-shadow: 5px 5px 5px 5px rgb(68 68 68 / 70%);
+  border-radius: 6px;
+}
+
+.content {
+  margin: 5% 0 12% 0;
+}
+
+.restaured-password button{
+  font-size: 12px;
+}
+
+.restaured-password {
+  width: 25%;
+  margin: 1.4% 0 0 8%;
+}
+
+.btn-login {
+  background-color:white;
+  border-color: brown; 
+  color: brown;
+}
+
+.btn-register {
+  background-color: white;
+  border-color: grey; 
+  color: grey;
+}
+
+.btn-register:hover {
+  background-color:grey;
+  color: white;
+}
+
+.btn-login:hover {
+  background-color:brown;
+  color:white;
+}
+

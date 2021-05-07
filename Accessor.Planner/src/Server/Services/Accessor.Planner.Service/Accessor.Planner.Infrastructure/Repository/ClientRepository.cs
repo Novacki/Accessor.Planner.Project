@@ -14,12 +14,13 @@ namespace Accessor.Planner.Infrastructure.Repository
     {
         public ClientRepository( ApplicationDataContext context ): base(context) { }
 
-        public override IQueryable<Client> GetAll() => base.GetAll().Include(c => c.Addresses).Include(c => c.Solicitations);
+        public override IQueryable<Client> GetAll() => base.GetAll().Include(c => c.Addresses).Include(c => c.Solicitations).Include(c => c.User);
         
-        public override async Task<Client> GetByIdAsync(Guid id) => await _entities.Where(c => c.Id == id).Include(c => c.Addresses)
+        public override async Task<Client> GetByIdAsync(Guid id) => await _entities.Where(c => c.Id == id).Include(c => c.Addresses).Include(c => c.User)
             .Include(c => c.Solicitations).FirstOrDefaultAsync().ConfigureAwait(false);
 
-        public override Client GetById(Guid id) => _entities.Where(c => c.Id == id).Include(c => c.Addresses).Include(c => c.Solicitations).FirstOrDefault();
+        public override Client GetById(Guid id) => _entities.Where(c => c.Id == id).Include(c => c.Addresses).Include(c => c.Solicitations)
+            .Include(c => c.User).FirstOrDefault();
 
         public bool ExistCpf(string cpf) => _entities.Any(c => c.Cpf == cpf);
 

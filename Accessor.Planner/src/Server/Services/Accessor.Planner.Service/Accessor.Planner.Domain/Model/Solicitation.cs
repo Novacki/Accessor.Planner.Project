@@ -38,7 +38,7 @@ namespace Accessor.Planner.Domain.Model
 
         public void Cancel()
         {
-            if (Status != StatusSolicitation.InReview)
+            if (Status != StatusSolicitation.InReview || Client.Type != UserType.Client)
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Canceled;
@@ -48,23 +48,35 @@ namespace Accessor.Planner.Domain.Model
 
         public void Approve()
         {
-            if (Status != StatusSolicitation.InReview)
+            if (Status != StatusSolicitation.InReview || Client.Type != UserType.Client)
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Approve;
         }
 
-        public void Accept(string accessorName)
+        public void ClientAccept(Guid accessorId, UserType type)
         {
-            if (Status != StatusSolicitation.OnHold && string.IsNullOrEmpty(accessorName))
+            if (( Status != StatusSolicitation.OnHold && Status != StatusSolicitation.Reject ) || type == UserType.Client || accessorId == Guid.Empty )
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Accept;
+            AccessorId = accessorId;
         }
+
+        public void ProviderAccept(Provider provider)
+        {
+            if (Status != StatusSolicitation.OnHold || Client.Type == UserType.Client || provider == null)
+                throw new DomainException("Status Solicitation is Invalid");
+
+            Status = StatusSolicitation.Accept;
+            Provider = provider;
+        }
+
+
 
         public void Reject(string reason)
         {
-            if (Status != StatusSolicitation.InReview || string.IsNullOrEmpty(reason))
+            if (Status != StatusSolicitation.InReview || string.IsNullOrEmpty(reason) || Client.Type != UserType.Client)
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Reject;
@@ -72,7 +84,7 @@ namespace Accessor.Planner.Domain.Model
 
         public void Send()
         {
-            if(Status != StatusSolicitation.Accept )
+            if(Status != StatusSolicitation.Accept || Client.Type == UserType.Client )
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.InReview;
@@ -83,6 +95,5 @@ namespace Accessor.Planner.Domain.Model
             Rooms = new List<Room>();
             Rooms.AddRange(rooms);
         }
-          
     }
 }

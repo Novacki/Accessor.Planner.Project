@@ -72,9 +72,12 @@ namespace Accessor.Planner.Domain.Service
             await _userRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task<User> Login(string email, string password)
+        public void ValidateUser(User user)
         {
-            return await _userRepository.Login(email, password).ConfigureAwait(false);
+            if (_userRepository.UserExist(user.UserName))
+                throw new UserServiceException("UserName already Exist");
+
+            ValidEmail(user.Email);
         }
 
         private void ValidEmail(string email)

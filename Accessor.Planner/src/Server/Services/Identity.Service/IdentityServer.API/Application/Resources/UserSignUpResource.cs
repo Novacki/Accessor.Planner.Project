@@ -7,6 +7,7 @@ namespace IdentityServer.API.Application.Resources
 {
     public class UserSignUpResource
     {
+        public Guid Id { get; set; }
         public string Email { get; set; }
 
         public string FirstName { get; set; }
@@ -14,5 +15,6 @@ namespace IdentityServer.API.Application.Resources
         public string LastName { get; set; }
 
         public string Password { get; set; }
+
     }
 }

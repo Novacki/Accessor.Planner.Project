@@ -56,7 +56,7 @@ namespace Accessor.Planner.Infrastructure.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Street")
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -204,7 +204,7 @@ namespace Accessor.Planner.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AcessorId")
+                    b.Property<Guid?>("AccessorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Activate")

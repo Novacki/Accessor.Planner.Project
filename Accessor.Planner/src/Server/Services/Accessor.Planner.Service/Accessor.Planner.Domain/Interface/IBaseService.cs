@@ -7,7 +7,6 @@ namespace Accessor.Planner.Domain.Interface
 {
     public interface IBaseService<T>
     {
-        Task Create(T entity);
         Task<T> GetByIdAsync(Guid id);
         List<T> GetAll();
     }

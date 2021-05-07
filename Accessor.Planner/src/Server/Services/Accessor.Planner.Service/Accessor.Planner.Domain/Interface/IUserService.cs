@@ -8,9 +8,9 @@ namespace Accessor.Planner.Domain.Interface
 {
     public interface IUserService : IBaseService<User>
     {
-        Task<User> Login(string email, string password);
+        Task Create(User user);
         Task Update(Guid id, User entity);
         Task Delete(Guid id);
-
+        public void ValidateUser(User user);
     }
 }

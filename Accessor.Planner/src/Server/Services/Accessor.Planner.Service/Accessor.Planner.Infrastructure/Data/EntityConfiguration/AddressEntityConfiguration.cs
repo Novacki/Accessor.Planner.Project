@@ -37,7 +37,7 @@ namespace Accessor.Planner.Infrastructure.Data.EntityConfiguration
             .HasColumnType("nvarchar(30)");
 
             builder.Property(address => address.Street)
-            .HasColumnType("nvarchar(20)");
+            .HasColumnType("nvarchar(50)");
 
             builder.Property(address => address.CreatedAt)
                 .HasColumnType("datetime2")

@@ -19,45 +19,6 @@ namespace Accessor.Planner.API.Controllers
             _clientService = clientService ?? throw new ArgumentNullException(nameof(clientService));
         }
 
-        [HttpPost]
-        [Route("create")]
-        public async Task<IActionResult> Create([FromBody] ClientDTO clientDTO)
-        {
-            if (clientDTO == null)
-                return BadRequest();
-
-            await _clientService.Create(clientDTO.ToClient());
-
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("{userId:Guid}/solicitations")]
-        public IActionResult GetSolicitations(Guid? userId)
-        {
-            if (userId == null)
-                return BadRequest();
-
-            var solicitations = _clientService.GetSolicitationsByUser(userId.Value);
-
-            return Ok(solicitations.ToViewModel());
-        }
-
-        [HttpGet]
-        [Route("solicitation/{id:Guid}")]
-        public async Task<IActionResult> GetSolicitation(Guid? id)
-        {
-            if(id == null)
-                return BadRequest();
-
-            var solicitation = await _clientService.GetSolicitationById(id.Value);
-
-            if (solicitation == null)
-                return NotFound();
-
-            return Ok(solicitation.ToViewModel());
-        }
-
         [HttpGet]
         [Route("me/{id:guid}")]
         public async Task<IActionResult> Get(Guid? id)
@@ -73,6 +34,19 @@ namespace Accessor.Planner.API.Controllers
             return Ok(client.ToViewModel());
         }
 
+        [HttpPost]
+        [Route("create")]
+        public async Task<IActionResult> Create([FromBody] FullDataClientDTO clientDTO)
+        {
+            if (clientDTO == null)
+                return BadRequest();
+
+            await _clientService.Create(clientDTO.ToClient());
+
+            return Ok();
+        }
+
+
         [HttpPut]
         [Route("update/{id:guid}")]
         public async Task<IActionResult> Update(Guid? id, [FromBody] ClientDTO clientDTO)
@@ -80,7 +54,7 @@ namespace Accessor.Planner.API.Controllers
             if (clientDTO == null || !id.HasValue)
                 return BadRequest();
 
-            await _clientService.Update(id.Value, clientDTO.ToClient());
+            await _clientService.Update(id.Value, clientDTO.Name, clientDTO.Phone, clientDTO.BirthDate);
 
             return Ok();
         }
@@ -98,13 +72,13 @@ namespace Accessor.Planner.API.Controllers
         }
 
         [HttpPut]
-        [Route("remove-address/{id:guid}")]
-        public IActionResult RemoveAddress(Guid? id, AddressDTO addressDTO)
+        [Route("remove-address/{id:guid}/{addressId:int}")]
+        public IActionResult RemoveAddress(Guid? id, int? addressId)
         {
-            if (addressDTO == null || !id.HasValue)
+            if (addressId == null || !id.HasValue)
                 return BadRequest();
 
-            _clientService.AddAddress(id.Value, addressDTO.ToAddress());
+            _clientService.RemoveAddress(id.Value, addressId.Value);
 
             return Ok();
         }

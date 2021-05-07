@@ -12,9 +12,9 @@ namespace Accessor.Planner.Domain.Model
     {
         private User() { }
 
-        public User(Guid id, string userName, string email, string password)
+        public User(string userName, string email, string password)
         {
-            Id = id;
+            Id = Guid.NewGuid();
             UserName = userName;
             Email = email;
             Password = password;

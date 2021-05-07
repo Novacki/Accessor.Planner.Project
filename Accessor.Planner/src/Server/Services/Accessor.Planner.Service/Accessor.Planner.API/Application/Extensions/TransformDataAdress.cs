@@ -17,7 +17,7 @@ namespace Accessor.Planner.API.Application.Extensions
 
         public static List<Address> ToAddress(this List<AddressDTO> addresses)
         {
-            return addresses.Select(address => new Address(address.Cep, address.State, address.City, address.Number, address.Street)).ToList();
+            return addresses.Select(address => new Address(address.Cep, address.State, address.City, address.Number, address.Street, address.Complement)).ToList();
         }
 
         public static AddressViewModel ToViewModel(this Address address)

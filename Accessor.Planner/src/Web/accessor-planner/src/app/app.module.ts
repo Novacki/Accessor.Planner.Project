@@ -1,14 +1,12 @@
-import { HttpService } from './shared/service/http.service';
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './login/login.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ProviderRegisterComponent } from './provider-register/provider-register.component';
-import { UserRegisterComponent } from './user-register/user-register.component';
 import { MenuComponent } from './menu/menu.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -24,10 +22,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ConfigComponent } from './config/config.component';
 import { HistSolicitationComponent } from './hist-solicitation/hist-solicitation.component';
 import { NewSolicitationComponent } from './new-solicitation/new-solicitation.component';
-import { RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { routes } from './app.routes';
-
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -35,46 +29,37 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { HomeModule } from './modules/home/home.module';
+import { MenuModule } from './modules/menu/menu.module';
+import { PoModule } from '@po-ui/ng-components';
+
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    HomeComponent,
     ProviderRegisterComponent,
-    UserRegisterComponent,
     MenuComponent,
     SolicitationComponent,
     ConfigComponent,
     HistSolicitationComponent,
     NewSolicitationComponent,
-
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     NgbModule,
+    HomeModule,
+    MenuModule,
     HttpClientModule,
-    LayoutModule,
     MatToolbarModule,
-    MatButtonModule,
     MatSidenavModule,
-    MatIconModule,
     MatListModule,
     MatTableModule,
     MatPaginatorModule,
-    RouterModule.forRoot(routes),
-    MatSortModule,
-
     AppRoutingModule,    
-    MatFormFieldModule,
-    FormsModule,
     ReactiveFormsModule,    
-    MatInputModule
-    MatTabsModule
+    MatTabsModule, PoModule
   ],
-  providers: [HttpService],
-  bootstrap: [AppComponent],
-
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
