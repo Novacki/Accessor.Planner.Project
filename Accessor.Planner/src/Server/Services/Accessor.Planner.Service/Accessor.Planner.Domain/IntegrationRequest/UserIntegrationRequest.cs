@@ -21,8 +21,8 @@ namespace Accessor.Planner.Domain.IntegrationRequest
         {
             Id = provider.User.Id;
             Email = provider.User.Email;
-            FirstName = provider.Name.Split(" ").FirstOrDefault();
-            LastName = provider.Name.Split(" ").LastOrDefault();
+            FirstName = provider.SocialReason.Split(" ").FirstOrDefault();
+            LastName = provider.SocialReason.Split(" ").LastOrDefault();
             Password = provider.User.Password;
         }
 
