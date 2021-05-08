@@ -55,8 +55,7 @@ import { PoModule } from '@po-ui/ng-components';
     MatPaginatorModule,
     AppRoutingModule,    
     ReactiveFormsModule,    
-    MatTabsModule, 
-    PoModule
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

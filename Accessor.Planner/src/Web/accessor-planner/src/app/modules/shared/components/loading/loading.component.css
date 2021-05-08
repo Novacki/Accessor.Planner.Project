@@ -1,0 +1,18 @@
+::ng-deep .po-loading-icon .po-loading-icon-bar {
+    background-color: brown;
+    height: 50%;
+}
+
+::ng-deep .po-overlay-absolute {
+    background-color: rgba(190,190,190, 0.4);
+}
+
+::ng-deep .po-overlay-fixed {
+    background-color: rgba(190,190,190, 0.4);
+}
+
+::ng-deep .po-loading-label {
+    color: brown;
+    margin: 20px 16px 0;
+    font-weight: bolder;
+}
