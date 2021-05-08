@@ -10,20 +10,21 @@ namespace Accessor.Planner.Domain.Model
     {
         private Provider() { }
 
-        public Provider(string name, string fantasyName, string cnpj, string phone, Address address)
+        public Provider(string fantasyName, string socialReason, string cnpj, string phone, Address address, User user)
         {
             Id = Guid.NewGuid();
-            Name = name;
             FantasyName = fantasyName;
+            SocialReason = socialReason;
             Cnpj = cnpj;
             Phone = phone;
             Address = address;
             CreatedAt = DateTime.Now;
             UpdatedAt = DateTime.Now;
+            User = user;
             Solicitations = new List<Solicitation>();
         }
 
-        public string Name { get; private set; }
+        public string SocialReason { get; private set; }
         public string FantasyName { get; private set; }
         public string Cnpj { get; private set; }
         public string Phone { get; private set; }
@@ -32,12 +33,12 @@ namespace Accessor.Planner.Domain.Model
         public List<Solicitation> Solicitations { get; private set; }
 
 
-        public void Update(string name, string fantasyName, string phone)
+        public void Update(string socialReason, string fantasyName, string phone)
         {
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(fantasyName) || string.IsNullOrEmpty(phone))
+            if (string.IsNullOrEmpty(socialReason) || string.IsNullOrEmpty(fantasyName) || string.IsNullOrEmpty(phone))
                 throw new DomainException("Value is Null");
 
-            Name = name;
+            SocialReason = socialReason;
             FantasyName = fantasyName;
             Phone = phone;
         }

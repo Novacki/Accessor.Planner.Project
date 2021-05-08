@@ -1,0 +1,19 @@
+.container {
+    margin-top: 5%;
+
+}
+  
+.btn {
+  color: white;
+  border-color: white;
+  background-color: brown;
+}
+
+.btn:hover {
+  background-color: rgb(70, 65, 65);
+}
+
+.imgIcons {
+  max-width: 40%;
+}
+  

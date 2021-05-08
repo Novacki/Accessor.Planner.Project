@@ -12,7 +12,7 @@ namespace Accessor.Planner.API.Application.Extensions
     {
         public static Provider ToProvider(this ProviderDTO provider)
         {
-            return new Provider(provider.Name, provider.FantasyName, provider.Cnpj, provider.Phone, provider.Address.ToAddress());
+            return new Provider(provider.FantasyName, provider.SocialReason, provider.Cnpj, provider.Phone, provider.Address.ToAddress(), provider.User.ToUser());
         }
 
         public static ProviderViewModel ToViewModel(this Provider provider)
@@ -22,7 +22,7 @@ namespace Accessor.Planner.API.Application.Extensions
                 Address = provider.Address.ToViewModel(),
                 Cnpj = provider.Cnpj,
                 FantasyName = provider.FantasyName,
-                Name = provider.Name,
+                SocialReason = provider.SocialReason,
                 Phone = provider.Phone
             };
         }

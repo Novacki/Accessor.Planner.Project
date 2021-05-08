@@ -24,7 +24,7 @@ namespace Accessor.Planner.Infrastructure.Data.EntityConfiguration
             builder.Property(provider => provider.FantasyName)
                 .HasColumnType("nvarchar(50)");
 
-            builder.Property(provider => provider.Name)
+            builder.Property(provider => provider.SocialReason)
                 .HasColumnType("nvarchar(50)");
 
             builder.Property(provider => provider.Phone)

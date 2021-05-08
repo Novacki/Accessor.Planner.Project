@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
-import { ProviderRegisterComponent } from './provider-register/provider-register.component';
 import { MenuComponent } from './menu/menu.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -36,7 +35,6 @@ import { PoModule } from '@po-ui/ng-components';
 @NgModule({
   declarations: [
     AppComponent,
-    ProviderRegisterComponent,
     MenuComponent,
     SolicitationComponent,
     ConfigComponent,
@@ -57,7 +55,8 @@ import { PoModule } from '@po-ui/ng-components';
     MatPaginatorModule,
     AppRoutingModule,    
     ReactiveFormsModule,    
-    MatTabsModule, PoModule
+    MatTabsModule, 
+    PoModule
   ],
   providers: [],
   bootstrap: [AppComponent]

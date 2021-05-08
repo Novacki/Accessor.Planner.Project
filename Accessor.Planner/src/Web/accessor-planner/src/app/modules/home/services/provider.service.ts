@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Provider } from '../../shared/model/provider.model';
+import { HttpService } from '../../shared/services/http.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProviderService {
 
-  constructor() { }
+  constructor( private http: HttpService ) { }
+
+  public create(provider: Provider) : Observable<Provider> {
+    return this.http.post("Providers", provider);
+  }
 }
