@@ -1,0 +1,48 @@
+::ng-deep .po-menu-item {
+    background-color: rgba(211, 211, 211, 0.4);
+    color: brown;
+    border-top: 1px solid rgba(139, 35, 35,0.5);
+}
+
+::ng-deep .po-icon.po-icon-menu-close:before {
+    color: brown;
+}
+
+::ng-deep .po-icon.po-icon-menu-open:before {
+    color: brown;
+}
+
+::ng-deep .po-menu-item:hover {
+    color: maroon;
+    background-color: silver;
+}
+
+::ng-deep .po-toolbar-title {
+    color: brown;
+}
+
+::ng-deep .po-icon.po-icon-menu:before {
+    color: brown;
+}
+
+::ng-deep .po-breadcrumb {
+    line-height: 11px;
+    height: 33px;
+}
+
+::ng-deep .po-breadcrumb-label {
+    padding: 0 8px;
+}
+
+::ng-deep .po-breadcrumb-arrow {
+    height: 100%;
+}
+
+::ng-deep .po-menu-inner {
+    background-color: rgba(211, 211, 211, 1);
+}
+
+::ng-deep .po-menu-footer {
+    background-color: rgba(211, 211, 211, 1);
+    border-top: 1px solid rgba(139, 35, 35,0.5);
+}
