@@ -20,8 +20,8 @@ export class SideMenuComponent implements OnInit {
       { label: 'Meus Dados' }
     ]},
     { label: 'Solicitações', icon: 'po-icon po-icon-list', shortLabel: 'Solicitações', subItems: [
-      { label: 'Encerradas' },
-      { label: 'Em Andamento' }
+      { label: 'Encerradas', link:'solicitations' },
+      { label: 'Em Andamento', link:'solicitations' }
     ]},
     { label: 'Acessores', icon: 'po-icon po-icon-weight', shortLabel: 'Acessores', subItems: [
       { label: 'Favoritos' }

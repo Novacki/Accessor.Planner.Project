@@ -4,7 +4,7 @@ import { CardComponent } from './components/card/card.component';
 import { DividerComponent } from './components/divider/divider.component';
 import { FormValidatorDirective } from './directives/form-validator.directive';
 import { HttpService } from './services/http.service';
-import { PoLoadingModule, PoModule } from '@po-ui/ng-components';
+import { PoLoadingModule, PoModule, PoTableModule } from '@po-ui/ng-components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingComponent } from './components/loading/loading.component';
 
@@ -16,9 +16,10 @@ import { LoadingComponent } from './components/loading/loading.component';
     CommonModule,
     PoLoadingModule,
     ReactiveFormsModule,
-    PoModule
+    PoModule,
+    PoTableModule
   ],
-  exports:[CardComponent, DividerComponent, FormValidatorDirective, ReactiveFormsModule, PoLoadingModule, PoModule, LoadingComponent],
+  exports:[CardComponent, DividerComponent, FormValidatorDirective, ReactiveFormsModule, PoLoadingModule, PoModule, LoadingComponent, PoTableModule],
   providers:[HttpService]
 })
 export class SharedModule { }

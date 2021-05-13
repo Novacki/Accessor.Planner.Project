@@ -1,0 +1,33 @@
+.table-room {
+    width: 70%;
+}
+
+::ng-deep .po-table .po-table-header {
+    color: brown;
+}
+
+.footer {
+    margin-top: 15%;
+}
+
+.btn {
+    color: white;
+    border-color: white;
+    background-color: brown;
+}
+  
+.btn:hover {
+    background-color: rgb(70, 65, 65);
+}
+
+.btn-default {
+    color: brown;
+    border-color: white;
+    background-color: white;
+}
+
+.btn-default:hover {
+    color: brown;
+    border-color: brown;
+    background-color: white;
+}

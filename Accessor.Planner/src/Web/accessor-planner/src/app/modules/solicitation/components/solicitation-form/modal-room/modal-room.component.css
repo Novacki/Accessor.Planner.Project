@@ -1,0 +1,12 @@
+::ng-deep .po-button-primary {
+    color:white;
+    background-color: brown;
+    border-color: brown;
+}
+
+::ng-deep .po-button-primary:hover {
+    color:white;
+    background-color: grey;
+    border-color: grey;
+}
+
