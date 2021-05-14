@@ -26,7 +26,7 @@ export class ModalRoomComponent implements OnInit {
   private generateForm(): void {
     this.form = this.fb.group({
       name:['', Validators.required],
-      metrage:['', Validators.required]
+      metreage:['', Validators.required]
     });
   }
 
