@@ -7,6 +7,7 @@ import { HttpService } from './services/http.service';
 import { PoLoadingModule, PoModule, PoTableModule } from '@po-ui/ng-components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingComponent } from './components/loading/loading.component';
+import { HttpInterceptorModule } from './Interceptor/http-interceptor.module';
 
 
 
@@ -17,7 +18,8 @@ import { LoadingComponent } from './components/loading/loading.component';
     PoLoadingModule,
     ReactiveFormsModule,
     PoModule,
-    PoTableModule
+    PoTableModule,
+    HttpInterceptorModule
   ],
   exports:[CardComponent, DividerComponent, FormValidatorDirective, ReactiveFormsModule, PoLoadingModule, PoModule, LoadingComponent, PoTableModule],
   providers:[HttpService]

@@ -10,6 +10,7 @@ import { ConfigComponent } from './config/config.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeModule } from './modules/home/home.module';
 import { MenuModule } from './modules/menu/menu.module';
+import { SolicitationService } from './modules/solicitation/services/solicitation.service';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { MenuModule } from './modules/menu/menu.module';
     HttpClientModule,
     AppRoutingModule,       
   ],
-  providers: [],
+  providers: [SolicitationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

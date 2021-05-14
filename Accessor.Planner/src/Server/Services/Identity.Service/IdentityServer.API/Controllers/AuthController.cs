@@ -62,8 +62,10 @@ namespace IdentityServer.API.Controllers
             if (userSigninResult)
             {
                 var roles = await _userManager.GetRolesAsync(user);
-                
-                return Ok(GenerateJwt(user, roles));
+
+                var response = new { UserId = user.Id , Token = GenerateJwt(user, roles) };
+
+                return Ok(response);
             }
 
             return BadRequest("Email or password incorrect.");

@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   public loginAccount() {
     this.loading = true;
     this.accountService.singIn(this.form.value).subscribe(response => {
-      localStorage.setItem('token', response);
+      localStorage.setItem('auth', response);
       this.router.navigate(['../menu'])
     });
   }

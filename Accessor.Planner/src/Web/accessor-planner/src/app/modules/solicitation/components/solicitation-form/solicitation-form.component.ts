@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PoTableColumn } from '@po-ui/ng-components';
 import { Subject } from 'rxjs';
 import { Room } from 'src/app/modules/shared/model/room.model';
 import { RoomColumn } from '../../model/room-column.model';
+import { SolicitationService } from '../../services/solicitation.service';
 
 @Component({
   selector: 'app-solicitation-form',
@@ -11,13 +13,13 @@ import { RoomColumn } from '../../model/room-column.model';
 })
 export class SolicitationFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(private solicitationService: SolicitationService, private router: Router) { }
   public rooms: Room[] = [];
 
   ngOnInit(): void {
+  }
 
-  } 
-
+  public loading: boolean = false;
   public getColumns(): Array<PoTableColumn> {
     return [
       { property: 'name', label: 'Comodo' },
@@ -56,6 +58,14 @@ export class SolicitationFormComponent implements OnInit {
   }
 
   public registerSolicitation(): void {
-    
+    this.loading = true;
+    this.solicitationService.create(this.rooms).subscribe(response => {
+      console.log(response);
+    },
+    error => console.log(error)
+    ,() => {
+      this.loading = false;
+      this.router.navigate(['../solicitations'])
+    });
   }
 }

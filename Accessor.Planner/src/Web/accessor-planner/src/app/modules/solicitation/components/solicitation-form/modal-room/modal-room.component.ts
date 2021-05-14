@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PoModalAction, PoModalComponent } from '@po-ui/ng-components';
 import { Room } from 'src/app/modules/shared/model/room.model';
@@ -41,13 +41,14 @@ export class ModalRoomComponent implements OnInit {
   confirm: PoModalAction = {
     action: () => {
       this.addRoom();
-      this.poModal.close();
+      this.closeModal();
     },
     label: 'Cadastrar',
-    disabled: false
+    disabled: true
   };
 
   closeModal() {
+    this.clearFields();
     this.poModal.close();
   }
 
@@ -59,4 +60,13 @@ export class ModalRoomComponent implements OnInit {
     this.room.emit(this.form.value);
   }
 
+  private clearFields(): void {
+    this.form.get('name').setValue('');
+    this.form.get('metreage').setValue('');
+  }
+
+  @HostListener('change')
+  private validForm() {
+    this.confirm.disabled = !this.form.valid;
+  }
 }
