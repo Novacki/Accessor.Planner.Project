@@ -1,0 +1,23 @@
+<div class="row mb-3 mt-3">
+    <po-button p-label="Adicionar Comodo" p-type="primary" (p-click)="openModal()" p-icon="po-icon po-icon-plus-circle">
+    </po-button>
+</div>
+<po-modal  p-title="Adicionar Comodo" [p-primary-action]="confirm" [p-secondary-action]="close">
+    <form [formGroup]="form">
+        <app-divider></app-divider>
+        <div class="po-row mt-3 mb-2">
+            <div class="col-md-5 po-mr-5 po-ml-5">
+                <label for="name" class="form-label">Comodo* </label>
+                <input formControlName="name" type="text" class="form-control" id="name" placeholder="Comodo"
+                    required />
+                <div class="invalid-feedback">O campo Comodo é obrigatório.</div>
+            </div>
+            <div class="col-md-5">
+                <label for="metrage" class="form-label">Metragem* </label>
+                <input formControlName="metreage" type="number" class="form-control" id="metrage"
+                    placeholder="Metragem" required />
+                <div class="invalid-feedback">O campo Metragem é obrigatório.</div>
+            </div>
+        </div>
+    </form>
+  </po-modal>

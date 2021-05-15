@@ -14,6 +14,7 @@ export class ClientFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private clientService: ClientService, private router: Router) { }
   public form: FormGroup;
   public client: Client;
+  public loading: boolean = false;
 
   ngOnInit(): void {
     this.createForm();
@@ -44,6 +45,7 @@ export class ClientFormComponent implements OnInit {
   }
 
   registerUser(): void {
+    this.loading = true;
     this.clientService.create(this.form.value).subscribe(response => {
       this.router.navigate(['/login']);
     })

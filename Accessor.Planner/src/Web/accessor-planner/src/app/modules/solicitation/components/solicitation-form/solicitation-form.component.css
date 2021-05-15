@@ -1,0 +1,45 @@
+.table-room {
+    width: 100%;
+}
+
+::ng-deep .po-table-header-fixed-inner {
+    color: brown;
+}
+
+.footer {
+    margin-top: 4%;
+}
+
+.btn {
+    color: white;
+    border-color: white;
+    background-color: brown;
+}
+  
+.btn:hover {
+    background-color: rgb(70, 65, 65);
+}
+
+.btn-default {
+    color: brown;
+    border-color: white;
+    background-color: white;
+}
+
+.btn-default:hover {
+    color: brown;
+    border-color: brown;
+    background-color: white;
+}
+
+::ng-deep .po-table-main-container::-webkit-scrollbar-thumb{
+    background-color: brown;
+}
+
+::ng-deep .po-table-container-fixed-inner::-webkit-scrollbar-thumb {
+    background-color: brown;
+}
+
+::ng-deep .po-icon.po-icon-delete:before {
+    color: brown;
+}

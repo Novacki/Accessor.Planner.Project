@@ -1,0 +1,29 @@
+<app-loading [loading]="loading"></app-loading>
+<div class="main">
+    <div class="content">
+        <div class="form-solicitation">
+            <po-upload p-label="Adicione a Solicitação" [p-drag-drop]="true" p-required>
+            </po-upload>
+            <app-divider [title]="'Comodos da Solicitação'"></app-divider>
+            <app-modal-room (room)="addRoom($event)"></app-modal-room>
+            <div class="table-room">
+                <po-table p-height="400" p-hide-columns-manager p-sort="true" [p-items]="getItems()" [p-columns]="getColumns()" [p-striped]="true">
+                </po-table>
+            </div>
+            <div class="footer">
+                <div class="row mt-5 d-flex justify-content-start">
+                    <div class="col-md-2">
+                        <button class="w-100 btn btn-primary btn-lg" (click)="registerSolicitation()" [disabled]="rooms.length == 0 || !rooms" type="submit">
+                            Cadastrar
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="w-100 btn btn-default btn-lg" routerLink="../">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

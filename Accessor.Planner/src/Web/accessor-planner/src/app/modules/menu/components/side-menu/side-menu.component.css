@@ -1,0 +1,76 @@
+::ng-deep .po-menu-item {
+    background-color: brown;
+    color: white;
+    border-top: 1px solid rgba(139, 35, 35,0.5);
+}
+
+::ng-deep .po-icon.po-icon-menu-close:before {
+    color: white;
+}
+
+::ng-deep .po-icon.po-icon-menu-open:before {
+    color: white;
+}
+
+::ng-deep .po-menu-item:hover {
+    color: maroon;
+    background-color: seashell;
+}
+
+::ng-deep .po-menu-sub-item-selected {
+    border-left: 3px solid brown !important;
+    color: maroon !important;
+    background-color: seashell !important;
+}
+
+::ng-deep .po-menu-sub-items .po-menu-item-level-two {
+    color: white;
+    background-color: rgba(178,34,34,0.9)
+}
+
+::ng-deep  .po-menu-item-level-two:hover {
+    color: maroon !important;
+    background-color: seashell;
+}
+
+::ng-deep .po-menu-sub-item-selected:hover {
+    border-left: 3px solid brown !important;
+}
+
+::ng-deep .po-menu-item-selected {
+    border-left: 3px solid brown !important;
+}
+
+::ng-deep .po-menu-item-selected:hover {
+    border-left: 3px solid brown !important;
+}
+
+::ng-deep .po-toolbar-title {
+    color: brown;
+}
+
+::ng-deep .po-icon.po-icon-menu:before {
+    color: brown;
+}
+
+::ng-deep .po-breadcrumb {
+    line-height: 11px;
+    height: 33px;
+}
+
+::ng-deep .po-breadcrumb-label {
+    padding: 0 8px;
+}
+
+::ng-deep .po-breadcrumb-arrow {
+    height: 100%;
+}
+
+::ng-deep .po-menu-inner {
+    background-color:brown;
+}
+
+::ng-deep .po-menu-footer {
+    background-color: brown;
+    border-top: 1px solid rgba(139, 35, 35,0.5);
+}

@@ -34,10 +34,6 @@ import { AccountService } from './services/account.service';
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    ReactiveFormsModule,
     MatButtonModule,
     SharedModule
   ],

@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) { }
 
   public form: FormGroup;
+  public loading: boolean = false;
 
   ngOnInit(): void {
     this.generateForm();
@@ -26,8 +27,9 @@ export class LoginComponent implements OnInit {
   }
 
   public loginAccount() {
+    this.loading = true;
     this.accountService.singIn(this.form.value).subscribe(response => {
-      localStorage.setItem('token', response);
+      localStorage.setItem('auth', response);
       this.router.navigate(['../menu'])
     });
   }

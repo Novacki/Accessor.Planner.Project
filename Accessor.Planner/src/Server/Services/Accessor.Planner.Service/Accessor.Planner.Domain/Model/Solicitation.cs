@@ -19,11 +19,14 @@ namespace Accessor.Planner.Domain.Model
             UpdatedAt = DateTime.Now;
             Activate = true;
             AddRooms(rooms);
+
+            RegisterHistory(new SolicitationHistory(this, SubscribeType.Client));
         }
 
         public DateTime SolicitationEndDate { get; private set; }
         public StatusSolicitation Status { get; private set; }
         public List<Room> Rooms { get; private set; }
+        public List<SolicitationHistory> SolicitationHistories { get; private set; }
         public Client Client { get; private set; }
         public Guid ClientId { get; private set; }
         public Guid? AccessorId { get; private set; }
@@ -44,6 +47,8 @@ namespace Accessor.Planner.Domain.Model
             Status = StatusSolicitation.Canceled;
             DeletedAt = DateTime.Now;
             Activate = false;
+
+            SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
         }
 
         public void Approve()
@@ -52,15 +57,17 @@ namespace Accessor.Planner.Domain.Model
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Approve;
+            SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
         }
 
-        public void ClientAccept(Guid accessorId, UserType type)
+        public void AcessorAccept(Guid accessorId, UserType type)
         {
             if (( Status != StatusSolicitation.OnHold && Status != StatusSolicitation.Reject ) || type == UserType.Client || accessorId == Guid.Empty )
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Accept;
             AccessorId = accessorId;
+            SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Accessor));
         }
 
         public void ProviderAccept(Provider provider)
@@ -70,6 +77,7 @@ namespace Accessor.Planner.Domain.Model
 
             Status = StatusSolicitation.Accept;
             Provider = provider;
+            SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Provider));
         }
 
 
@@ -80,6 +88,7 @@ namespace Accessor.Planner.Domain.Model
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Reject;
+            SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
         }
 
         public void Send()
@@ -88,12 +97,19 @@ namespace Accessor.Planner.Domain.Model
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.InReview;
+            SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Accessor));
         }
 
         private void AddRooms(List<Room> rooms)
         {
             Rooms = new List<Room>();
             Rooms.AddRange(rooms);
+        }
+
+        private void RegisterHistory(SolicitationHistory solicitationHistory)
+        {
+            SolicitationHistories = new List<SolicitationHistory>();
+            SolicitationHistories.Add(solicitationHistory);
         }
     }
 }

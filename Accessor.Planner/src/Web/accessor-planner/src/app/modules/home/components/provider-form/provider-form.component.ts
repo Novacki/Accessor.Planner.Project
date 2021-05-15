@@ -13,6 +13,7 @@ export class ProviderFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private providerService: ProviderService, private router: Router) { }
 
   public form: FormGroup;
+  public loading: boolean = false;
 
   ngOnInit(): void {
     this.generateForm();
@@ -41,6 +42,7 @@ export class ProviderFormComponent implements OnInit {
   }
 
   public registerProvider(): void {
+    this.loading = true;
     this.providerService.create(this.form.value).subscribe(response => {
       this.router.navigate(['login']);
     });

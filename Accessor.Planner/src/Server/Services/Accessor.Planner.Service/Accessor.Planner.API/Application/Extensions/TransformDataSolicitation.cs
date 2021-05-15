@@ -14,8 +14,9 @@ namespace Accessor.Planner.API.Application.Extensions
             return new SolicitationViewModel()
             {
                 Id = solicitation.Id,
-                ClientId = solicitation.ClientId,
-                ProviderId = solicitation.ProviderId,
+                AccessorId = solicitation.AccessorId,
+                Provider = solicitation.Provider.ToViewModel(),
+                Client = solicitation.Client.ToViewModel(),
                 Status = (int)solicitation.Status,
                 Rooms = solicitation.Rooms.ToViewModel()
             };
@@ -26,8 +27,9 @@ namespace Accessor.Planner.API.Application.Extensions
             return solicitations.Select(s => new SolicitationViewModel()
             {
                 Id = s.Id,
-                ClientId = s.ClientId,
-                ProviderId = s.ProviderId,
+                AccessorId = s.AccessorId,
+                Provider = s.Provider.ToViewModel(),
+                Client = s.Client.ToViewModel(),
                 Status = (int)s.Status,
                 Rooms = s.Rooms.ToViewModel()
 

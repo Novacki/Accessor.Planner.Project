@@ -78,7 +78,7 @@ namespace Accessor.Planner.Domain.Model
             if (Type != UserType.Client)
                 throw new DomainException("Accessor Can't Create Solicitation");
 
-            solicitation.Cancel();
+            solicitation.Approve();
         }
 
         private void AddAddresses(Address address)

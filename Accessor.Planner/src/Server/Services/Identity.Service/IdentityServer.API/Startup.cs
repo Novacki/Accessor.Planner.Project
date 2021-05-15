@@ -45,8 +45,6 @@ namespace IdentityServer.API
 
             IdentityConfiguration(services);
             MapperConfiguration(services);
-            //services.AddScoped<IProxyApplication, ProxyApplication>();
-            //services.AddScoped<IUserIntegrationProxyService, UserIntegrationProxyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

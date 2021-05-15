@@ -240,6 +240,49 @@ namespace Accessor.Planner.Infrastructure.Migrations
                     b.ToTable("Solicitations");
                 });
 
+            modelBuilder.Entity("Accessor.Planner.Domain.Model.SolicitationHistory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AcessorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Activate")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ProviderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SolicitationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double?>("Value")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SolicitationId");
+
+                    b.ToTable("SolicitationHistories");
+                });
+
             modelBuilder.Entity("Accessor.Planner.Domain.Model.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -334,6 +377,17 @@ namespace Accessor.Planner.Infrastructure.Migrations
                     b.Navigation("Provider");
                 });
 
+            modelBuilder.Entity("Accessor.Planner.Domain.Model.SolicitationHistory", b =>
+                {
+                    b.HasOne("Accessor.Planner.Domain.Model.Solicitation", "Solicitation")
+                        .WithMany("SolicitationHistories")
+                        .HasForeignKey("SolicitationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Solicitation");
+                });
+
             modelBuilder.Entity("Accessor.Planner.Domain.Model.Client", b =>
                 {
                     b.Navigation("Addresses");
@@ -349,6 +403,8 @@ namespace Accessor.Planner.Infrastructure.Migrations
             modelBuilder.Entity("Accessor.Planner.Domain.Model.Solicitation", b =>
                 {
                     b.Navigation("Rooms");
+
+                    b.Navigation("SolicitationHistories");
                 });
 #pragma warning restore 612, 618
         }

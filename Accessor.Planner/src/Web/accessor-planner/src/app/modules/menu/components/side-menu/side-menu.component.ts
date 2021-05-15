@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PoMenuItem } from '@po-ui/ng-components';
+import { PoBreadcrumb, PoMenuItem } from '@po-ui/ng-components';
 
 @Component({
   selector: 'app-side-menu',
@@ -16,46 +16,25 @@ export class SideMenuComponent implements OnInit {
   menuItemSelected: string;
 
   menus: Array<PoMenuItem> = [
-    { label: 'Register user', action: this.printMenuAction.bind(this), icon: 'po-icon-user', shortLabel: 'Register' },
-    {
-      label: 'Timekeeping',
-      action: this.printMenuAction.bind(this),
-      icon: 'po-icon-clock',
-      shortLabel: 'Timekeeping',
-      badge: { value: 1 }
-    },
-    {
-      label: 'Useful links',
-      icon: 'po-icon-share',
-      shortLabel: 'Links',
-      subItems: [
-        { label: 'Ministry of Labour', action: this.printMenuAction.bind(this), link: 'http://trabalho.gov.br/' },
-        { label: 'SindPD Syndicate', action: this.printMenuAction.bind(this), link: 'http://www.sindpd.com.br/' }
-      ]
-    },
-    {
-      label: 'Benefits',
-      icon: 'po-icon-star',
-      shortLabel: 'Benefits',
-      subItems: [
-        {
-          label: 'Meal tickets',
-          subItems: [
-            { label: 'Acceptance network ', action: this.printMenuAction.bind(this) },
-            {
-              label: 'Extracts',
-              action: this.printMenuAction.bind(this),
-              subItems: [
-                { label: 'Monthly', action: this.printMenuAction.bind(this), badge: { value: 3, color: 'color-03' } },
-                { label: 'Custom', action: this.printMenuAction.bind(this) }
-              ]
-            }
-          ]
-        },
-        { label: 'Transportation tickets', action: this.printMenuAction.bind(this), badge: { value: 12 } }
-      ]
-    }
+    { label:'Perfil', icon:'po-icon po-icon-user', shortLabel: 'Perfil', subItems: [
+      { label: 'Meus Dados' }
+    ]},
+    { label: 'Solicitações', icon: 'po-icon po-icon-list', shortLabel: 'Solicitações', subItems: [
+      { label: 'Em Espera', link:'solicitations' },
+      { label: 'Aprovadas', link:'solicitations' },
+      { label: 'Canceladas', link:'solicitations' }
+    ]},
+    { label: 'Acessores', icon: 'po-icon po-icon-weight', shortLabel: 'Acessores', subItems: [
+      { label: 'Favoritos' }
+    ]},
+    { label: 'Fornecedores', icon: 'po-icon po-icon-pallet-partial', shortLabel: 'Fornecedores', subItems: [
+      { label: 'Favoritos' }
+    ]},
   ];
+
+  public readonly breadcrumb: PoBreadcrumb = {
+    items: [{ label: 'Home', link: '/' }, { label: 'Dashboard' }]
+  };
 
   printMenuAction(menu: PoMenuItem) {
     this.menuItemSelected = menu.label;
