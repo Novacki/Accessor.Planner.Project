@@ -1,0 +1,36 @@
+<div class="row mb-3 mt-3">
+    <po-button p-label="Adicionar Móvel" p-type="primary" (p-click)="openModal()" p-icon="po-icon po-icon-plus-circle">
+    </po-button>
+</div>
+<po-modal [p-hide-close]="true" p-title="Adicionar Móvel" [p-primary-action]="confirm" [p-secondary-action]="close">
+    <form [formGroup]="form">
+        <app-divider></app-divider>
+        <div class="po-row mt-3 po-mb-2 d-flex justify-content-center">
+            <div class="col-md-5 po-mr-3">
+                <label for="name" class="form-label">Móvel* </label>
+                <input formControlName="name"  type="text" class="form-control" id="name" placeholder="Móvel"
+                    required />
+                <div class="invalid-feedback">O campo Móvel é obrigatório.</div>
+            </div>
+            <div class="col-md-3 po-mr-2">
+                <label for="metrage" class="form-label">Largura* </label>
+                <input formControlName="width" type="number" class="form-control" id="width" placeholder="Largura"
+                    required />
+                <div class="invalid-feedback">O campo Largura é obrigatório.</div>
+            </div>
+            <div class="col-md-3">
+                <label for="height" class="form-label">Altura* </label>
+                <input  formControlName="height" type="number" class="form-control" id="height" placeholder="Altura"
+                    required />
+                <div class="invalid-feedback">O campo Altura é obrigatório.</div>
+            </div>
+        </div>  
+        <div class="po-row d-flex justify-content-center">
+            <div class="col-md-11 po-mb-2">
+                <label for="description" class="form-label">Descrição* </label>
+                <textarea formControlName="description" class="form-control description" id="description" rows="8"></textarea>
+            </div>
+        </div>
+    </form>
+</po-modal>
+

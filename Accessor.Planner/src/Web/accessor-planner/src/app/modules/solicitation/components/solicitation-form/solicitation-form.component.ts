@@ -47,7 +47,7 @@ export class SolicitationFormComponent implements OnInit {
 
   private removeRoom(row: RoomColumn) {
    let room: Room = { metreage: row.metreage, name: row.name };
-   let roomResult = this.rooms.find(value => value.metreage == room.metreage && value.name == value.name);
+   let roomResult = this.rooms.find(value => value.metreage == room.metreage && value.name == room.name);
    this.rooms.splice(this.rooms.indexOf(roomResult), 1);
   }
 
