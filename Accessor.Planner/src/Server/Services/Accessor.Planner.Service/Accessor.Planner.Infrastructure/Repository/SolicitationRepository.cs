@@ -20,24 +20,25 @@ namespace Accessor.Planner.Infrastructure.Repository
             return base.GetAll()
                 .Include(s => s.Provider)
                 .Include(s => s.Client)
-                .Include(s => s.Rooms);
+                .Include(s => s.Rooms)
+                .Include(s => s.SolicitationHistories);
         }
 
         public override async Task<Solicitation> GetByIdAsync(Guid id)
         {
             return await _entities.Include(s => s.Provider).Include(s => s.Client)
-                .Include(s => s.Rooms).FirstOrDefaultAsync(s => s.Id == id);
+                .Include(s => s.Rooms).Include(s => s.SolicitationHistories).FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public override Solicitation GetById(Guid id)
         {
             return  _entities.Include(s => s.Provider).Include(s => s.Client)
-               .Include(s => s.Rooms).FirstOrDefault(s => s.Id == id);
+               .Include(s => s.Rooms).Include(s => s.SolicitationHistories).FirstOrDefault(s => s.Id == id);
         }
 
         public async  Task<List<Solicitation>> GetByUserAsync(Guid id)
         {
-            return await _entities.Where(s => s.ClientId == id).Include(s => s.Rooms).Include(s => s.Provider).Include(s => s.Client).ToListAsync();
+            return await _entities.Where(s => s.ClientId == id).Include(s => s.Rooms).Include(s => s.SolicitationHistories).Include(s => s.Provider).Include(s => s.Client).ToListAsync();
         }
     }
 }

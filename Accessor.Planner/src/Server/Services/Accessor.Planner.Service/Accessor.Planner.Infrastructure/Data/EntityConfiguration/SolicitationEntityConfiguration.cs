@@ -62,6 +62,7 @@ namespace Accessor.Planner.Infrastructure.Data.EntityConfiguration
             builder.Navigation(solicitation => solicitation.Client);
             builder.Navigation(solicitation => solicitation.Provider);
             builder.Navigation(solicitation => solicitation.Rooms);
+            builder.Navigation(solicitation => solicitation.SolicitationHistories);
         }
     }
 }

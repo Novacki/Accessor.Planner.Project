@@ -12,6 +12,7 @@ namespace Accessor.Planner.Domain.Interface
         Solicitation CreateSolicitation(Solicitation solicitation);
         public Solicitation GetById(Guid id);
         Task<List<Solicitation>> GetByUserAsync(Guid userId);
+    
         public void Send(Guid id);
     }
 }

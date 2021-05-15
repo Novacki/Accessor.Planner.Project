@@ -93,7 +93,7 @@ namespace Accessor.Planner.Domain.Service
             var client = GetClientByUserId(userId);
             var solicitation = _solicitationService.GetById(solicitationId);
 
-            solicitation.ClientAccept(client.Id, client.Type);
+            solicitation.AcessorAccept(client.Id, client.Type);
             await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
