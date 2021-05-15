@@ -2,7 +2,7 @@
     <po-button p-label="Adicionar Comodo" p-type="primary" (p-click)="openModal()" p-icon="po-icon po-icon-plus-circle">
     </po-button>
 </div>
-<po-modal [p-hide-close]="true" p-title="Adicionar Comodo" [p-primary-action]="confirm" [p-secondary-action]="close">
+<po-modal [p-hide-close]="true" p-title="Adicionar Comodo" [p-primary-action]="getOperation()" [p-secondary-action]="close">
     <form [formGroup]="form">
         <app-divider></app-divider>
         <div class="po-row mt-3 po-mb-2 d-flex justify-content-center">
@@ -28,7 +28,7 @@
         <div class="po-row d-flex justify-content-center">
             <div class="col-md-11 po-mb-2">
                 <label for="description" class="form-label">Descrição* </label>
-                <textarea class="form-control description" id="description" rows="8"></textarea>
+                <textarea formControlName="description" class="form-control description" id="description" rows="8"></textarea>
             </div>
         </div>
         <app-divider [title]="'Móveis'"></app-divider>

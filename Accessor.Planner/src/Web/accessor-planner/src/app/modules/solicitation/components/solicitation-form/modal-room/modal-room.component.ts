@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PoModalAction, PoModalComponent, PoTableColumn, PoUploadComponent } from '@po-ui/ng-components';
 import { ShowInformationsComponent } from 'src/app/Modules/shared/components/show-informations/show-informations.component';
@@ -16,7 +16,15 @@ export class ModalRoomComponent implements OnInit {
   constructor(private fb: FormBuilder) { }
 
   
-  @Output() public room = new EventEmitter<Room>();
+  @Output() public roomRegister = new EventEmitter<Room>();
+
+  private room: Room;
+  private formValid: boolean = true;
+  @Input() public set setRoom(value: Room) {
+    this.room = value;
+    this.populateFrom(this.room);
+  } 
+
 
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
   @ViewChild('upload', { static: true }) upload: PoUploadComponent;
@@ -33,8 +41,16 @@ export class ModalRoomComponent implements OnInit {
   private generateForm(): void {
     this.form = this.fb.group({
       name:['', Validators.required],
-      metreage:['', Validators.required]
+      metreage:['', Validators.required],
+      description:['', Validators.required]
     });
+  }
+
+  private populateFrom(room: Room): void {
+    this.form.get('name').setValue(room.name);
+    this.form.get('metreage').setValue(room.metreage);
+    this.form.get('description').setValue(room.description);
+    this.furnitures = room.furnitures;
   }
 
   close: PoModalAction = {
@@ -51,25 +67,45 @@ export class ModalRoomComponent implements OnInit {
       this.closeModal();
     },
     label: 'Cadastrar',
-    disabled: true
+    disabled: this.formValid
   };
 
-  closeModal() {
+  edit: PoModalAction = {
+    action: () => {
+      this.closeModal();
+    },
+    label: 'Editar',
+    disabled: !this.formValid
+  };
+
+  public getOperation(): PoModalAction {
+    return this.room ? this.edit : this.confirm;
+  }
+
+  public closeModal() {
     this.clearFields();
     this.poModal.close();
   }
 
-  openModal(): void {
+  public openModal(): void {
+    this.validForm();
     this.poModal.open();
   }
 
-  addRoom(): void {
-    this.room.emit(this.form.value);
+  public addRoom(): void {
+    let room: Room = { 
+      name: this.form.get('name').value,
+      metreage: this.form.get('metreage').value,
+      description: this.form.get('description').value,
+      furnitures: this.furnitures,
+    }
+
+    this.roomRegister.emit(room);
   }
 
   public addFurniture(furniture: Furniture) {
-    console.log(furniture);
     this.furnitures.push(furniture);
+    this.validForm();
   } 
 
   public getColumns(): Array<PoTableColumn> {
@@ -122,11 +158,15 @@ export class ModalRoomComponent implements OnInit {
       value.height == furniture.height && value.width == furniture.width);
 
     this.furnitures.splice(this.furnitures.indexOf(furnitureResult), 1);
+    this.validForm();
   }
 
   private clearFields(): void {
     this.form.get('name').setValue('');
     this.form.get('metreage').setValue('');
+    this.form.get('description').setValue('');
+    this.furnitures = [];
+    this.room = null;
   }
 
   private showDescription(row: FurnitureColumn) {
@@ -140,6 +180,20 @@ export class ModalRoomComponent implements OnInit {
 
   @HostListener('change')
   private validForm() {
-    this.confirm.disabled = !this.form.valid;
+    this.formValid = !this.form.valid || this.furnitures.length == 0;
+    
+    if(this.room) {
+      let room: Room = { 
+        name: this.form.get('name').value,
+        metreage: this.form.get('metreage').value,
+        description: this.form.get('description').value,
+        furnitures: this.furnitures,
+      }
+
+      this.room = room;
+      this.edit.disabled = this.formValid;
+    } else {
+      this.confirm.disabled = this.formValid;
+    }
   }
 }

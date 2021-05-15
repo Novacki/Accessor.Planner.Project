@@ -43,3 +43,7 @@
 ::ng-deep .po-icon.po-icon-delete:before {
     color: brown;
 }
+
+::ng-deep .po-icon.po-icon-edit:before {
+    color: brown;
+}
