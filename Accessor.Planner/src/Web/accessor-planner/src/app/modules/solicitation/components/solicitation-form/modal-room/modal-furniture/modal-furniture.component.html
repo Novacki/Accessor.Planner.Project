@@ -6,23 +6,29 @@
     <form [formGroup]="form">
         <app-divider></app-divider>
         <div class="po-row mt-3 po-mb-2 d-flex justify-content-center">
-            <div class="col-md-5 po-mr-3">
+            <div class="col-md-4 po-mr-3">
                 <label for="name" class="form-label">Móvel* </label>
                 <input formControlName="name"  type="text" class="form-control" id="name" placeholder="Móvel"
                     required />
                 <div class="invalid-feedback">O campo Móvel é obrigatório.</div>
             </div>
-            <div class="col-md-3 po-mr-2">
-                <label for="metrage" class="form-label">Largura* </label>
+            <div class="col-md-2 po-mr-2">
+                <label for="height" class="form-label">Altura* </label>
+                <input  formControlName="height" type="number" class="form-control" id="height" placeholder="Altura"
+                    required />
+                <div class="invalid-feedback">O campo Altura é obrigatório.</div>
+            </div>
+            <div class="col-md-2 po-mr-2">
+                <label for="width" class="form-label">Largura* </label>
                 <input formControlName="width" type="number" class="form-control" id="width" placeholder="Largura"
                     required />
                 <div class="invalid-feedback">O campo Largura é obrigatório.</div>
             </div>
             <div class="col-md-3">
-                <label for="height" class="form-label">Altura* </label>
-                <input  formControlName="height" type="number" class="form-control" id="height" placeholder="Altura"
+                <label for="length" class="form-label">Comprimento* </label>
+                <input formControlName="length" type="number" class="form-control" id="length" placeholder="Comprimento"
                     required />
-                <div class="invalid-feedback">O campo Altura é obrigatório.</div>
+                <div class="invalid-feedback">O campo Comprimento é obrigatório.</div>
             </div>
         </div>  
         <div class="po-row d-flex justify-content-center">

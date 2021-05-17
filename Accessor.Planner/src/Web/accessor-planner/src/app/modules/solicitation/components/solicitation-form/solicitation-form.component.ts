@@ -19,7 +19,7 @@ export class SolicitationFormComponent implements OnInit {
   public rooms: Room[] = [];
   public showRoom: Room;
   @ViewChild('information') information: ShowInformationsComponent;
-  @ViewChild('editRoom') edit: ModalRoomComponent;
+  @ViewChild('edit') edit: ModalRoomComponent;
 
   ngOnInit(): void {
   }
@@ -51,7 +51,7 @@ export class SolicitationFormComponent implements OnInit {
         type: 'icon',
         icons: [
           {
-            action: this.editRoom.bind(this),
+            action: this.openEditRoom.bind(this),
             icon: 'po-icon po-icon-edit',
             tooltip: 'Editar',
             value: 'edit',
@@ -67,15 +67,15 @@ export class SolicitationFormComponent implements OnInit {
     ]
   }
 
-  addRoom(room: Room): void {
+  public addRoom(room: Room): void {
     this.rooms.push(room);
   }
 
-  private removeRoom(row: RoomColumn) {
-   
-   let roomResult = this.getRoomByRow(row);
-
-   this.rooms.splice(this.rooms.indexOf(roomResult), 1);
+  public editRoom(room: Room): void {
+    this.showRoom.name = room.name;
+    this.showRoom.metreage = room.metreage;
+    this.showRoom.description = room.description;
+    this.showRoom.furnitures = room.furnitures;
   }
 
   public getItems(): RoomColumn[] {
@@ -96,13 +96,21 @@ export class SolicitationFormComponent implements OnInit {
     });
   }
 
+  private removeRoom(row: RoomColumn) {
+   
+    let roomResult = this.getRoomByRow(row);
+ 
+    this.rooms.splice(this.rooms.indexOf(roomResult), 1);
+  }
+ 
+
   private showDescription(row: RoomColumn) {
     this.showRoom = this.getRoomByRow(row);
 
     this.information.poModal.open();
   }
 
-  private editRoom(row: RoomColumn) {
+  private openEditRoom(row: RoomColumn) {
     this.showRoom = this.getRoomByRow(row);
     this.edit.setRoom = this.showRoom;
     this.edit.poModal.open();

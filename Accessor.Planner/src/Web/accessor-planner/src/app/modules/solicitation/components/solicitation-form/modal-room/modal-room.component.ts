@@ -17,11 +17,16 @@ export class ModalRoomComponent implements OnInit {
 
   
   @Output() public roomRegister = new EventEmitter<Room>();
-
+  @Output() public roomEdit = new EventEmitter<Room>();
+  
   private room: Room;
   private formValid: boolean = true;
+  private initialRooms: string;
+
   @Input() public set setRoom(value: Room) {
     this.room = value;
+    this.initialRooms = JSON.stringify(value);
+
     this.populateFrom(this.room);
   } 
 
@@ -55,6 +60,9 @@ export class ModalRoomComponent implements OnInit {
 
   close: PoModalAction = {
     action: () => {
+      if(this.room)
+        this.restoreFurnitures();
+
       this.closeModal();
     },
     label: 'Fechar',
@@ -72,8 +80,10 @@ export class ModalRoomComponent implements OnInit {
 
   edit: PoModalAction = {
     action: () => {
+      this.editRoom();
       this.closeModal();
     },
+
     label: 'Editar',
     disabled: !this.formValid
   };
@@ -103,6 +113,17 @@ export class ModalRoomComponent implements OnInit {
     this.roomRegister.emit(room);
   }
 
+  public editRoom(): void {
+    let room: Room = { 
+      name: this.form.get('name').value,
+      metreage: this.form.get('metreage').value,
+      description: this.form.get('description').value,
+      furnitures: this.furnitures,
+    }
+
+    this.roomEdit.emit(room);
+  }
+
   public addFurniture(furniture: Furniture) {
     this.furnitures.push(furniture);
     this.validForm();
@@ -111,8 +132,9 @@ export class ModalRoomComponent implements OnInit {
   public getColumns(): Array<PoTableColumn> {
     return [
       { property: 'name', label: 'Móvel' },
-      { property: 'width', label: 'Largura' },
       { property: 'height', label: 'Altura' },
+      { property: 'width', label: 'Largura' },
+      { property: 'length', label: 'Comprimento', width:"20%" },
       { 
         property: 'description', 
         label: 'Descrição',
@@ -146,16 +168,14 @@ export class ModalRoomComponent implements OnInit {
 
   public getItems(): FurnitureColumn[] {
     return this.furnitures.map(furniture => {
-      return {name: furniture.name, width: furniture.width, height: furniture.height, 
+      return {name: furniture.name, width: furniture.width, height: furniture.height, length: furniture.length,
         description: ['view'], option: ['remove'] }
     });
   }
 
   private removeFurniture(row: FurnitureColumn) {
-    let furniture: Furniture = {name: row.name, width: row.width, height: row.height, description: row.description };
 
-    let furnitureResult = this.furnitures.find(value => value.name == furniture.name && 
-      value.height == furniture.height && value.width == furniture.width);
+    let furnitureResult = this.getFurnitureByRow(row);
 
     this.furnitures.splice(this.furnitures.indexOf(furnitureResult), 1);
     this.validForm();
@@ -166,14 +186,13 @@ export class ModalRoomComponent implements OnInit {
     this.form.get('metreage').setValue('');
     this.form.get('description').setValue('');
     this.furnitures = [];
+    this.initialRooms = null;
     this.room = null;
   }
 
   private showDescription(row: FurnitureColumn) {
-    let furniture: Furniture = {name: row.name, width: row.width, height: row.height, description: row.description };
 
-    this.showFurniture = this.furnitures.find(value => value.name == furniture.name && 
-      value.height == furniture.height && value.width == furniture.width);
+    this.showFurniture = this.getFurnitureByRow(row);
 
       this.information.poModal.open();
   }
@@ -195,5 +214,16 @@ export class ModalRoomComponent implements OnInit {
     } else {
       this.confirm.disabled = this.formValid;
     }
+  }
+
+  private getFurnitureByRow(row: FurnitureColumn) : Furniture {
+    let furniture: Furniture = {name: row.name, width: row.width, height: row.height, length: row.length, description: row.description };
+
+    return this.furnitures.find(value => value.name == furniture.name && 
+      value.height == furniture.height && value.width == furniture.width && value.length == furniture.length);
+  }
+
+  private restoreFurnitures(): void {
+    this.roomEdit.emit(JSON.parse(this.initialRooms) as Room);
   }
 }

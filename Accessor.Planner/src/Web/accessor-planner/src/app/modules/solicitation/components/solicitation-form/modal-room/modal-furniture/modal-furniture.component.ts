@@ -26,7 +26,8 @@ export class ModalFurnitureComponent implements OnInit {
       name:['', Validators.required],
       width:['', Validators.required],
       height:['', Validators.required],
-      description:['', Validators.required],
+      length:['', Validators.required],
+      description:['', Validators.required]
     });
   }
 
@@ -60,6 +61,7 @@ export class ModalFurnitureComponent implements OnInit {
     this.form.get('name').setValue('');
     this.form.get('width').setValue('');
     this.form.get('height').setValue('');
+    this.form.get('length').setValue('');
     this.form.get('description').setValue('');
   }
 
