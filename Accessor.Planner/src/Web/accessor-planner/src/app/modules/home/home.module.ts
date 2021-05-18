@@ -9,12 +9,7 @@ import { HomeContentComponent } from './components/home-content/home-content.com
 import { RouterModule } from '@angular/router';
 import { routes } from './home.routes';
 import { LoginComponent } from './components/login/login.component';
-import { MatFormFieldModule } from '@angular/material/form-field';
 
-import {ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { ClientFormComponent } from './components/client-form/client-form.component';
 import { ProviderFormComponent } from './components/provider-form/provider-form.component';
 import { FormClientComponent } from './pages/form-client/form-client.component';
@@ -34,7 +29,6 @@ import { AccountService } from './services/account.service';
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    MatButtonModule,
     SharedModule
   ],
   exports:[],

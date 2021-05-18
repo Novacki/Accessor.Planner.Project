@@ -47,3 +47,7 @@
 ::ng-deep .po-icon.po-icon-edit:before {
     color: brown;
 }
+
+.description {
+    resize: none
+}
