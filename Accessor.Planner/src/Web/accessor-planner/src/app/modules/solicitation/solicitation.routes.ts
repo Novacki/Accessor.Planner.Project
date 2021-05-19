@@ -3,6 +3,6 @@ import { SolicitationFormComponent } from "./components/solicitation-form/solici
 import { IndexComponent } from "./pages/index/index.component";
 
 export const routes: Routes = [
-    { path: '', component: IndexComponent },
-    { path: 'new-solicitation', component: SolicitationFormComponent}
+    { path: '', data: { breadcrumb: 'Solicitações em Espera' }, component: IndexComponent },
+    { path: 'new-solicitation',data: { breadcrumb: 'Nova Solicitação' },  component: SolicitationFormComponent}
 ]

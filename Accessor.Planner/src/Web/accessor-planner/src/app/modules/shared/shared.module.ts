@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingComponent } from './components/loading/loading.component';
 import { HttpInterceptorModule } from './Interceptor/http-interceptor.module';
 import { ShowInformationsComponent } from './components/show-informations/show-informations.component';
+import { BreadcrumbService } from './services/breadcrumb.service';
 
 
 
@@ -23,6 +24,6 @@ import { ShowInformationsComponent } from './components/show-informations/show-i
     HttpInterceptorModule
   ],
   exports:[CardComponent, DividerComponent, FormValidatorDirective, ReactiveFormsModule, PoLoadingModule, PoModule, LoadingComponent, PoTableModule, ShowInformationsComponent],
-  providers:[HttpService]
+  providers:[HttpService, BreadcrumbService]
 })
 export class SharedModule { }
