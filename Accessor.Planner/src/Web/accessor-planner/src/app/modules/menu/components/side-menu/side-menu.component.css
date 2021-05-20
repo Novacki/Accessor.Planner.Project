@@ -78,8 +78,10 @@
 ::ng-deep .po-page-header-title {
     color: maroon;
     font-size: 35px;
+    font-family: Roboto-Condensed-Light !important;
     text-transform: uppercase;
     margin-top: 1.5%;
+    font-weight: bolder;
     display: inline-block
 }
 

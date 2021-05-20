@@ -1,0 +1,19 @@
+::ng-deep .po-table-header-fixed-inner {
+    color: brown;
+}
+
+::ng-deep .po-table-main-container::-webkit-scrollbar-thumb{
+    background-color: brown;
+}
+
+::ng-deep .po-table-container-fixed-inner::-webkit-scrollbar-thumb {
+    background-color: brown;
+}
+
+::ng-deep .po-icon.po-icon-delete:before {
+    color: brown;
+}
+
+::ng-deep .po-icon.po-icon-edit:before {
+    color: brown;
+}

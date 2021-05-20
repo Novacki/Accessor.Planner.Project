@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PoSelectOption, PoTableColumn } from '@po-ui/ng-components';
 import { Solicitation } from 'src/app/modules/shared/model/solicitation.model';
-import { coluns } from './index-solicitation.columns';
 
 @Component({
   selector: 'app-index',

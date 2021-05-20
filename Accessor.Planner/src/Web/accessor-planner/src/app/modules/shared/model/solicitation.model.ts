@@ -5,7 +5,7 @@ import { Room } from "./room.model";
 
 export interface Solicitation {
     id?: string;
-    accessorId: string;
+    accessorId?: string;
     provider?: Provider; 
     client: Client;
     status:StatusSolicitation;

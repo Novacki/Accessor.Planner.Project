@@ -1,6 +1,7 @@
 import { PoMenuItem } from "@po-ui/ng-components";
 
 const commomMenus: Array<PoMenuItem> =  [
+    { label:'Accessor Planner', icon:'po-icon po-icon-star-filled', shortLabel: 'Accessor', link:'../menu' },
     { label:'Perfil', icon:'po-icon po-icon-user', shortLabel: 'Perfil', subItems: [
       { label: 'Meus Dados' }
     ]},
