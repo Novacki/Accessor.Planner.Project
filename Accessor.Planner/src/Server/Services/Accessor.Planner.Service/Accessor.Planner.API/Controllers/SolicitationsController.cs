@@ -1,4 +1,5 @@
 ﻿using Accessor.Planner.API.Application.Extensions;
+using Accessor.Planner.API.Application.Model.DTO;
 using Accessor.Planner.API.Application.Model.ViewModel;
 using Accessor.Planner.Domain.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +47,77 @@ namespace Accessor.Planner.API.Controllers
                 return NotFound();
 
             return Ok(solicitation.ToViewModel());
+        }
+
+        [HttpPost]
+        [Route("create")]
+        public async Task<IActionResult> Create([FromBody] SolicitationDTO solicitationDTO)
+        {
+            if (solicitationDTO == null)
+                return BadRequest();
+
+            await _solicitationService.Create(solicitationDTO.UserId,
+                solicitationDTO.Rooms.ToRoom());
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("{userId:guid}/accept/{solicitationId:guid}")]
+        public async Task<IActionResult> Accept(Guid? userId, Guid? solicitationId)
+        {
+            if (!userId.HasValue || !solicitationId.HasValue)
+                return BadRequest();
+
+            await _solicitationService.Accept(userId.Value, solicitationId.Value);
+            return Ok();
+        }
+
+
+        [HttpPut]
+        [Route("{userId:guid}/send/{solicitationId:guid}")]
+        public async Task<IActionResult> Send(Guid? userId, Guid? solicitationId)
+        {
+            if (!userId.HasValue || !solicitationId.HasValue)
+                return BadRequest();
+
+            await _solicitationService.Send(userId.Value, solicitationId.Value);
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("{userId:guid}/approve/{solicitationId:guid}")]
+        public async Task<IActionResult> Approve(Guid? userId, Guid? solicitationId)
+        {
+            if (!userId.HasValue || !solicitationId.HasValue)
+                return BadRequest();
+
+            await _solicitationService.Approve(userId.Value, solicitationId.Value);
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("{userId:guid}/reject/{solicitationId:guid}")]
+        public async Task<IActionResult> Reject(Guid? userId, Guid? solicitationId, [FromBody] string reason)
+        {
+            if (!userId.HasValue || !solicitationId.HasValue || string.IsNullOrEmpty(reason))
+                return BadRequest();
+
+            await _solicitationService.Reject(userId.Value, solicitationId.Value, reason);
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("{userId:guid}/cancel/{solicitationId:guid}")]
+        public async Task<IActionResult> Cancel(Guid? userId, Guid? solicitationId, [FromBody] string reason)
+        {
+            if (!userId.HasValue || !solicitationId.HasValue)
+                return BadRequest();
+
+            await _solicitationService.Cancel(userId.Value, solicitationId.Value, reason);
+            return Ok();
         }
     }
 }

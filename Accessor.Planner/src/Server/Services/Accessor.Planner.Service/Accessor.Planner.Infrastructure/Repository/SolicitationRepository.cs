@@ -26,7 +26,7 @@ namespace Accessor.Planner.Infrastructure.Repository
 
         public override async Task<Solicitation> GetByIdAsync(Guid id)
         {
-            return await _entities.Include(s => s.Provider).Include(s => s.Client)
+            return await _entities.Include(s => s.Provider).Include(s => s.Client).Include(s => s.Client.Addresses)
                 .Include(s => s.Rooms).Include(s => s.SolicitationHistories).FirstOrDefaultAsync(s => s.Id == id);
         }
 
@@ -38,7 +38,7 @@ namespace Accessor.Planner.Infrastructure.Repository
 
         public async  Task<List<Solicitation>> GetByUserAsync(Guid id)
         {
-            return await _entities.Where(s => s.ClientId == id).Include(s => s.Rooms).Include(s => s.SolicitationHistories).Include(s => s.Provider).Include(s => s.Client).ToListAsync();
+            return await _entities.Where(s => s.Client.User.Id == id).Include(s => s.Rooms).Include(s => s.SolicitationHistories).Include(s => s.Provider).Include(s => s.Client).Include(s => s.Client.Addresses).ToListAsync();
         }
     }
 }

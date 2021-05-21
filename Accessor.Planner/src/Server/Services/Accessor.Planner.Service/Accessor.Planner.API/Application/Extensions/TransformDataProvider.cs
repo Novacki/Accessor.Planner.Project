@@ -19,6 +19,7 @@ namespace Accessor.Planner.API.Application.Extensions
         {
             return new ProviderViewModel()
             {
+                Id = provider.Id,
                 Address = provider.Address.ToViewModel(),
                 Cnpj = provider.Cnpj,
                 FantasyName = provider.FantasyName,

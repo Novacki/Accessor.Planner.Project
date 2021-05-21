@@ -57,29 +57,6 @@ namespace Accessor.Planner.Domain.Model
             Activate = false;
             DeletedAt = DateTime.Now;
         }
-        public void AddSolicitation(Solicitation solicitation)
-        {
-            if (Type != UserType.Client)
-                throw new DomainException("Accessor Can't Create Solicitation");
-
-            Solicitations.Add(solicitation);
-        }
-
-        public void CancelSolicitation(Solicitation solicitation)
-        {
-            if (Type != UserType.Client)
-                throw new DomainException("Accessor Can't Create Solicitation");
-
-            solicitation.Cancel();
-        }
-
-        public void Approve(Solicitation solicitation)
-        {
-            if (Type != UserType.Client)
-                throw new DomainException("Accessor Can't Create Solicitation");
-
-            solicitation.Approve();
-        }
 
         private void AddAddresses(Address address)
         {
