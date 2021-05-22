@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace Accessor.Planner.API.Application.Model.ViewModel
 {
-    public class RoomViewModel
+    public class FurnitureViewModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
-        public double Metreage { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public double Length { get; set; }
         public string Description { get; set; }
-        public List<FurnitureViewModel> Furnitures { get; set; }
     }
 }

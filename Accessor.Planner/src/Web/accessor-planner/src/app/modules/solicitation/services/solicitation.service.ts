@@ -14,6 +14,11 @@ export class SolicitationService {
 
   public create(rooms: Room[]): Observable<SolicitationRequest> {
     let user = JSON.parse(localStorage.getItem('auth'));
-    return this.http.put<SolicitationRequest>('Clients/create-solicitation', new SolicitationRequest(`${user.userId}`, rooms));
+    return this.http.post<SolicitationRequest>('Solicitations/create', new SolicitationRequest(`${user.userId}`, rooms));
+  }
+
+  public get():Observable<Solicitation[]> {
+    let user = JSON.parse(localStorage.getItem('auth'));
+    return this.http.get<Solicitation>(`Solicitations/${user.userId}/solicitations`);
   }
 }

@@ -131,14 +131,14 @@ export class ModalRoomComponent implements OnInit {
 
   public getColumns(): Array<PoTableColumn> {
     return [
-      { property: 'name', label: 'Móvel' },
-      { property: 'height', label: 'Altura' },
-      { property: 'width', label: 'Largura' },
+      { property: 'name', label: 'Móvel', width:"18%" },
+      { property: 'height', label: 'Altura', width:"16%" },
+      { property: 'width', label: 'Largura', width:"16%" },
       { property: 'length', label: 'Comprimento', width:"20%" },
       { 
         property: 'description', 
         label: 'Descrição',
-        width:"20%",
+        width:"17%",
         type: 'icon',
         icons: [
           {
@@ -152,7 +152,7 @@ export class ModalRoomComponent implements OnInit {
       {
         property: 'option',
         label: 'Opções',
-        width:"20%",
+        width:"15%",
         type: 'icon',
         icons: [
           {

@@ -38,7 +38,7 @@ namespace Accessor.Planner.API.Controllers
         [Route("solicitation/{id:Guid}")]
         public async Task<IActionResult> GetSolicitation(Guid? id)
         {
-            if (id == null)
+            if (!id.HasValue)
                 return BadRequest();
 
             var solicitation = await _solicitationService.GetByIdAsync(id.Value);

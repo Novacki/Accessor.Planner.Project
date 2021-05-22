@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PoSelectOption, PoTableColumn } from '@po-ui/ng-components';
+import { Solicitation } from 'src/app/modules/shared/model/solicitation.model';
+import { SolicitationColumn } from '../../model/solicitation-column.model';
+import { SolicitationService } from '../../services/solicitation.service';
 
 @Component({
   selector: 'app-solicitation-table',
@@ -8,7 +11,9 @@ import { PoSelectOption, PoTableColumn } from '@po-ui/ng-components';
 })
 export class SolicitationTableComponent implements OnInit {
 
-  constructor() { }
+  constructor(private solicitationService: SolicitationService) { }
+
+  public solicitations: Solicitation[];
 
   public getColumns():Array<PoTableColumn> {
     return [
@@ -18,7 +23,7 @@ export class SolicitationTableComponent implements OnInit {
       { property: 'client', label: 'Cliente', width: '15%' },
       { property: 'rooms', label: 'Número de Comodos', width: '15%' },
       {
-        property: 'option',
+        property: 'options',
         label: 'Opções',
         width:"10%",
         type: 'icon',
@@ -29,17 +34,27 @@ export class SolicitationTableComponent implements OnInit {
             value: 'edit',
           },
           {
-            icon: 'po-icon po-icon-delete',
-            tooltip: 'Remover',
-            value: 'remove',
+            icon: 'po-icon po-icon-eye',
+            tooltip: 'Visualizar',
+            value: 'view',
           },
         ]
       }
     ]
   }
 
+  public getItems(): SolicitationColumn[] {
+    return this.solicitations.map(solicitation => {
+      return {status: solicitation.status, accessor: solicitation.accessorId, provider: 'Não Requisitado', 
+        client: solicitation.client.name, rooms: solicitation.rooms.length, options: ['edit', 'view']}
+    });
+    
+  }
 
   ngOnInit(): void {
+    this.solicitationService.get().subscribe(response => {
+      this.solicitations = response;
+    })
   }
 
 }

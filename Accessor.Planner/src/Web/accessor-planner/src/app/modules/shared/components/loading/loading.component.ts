@@ -12,7 +12,7 @@ export class LoadingComponent implements OnInit {
   @Input('loading') public set setLoading(value: boolean) {
     setTimeout(() => {
       this.loading = value;
-    }, 300);
+    }, 100);
   }
 
   public loading: boolean = true;

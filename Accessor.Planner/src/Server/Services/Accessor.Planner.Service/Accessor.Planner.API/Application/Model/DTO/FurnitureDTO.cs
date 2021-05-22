@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 
 namespace Accessor.Planner.API.Application.Model.DTO
 {
-    public class RoomDTO
+    public class FurnitureDTO
     {
         public string Name { get; set; }
-        public double Metreage { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public double Length { get; set; }
         public string Description { get; set; }
-        public List<FurnitureDTO> Furnitures  { get; set; }
     }
 }

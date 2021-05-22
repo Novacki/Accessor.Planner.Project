@@ -19,6 +19,7 @@ namespace Accessor.Planner.Infrastructure.Data
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<SolicitationHistory> SolicitationHistories { get; set; }
+        public DbSet<Furniture> Furnitures { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,6 +30,7 @@ namespace Accessor.Planner.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new RoomEntityConfiguration());
             modelBuilder.ApplyConfiguration(new AddressEntityConfiguration());
             modelBuilder.ApplyConfiguration(new SolicitationHistoryConfiguration());
+            modelBuilder.ApplyConfiguration(new FurnitureEntityConfiguration());
         }
     }
 }

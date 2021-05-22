@@ -10,10 +10,11 @@
     background-color: brown;
 }
 
-::ng-deep .po-icon.po-icon-delete:before {
+::ng-deep .po-icon.po-icon-edit:before {
     color: brown;
 }
 
-::ng-deep .po-icon.po-icon-edit:before {
+::ng-deep .po-icon.po-icon-eye:before {
+    text-align: center;
     color: brown;
 }
