@@ -1,13 +1,7 @@
-<app-loading [loading]="false"></app-loading>
-<div *ngIf="solicitations">
-  <div class="main">
-    <div class="content">
-      <div class="new-solicitation d-flex justify-content-end mt-3 mb-5 mr-5">
-        <po-button routerLink="new-solicitation" p-label="Nova Solicitação" p-type="primary" p-icon="po-icon po-icon-plus-circle"></po-button>
-      </div>
-      <po-table p-height="610" p-hide-columns-manager p-sort="true" [p-items]="getItems()" [p-columns]="getColumns()" [p-striped]="true">
-      </po-table>
-    </div>
+<div class="main">
+  <div class="content">
+    <po-table p-height="610" p-hide-columns-manager p-sort="true" [p-items]="items" [p-columns]="columns"
+      [p-striped]="true">
+    </po-table>
   </div>
 </div>
-

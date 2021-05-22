@@ -14,9 +14,9 @@ namespace Accessor.Planner.API.Application.Extensions
         public static Client ToClient(this FullDataClientDTO client) => new Client(client.Name, client.Cpf, client.BirthDate, client.Sex, 
             client.Phone, TransformDataEnums.GetTypeUser(client.Type), client.Address.ToAddress(), client.User.ToUser());
 
-        public static ClientViewModel ToViewModel(this Client client)
+        public static FullDataClientViewModel ToFullViewModel(this Client client)
         {
-            return new ClientViewModel()
+            return new FullDataClientViewModel()
             {
                 Id = client.Id,
                 Name = client.Name,
@@ -26,6 +26,16 @@ namespace Accessor.Planner.API.Application.Extensions
                 BirthDate = client.BirthDate,
                 Type = client.Type,
                 Addresses = client.Addresses.ToViewModel()
+            };
+        }
+
+        public static DataClientViewModel ToViewModel(this Client client)
+        {
+            return new DataClientViewModel()
+            {
+                Id = client.Id,
+                Name = client.Name,
+                Type = client.Type,
             };
         }
     }

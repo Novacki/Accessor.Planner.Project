@@ -16,7 +16,7 @@ namespace Accessor.Planner.API.Application.Extensions
                 Id = solicitation.Id,
                 AccessorId = solicitation.AccessorId,
                 Provider = solicitation.Provider == null ? null : solicitation.Provider.ToViewModel(),
-                Client = solicitation.Client.ToViewModel(),
+                Client = solicitation.Client.ToFullViewModel(),
                 Status = (int)solicitation.Status,
                 Rooms = solicitation.Rooms.ToViewModel()
             };
@@ -29,7 +29,7 @@ namespace Accessor.Planner.API.Application.Extensions
                 Id = s.Id,
                 AccessorId = s.AccessorId,
                 Provider = s.Provider == null ? null : s.Provider.ToViewModel(),
-                Client = s.Client.ToViewModel(),
+                Client = s.Client.ToFullViewModel(),
                 Status = (int)s.Status,
                 Rooms = s.Rooms.ToViewModel()
 

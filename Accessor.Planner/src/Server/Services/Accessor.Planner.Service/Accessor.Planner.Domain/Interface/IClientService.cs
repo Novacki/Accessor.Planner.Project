@@ -12,6 +12,6 @@ namespace Accessor.Planner.Domain.Interface
         void RemoveAddress(Guid id, int addressId);
         void AddAddress(Guid id, Address address);
         Client GetClientByUserId(Guid id);
-       
+        Task<Client> GetClientByUserIdAsync(Guid id);
     }
 }

@@ -26,10 +26,29 @@ namespace Accessor.Planner.API.Controllers
         [Route("{userId:Guid}/solicitations")]
         public async Task<IActionResult> GetSolicitations(Guid? userId)
         {
-            if (userId == null)
+            if (!userId.HasValue)
                 return BadRequest();
 
-            var solicitations = await _solicitationService.GetByUserAsync(userId.Value);
+            var solicitations = await _solicitationService.GetSolicitationsByUserAsync(userId.Value);
+
+            if (solicitations == null || solicitations.Count == 0)
+                return NotFound();
+
+            return Ok(solicitations.ToViewModel());
+        }
+
+        [HttpGet]
+        [Route("filter")]
+        public IActionResult Get([FromQuery] Guid? profileContextId, int? status,  int? userType)
+        {
+            if (!profileContextId.HasValue || !status.HasValue)
+                return BadRequest();
+
+            var solicitations =  _solicitationService.GetSolicitationsByFilter(profileContextId.Value, 
+                TransformDataEnums.GetStatusSolicitation(status.Value), TransformDataEnums.GetTypeUser(userType.Value));
+
+            if (solicitations == null || solicitations.Count == 0)
+                return NotFound();
 
             return Ok(solicitations.ToViewModel());
         }

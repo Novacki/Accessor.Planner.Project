@@ -1,4 +1,5 @@
 ﻿using Accessor.Planner.Domain.Model;
+using Accessor.Planner.Domain.Model.Enum;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,8 @@ namespace Accessor.Planner.Domain.Interface
     {
         Task Create(Guid userId, List<Room> rooms);
         Solicitation GetById(Guid id);
-        Task<List<Solicitation>> GetByUserAsync(Guid userId);
+        Task<List<Solicitation>> GetSolicitationsByUserAsync(Guid userId);
+        List<Solicitation> GetSolicitationsByFilter(Guid profileContextId, StatusSolicitation status, UserType? userType);
         Task Accept(Guid userId, Guid solicitationId);
         Task Send(Guid userId, Guid solicitationId);
         Task Approve(Guid userId, Guid solicitationId);

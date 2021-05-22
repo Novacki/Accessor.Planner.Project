@@ -31,6 +31,9 @@ export class LoginComponent implements OnInit {
     this.accountService.singIn(this.form.value).subscribe(response => {
       localStorage.setItem('auth', response);
       this.router.navigate(['../menu'])
+    }, error => console.log(error),
+    () => {
+      this.loading = false;
     });
   }
 }

@@ -5,7 +5,7 @@ export interface SolicitationColumn {
     accessor?: string;
     provider?: string; 
     client?: string;
-    status:StatusSolicitation;
+    status:string;
     rooms: number ;
     options: any;
 }

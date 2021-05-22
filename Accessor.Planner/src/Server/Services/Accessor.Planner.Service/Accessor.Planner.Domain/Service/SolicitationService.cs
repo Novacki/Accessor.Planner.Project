@@ -94,7 +94,23 @@ namespace Accessor.Planner.Domain.Service
             return solicitation;
         }
 
-        public async Task<List<Solicitation>> GetByUserAsync(Guid userId) => await _solicitationRepository.GetByUserAsync(userId).ConfigureAwait(false);
+        public async Task<List<Solicitation>> GetSolicitationsByUserAsync(Guid userId) => await _solicitationRepository.GetByUserAsync(userId).ConfigureAwait(false);
 
+        public List<Solicitation> GetSolicitationsByFilter(Guid profileContextId, StatusSolicitation status, UserType? userType)
+        {
+            var solicitations = _solicitationRepository.GetAll().Where(s => s.Status == status);
+
+            if(userType.Value == 0)
+                throw new SolicitationServiceException("This user don't exist");
+
+            if (!userType.HasValue)
+                solicitations = solicitations.Where(s => s.Provider.Id == profileContextId);
+            else if (userType.Value == UserType.Accessor)
+                solicitations = solicitations.Where(s => s.AccessorId == profileContextId);
+            else
+                solicitations = solicitations.Where(s => s.Client.Id == profileContextId);
+
+            return solicitations.ToList();
+        }       
     }
 }

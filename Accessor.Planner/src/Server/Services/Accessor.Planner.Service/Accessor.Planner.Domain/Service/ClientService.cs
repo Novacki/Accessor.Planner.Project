@@ -80,7 +80,7 @@ namespace Accessor.Planner.Domain.Service
 
         public Client GetClientByUserId(Guid id)
         {
-            var client = GetAll().Where(c => c.User.Id == id).FirstOrDefault();
+            var client = _clientRepository.GetByUserId(id);
 
             if (client == null)
                 throw new ClientServiceException("Client Not Found");
@@ -98,5 +98,8 @@ namespace Accessor.Planner.Domain.Service
 
             return client;
         }
+
+        public async Task<Client> GetClientByUserIdAsync(Guid id) => await _clientRepository.GetByUserIdAsync(id).ConfigureAwait(false);
+      
     }
 }

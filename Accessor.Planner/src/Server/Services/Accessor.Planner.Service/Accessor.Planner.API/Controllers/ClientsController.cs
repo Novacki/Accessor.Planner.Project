@@ -23,10 +23,25 @@ namespace Accessor.Planner.API.Controllers
         [Route("me/{id:guid}")]
         public async Task<IActionResult> Get(Guid? id)
         {
-            if (id == null)
+            if (!id.HasValue)
                 return BadRequest();
 
             var client = await _clientService.GetByIdAsync(id.Value);
+
+            if (client == null)
+                return NotFound();
+
+            return Ok(client.ToViewModel());
+        }
+
+        [HttpGet]
+        [Route("{userId:guid}")]
+        public async Task<IActionResult> GetByUser(Guid? userId)
+        {
+            if (!userId.HasValue)
+                return BadRequest();
+
+            var client = await _clientService.GetClientByUserIdAsync(userId.Value);
 
             if (client == null)
                 return NotFound();

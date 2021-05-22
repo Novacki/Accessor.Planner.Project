@@ -22,6 +22,10 @@ namespace Accessor.Planner.Infrastructure.Repository
         public override Client GetById(Guid id) => _entities.Where(c => c.Id == id).Include(c => c.Addresses).Include(c => c.Solicitations)
             .Include(c => c.User).FirstOrDefault();
 
+        public async Task<Client> GetByUserIdAsync(Guid id) => await _entities.Include(c => c.User).Where(c => c.User.Id == id).FirstOrDefaultAsync();
+
+        public Client GetByUserId(Guid id) => _entities.Include(c => c.User).Where(c => c.User.Id == id).FirstOrDefault();
+
         public bool ExistCpf(string cpf) => _entities.Any(c => c.Cpf == cpf);
 
     }

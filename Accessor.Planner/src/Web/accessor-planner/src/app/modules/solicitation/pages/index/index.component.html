@@ -1,1 +1,8 @@
-<app-solicitation-table></app-solicitation-table>
+<div *ngIf="solicitations">
+    <app-loading [loading]="loading"></app-loading>
+    <div class="new-solicitation d-flex justify-content-end mt-3 mb-5 mr-5">
+        <po-button routerLink="new-solicitation" p-label="Nova Solicitação" p-type="primary"
+            p-icon="po-icon po-icon-plus-circle"></po-button>
+    </div>
+    <app-solicitation-table [columns]="getColumns()" [items]="getItems()"></app-solicitation-table>
+</div>

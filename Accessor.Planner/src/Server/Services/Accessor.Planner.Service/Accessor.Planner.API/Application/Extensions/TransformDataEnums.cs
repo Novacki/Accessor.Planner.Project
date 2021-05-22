@@ -12,5 +12,10 @@ namespace Accessor.Planner.API.Application.Extensions
         {
             return Enum.GetValues<UserType>().Where(user => (int)user == value).FirstOrDefault();
         }
+
+        public static StatusSolicitation GetStatusSolicitation(int value)
+        {
+            return Enum.GetValues<StatusSolicitation>().Where(s => (int)s == value).FirstOrDefault();
+        }
     }
 }

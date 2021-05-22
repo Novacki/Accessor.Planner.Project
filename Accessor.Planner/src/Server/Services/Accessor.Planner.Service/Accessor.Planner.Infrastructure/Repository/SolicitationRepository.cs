@@ -21,7 +21,9 @@ namespace Accessor.Planner.Infrastructure.Repository
             return base.GetAll()
                 .Include(s => s.Provider)
                 .Include(s => s.Client)
+                .ThenInclude(c => c.Addresses)
                 .Include(s => s.Rooms)
+                .ThenInclude(r => r.Furnitures)
                 .Include(s => s.SolicitationHistories);
         }
 
