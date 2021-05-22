@@ -9,6 +9,8 @@ namespace Accessor.Planner.Domain.Data.Repository
     public interface IClientRepository : IRepository<Client>
     {
         public bool ExistCpf(string cpf);
+        public Client GetByUserId(Guid id);
+        public Task<Client> GetByUserIdAsync(Guid id);
 
     }
 }

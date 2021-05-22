@@ -16,6 +16,10 @@ export class HttpService {
     return this.http.get<T[]>(`${this.baseUrlAccessor}${url}`);
   }
 
+  public getById<T>(url: string): Observable<T> {
+    return this.http.get<T>(`${this.baseUrlAccessor}${url}`);
+  }
+
   public post<T>(url: string, obj: T, options = {}, baseUrl: string = this.baseUrlAccessor): Observable<T> {
     return this.http.post<T>(`${baseUrl}${url}`, obj, options);
   }

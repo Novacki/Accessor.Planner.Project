@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { PoBreadcrumb, PoMenuItem } from '@po-ui/ng-components';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { PoBreadcrumb, PoBreadcrumbItem, PoMenuItem } from '@po-ui/ng-components';
+import { getMenuByUser } from './menu-items.model';
+import { filter } from 'rxjs/operators';
+import { BreadcrumbService } from 'src/app/Modules/shared/services/breadcrumb.service';
+import { ClientDataService } from 'src/app/modules/shared/services/client-data.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -8,35 +13,33 @@ import { PoBreadcrumb, PoMenuItem } from '@po-ui/ng-components';
 })
 export class SideMenuComponent implements OnInit {
 
-  constructor() {}
+  constructor(private breadcrumbService: BreadcrumbService, private router: Router, 
+    private activatedRoute: ActivatedRoute,
+    private clientDataService: ClientDataService) {}
 
+  public poBreadcrumb: PoBreadcrumb = { items: [ { label:'Accessor Planner' } ] };
+  public menus: Array<PoMenuItem>;
+  public loading: boolean = true;
   ngOnInit(): void {
+    this.breadcrumbService.listenerRouteChanges(this.router, this.activatedRoute);
+    
+    this.breadcrumbService.breadcrumb.subscribe(value => {
+     this.menuItemSelected = value[value.length - 1].label;
+     this.poBreadcrumb.items = value;
+    });
+
+    let user = JSON.parse(localStorage.getItem('auth'));
+    
+    this.clientDataService.get(user.userId).subscribe(client => {
+      localStorage.setItem('client', JSON.stringify(client));
+      this.menus = getMenuByUser.get(client.type);
+      this.loading = false;
+    });
   }
 
   menuItemSelected: string;
 
-  menus: Array<PoMenuItem> = [
-    { label:'Perfil', icon:'po-icon po-icon-user', shortLabel: 'Perfil', subItems: [
-      { label: 'Meus Dados' }
-    ]},
-    { label: 'Solicitações', icon: 'po-icon po-icon-list', shortLabel: 'Solicitações', subItems: [
-      { label: 'Em Espera', link:'solicitations' },
-      { label: 'Aprovadas', link:'solicitations' },
-      { label: 'Canceladas', link:'solicitations' }
-    ]},
-    { label: 'Acessores', icon: 'po-icon po-icon-weight', shortLabel: 'Acessores', subItems: [
-      { label: 'Favoritos' }
-    ]},
-    { label: 'Fornecedores', icon: 'po-icon po-icon-pallet-partial', shortLabel: 'Fornecedores', subItems: [
-      { label: 'Favoritos' }
-    ]},
-  ];
-
-  public readonly breadcrumb: PoBreadcrumb = {
-    items: [{ label: 'Home', link: '/' }, { label: 'Dashboard' }]
-  };
-
-  printMenuAction(menu: PoMenuItem) {
+  public printMenuAction(menu: PoMenuItem): void {
     this.menuItemSelected = menu.label;
   }
 }

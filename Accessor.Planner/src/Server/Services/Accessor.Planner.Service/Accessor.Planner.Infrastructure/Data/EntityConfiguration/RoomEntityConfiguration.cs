@@ -25,6 +25,9 @@ namespace Accessor.Planner.Infrastructure.Data.EntityConfiguration
             builder.Property(room => room.SolicitationId)
                 .HasColumnType("uniqueidentifier");
 
+            builder.Property(room => room.Description)
+                .HasColumnType("nvarchar(20)");
+
             builder.Property(room => room.CreatedAt)
                .HasColumnType("datetime2")
                .IsRequired();

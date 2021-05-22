@@ -10,3 +10,21 @@
     border-color: grey;
 }
 
+.file ::ng-deep .po-button {
+    width: 50%;
+}
+
+::ng-deep .po-icon.po-icon-upload-cloud:before {
+    font-size: 45px;
+    text-align: center;
+    color: brown;
+}
+
+::ng-deep .po-icon.po-icon-eye:before {
+    text-align: center;
+    color: brown;
+}
+
+.description {
+    resize: none
+}

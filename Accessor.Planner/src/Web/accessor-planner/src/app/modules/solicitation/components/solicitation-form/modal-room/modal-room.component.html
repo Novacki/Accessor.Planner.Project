@@ -2,22 +2,55 @@
     <po-button p-label="Adicionar Comodo" p-type="primary" (p-click)="openModal()" p-icon="po-icon po-icon-plus-circle">
     </po-button>
 </div>
-<po-modal  p-title="Adicionar Comodo" [p-primary-action]="confirm" [p-secondary-action]="close">
+<po-modal [p-hide-close]="true" p-title="Adicionar Comodo" [p-primary-action]="getOperation()" [p-secondary-action]="close">
     <form [formGroup]="form">
         <app-divider></app-divider>
-        <div class="po-row mt-3 mb-2">
-            <div class="col-md-5 po-mr-5 po-ml-5">
+        <div class="po-row mt-3 po-mb-2 d-flex justify-content-center">
+            <div class="col-md-5 po-ml-4 po-mr-3">
                 <label for="name" class="form-label">Comodo* </label>
                 <input formControlName="name" type="text" class="form-control" id="name" placeholder="Comodo"
                     required />
                 <div class="invalid-feedback">O campo Comodo é obrigatório.</div>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-3 po-mr-5">
                 <label for="metrage" class="form-label">Metragem* </label>
-                <input formControlName="metreage" type="number" class="form-control" id="metrage"
-                    placeholder="Metragem" required />
+                <input formControlName="metreage" type="number" class="form-control" id="metrage" placeholder="Metragem"
+                    required />
                 <div class="invalid-feedback">O campo Metragem é obrigatório.</div>
             </div>
+            <div class="col-md-2 po-ml-3 po-mt-3 file">
+                <span class="po-icon po-icon-upload-cloud po-clickable" (click)="upload.selectFiles()"></span>
+                <!-- <po-upload #upload name="project" p-hide-select-button
+                    p-hide-send-button p-required p-url="https://thf.totvs.com.br/sample/api/uploads/addFile">
+                </po-upload> -->
+            </div>
+        </div>
+        <div class="po-row d-flex justify-content-center">
+            <div class="col-md-11 po-mb-2">
+                <label for="description" class="form-label">Descrição* </label>
+                <textarea formControlName="description" class="form-control description" id="description" rows="8"></textarea>
+            </div>
+        </div>
+        <app-divider [title]="'Móveis'"></app-divider>
+        <div class="po-row">
+            <app-modal-furniture (addFurniture)="addFurniture($event)"></app-modal-furniture>
+        </div>
+        <div class="table-room">
+            <po-table p-height="400" p-hide-columns-manager p-sort="true" [p-items]="getItems()"
+                [p-columns]="getColumns()" [p-striped]="true">
+            </po-table>
         </div>
     </form>
-  </po-modal>
+</po-modal>
+
+<app-show-informations [name]="'Descrição'" #information>
+    <div *ngIf="showFurniture">
+        <div class="po-row d-flex justify-content-center">
+            <div class="col-md-11 po-mb-2">
+                <app-divider [title]="showFurniture.name"></app-divider>
+                <textarea readonly [value]="showFurniture.description" class="form-control description" id="description"
+                    rows="8"></textarea>
+            </div>
+        </div>
+    </div>
+</app-show-informations>

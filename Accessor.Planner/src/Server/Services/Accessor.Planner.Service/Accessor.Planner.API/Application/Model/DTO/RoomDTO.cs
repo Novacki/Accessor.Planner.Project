@@ -9,5 +9,7 @@ namespace Accessor.Planner.API.Application.Model.DTO
     {
         public string Name { get; set; }
         public double Metreage { get; set; }
+        public string Description { get; set; }
+        public List<FurnitureDTO> Furnitures  { get; set; }
     }
 }

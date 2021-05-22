@@ -5,8 +5,8 @@ import { IndexComponent } from './pages/index/index.component';
 
 
 const routes: Routes = [
-  { path: '',  component: IndexComponent, children: [
-    { path: 'solicitations',  loadChildren: () => import("../solicitation/solicitation.module").then(m => m.SolicitationModule )},
+  { path: '',  component: IndexComponent, data: { breadcrumb: 'Accessor Planner' }, children: [
+    { path: 'solicitations', data: { breadcrumb: 'Solicitações' }, loadChildren: () => import("../solicitation/solicitation.module").then(m => m.SolicitationModule )},
   ] },
 ];
 

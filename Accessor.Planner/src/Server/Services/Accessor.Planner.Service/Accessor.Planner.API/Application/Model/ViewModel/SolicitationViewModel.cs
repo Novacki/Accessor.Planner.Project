@@ -11,7 +11,7 @@ namespace Accessor.Planner.API.Application.Model.ViewModel
         public Guid? AccessorId { get; set; }
         public int Status { get; set; }
         public ProviderViewModel Provider { get; set; }
-        public ClientViewModel Client { get; set; }
+        public FullDataClientViewModel Client { get; set; }
         public List<RoomViewModel> Rooms { get; set; }
 
     }

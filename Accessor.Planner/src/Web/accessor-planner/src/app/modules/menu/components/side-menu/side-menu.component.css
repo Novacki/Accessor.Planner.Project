@@ -74,3 +74,17 @@
     background-color: brown;
     border-top: 1px solid rgba(139, 35, 35,0.5);
 }
+
+::ng-deep .po-page-header-title {
+    color: maroon;
+    font-size: 35px;
+    font-family: Roboto-Condensed-Light !important;
+    text-transform: uppercase;
+    margin-top: 1.5%;
+    font-weight: bolder;
+    display: inline-block
+}
+
+::ng-deep .po-breadcrumb-item .po-breadcrumb-label {
+    color: maroon;
+}

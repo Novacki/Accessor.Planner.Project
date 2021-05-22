@@ -13,12 +13,12 @@ namespace Accessor.Planner.API.Application.Extensions
 
         public static Room ToRoom(this RoomDTO room)
         {
-            return new Room(room.Name, room.Metreage);
+            return new Room(room.Name, room.Metreage, room.Description, room.Furnitures.ToFurniture());
         }
 
         public static List<Room> ToRoom(this List<RoomDTO> rooms)
         {
-            return rooms.Select(r => new Room(r.Name, r.Metreage)).ToList();
+            return rooms.Select(r => new Room(r.Name, r.Metreage, r.Description, r.Furnitures.ToFurniture())).ToList();
         }
 
         public static RoomViewModel ToViewModel(this Room room)
@@ -27,7 +27,9 @@ namespace Accessor.Planner.API.Application.Extensions
             {
                 Id = room.Id,
                 Name = room.Name,
-                Metreage = room.Metreage
+                Metreage = room.Metreage,
+                Description = room.Description,
+                Furnitures = room.Furnitures.ToViewModel()
             };
         }
 
@@ -37,8 +39,9 @@ namespace Accessor.Planner.API.Application.Extensions
             {
                 Id = r.Id,
                 Name = r.Name,
-                Metreage = r.Metreage
-
+                Metreage = r.Metreage,
+                Description = r.Description,
+                Furnitures = r.Furnitures.ToViewModel()
             }).ToList(); 
         }
     }

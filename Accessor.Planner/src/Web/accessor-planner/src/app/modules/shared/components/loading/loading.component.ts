@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-loading',
@@ -8,15 +10,16 @@ import { Component, Input, OnInit } from '@angular/core';
 export class LoadingComponent implements OnInit {
 
   constructor() { }
-
+  public onLoad: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   @Input('loading') public set setLoading(value: boolean) {
-    setTimeout(() => {
-      this.loading = value;
-    }, 300);
+    this.onLoad.next(value);
   }
 
   public loading: boolean = true;
   
   ngOnInit(): void {
+    this.onLoad.pipe(debounceTime(2)).subscribe(load => {
+      this.loading = load;
+    });
   }
 }

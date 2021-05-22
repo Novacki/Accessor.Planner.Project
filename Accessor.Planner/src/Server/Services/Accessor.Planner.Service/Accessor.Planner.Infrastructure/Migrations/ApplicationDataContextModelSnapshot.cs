@@ -116,6 +116,50 @@ namespace Accessor.Planner.Infrastructure.Migrations
                     b.ToTable("Clients");
                 });
 
+            modelBuilder.Entity("Accessor.Planner.Domain.Model.Furniture", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Activate")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Height")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Length")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Width")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Furnitures");
+                });
+
             modelBuilder.Entity("Accessor.Planner.Domain.Model.Provider", b =>
                 {
                     b.Property<Guid>("Id")
@@ -179,6 +223,9 @@ namespace Accessor.Planner.Infrastructure.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<double>("Metreage")
                         .HasColumnType("float");
 
@@ -222,7 +269,7 @@ namespace Accessor.Planner.Infrastructure.Migrations
                     b.Property<Guid?>("ProviderId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("SolicitationEndDate")
+                    b.Property<DateTime?>("SolicitationEndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
@@ -334,6 +381,17 @@ namespace Accessor.Planner.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Accessor.Planner.Domain.Model.Furniture", b =>
+                {
+                    b.HasOne("Accessor.Planner.Domain.Model.Room", "Room")
+                        .WithMany("Furnitures")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
             modelBuilder.Entity("Accessor.Planner.Domain.Model.Provider", b =>
                 {
                     b.HasOne("Accessor.Planner.Domain.Model.Address", "Address")
@@ -398,6 +456,11 @@ namespace Accessor.Planner.Infrastructure.Migrations
             modelBuilder.Entity("Accessor.Planner.Domain.Model.Provider", b =>
                 {
                     b.Navigation("Solicitations");
+                });
+
+            modelBuilder.Entity("Accessor.Planner.Domain.Model.Room", b =>
+                {
+                    b.Navigation("Furnitures");
                 });
 
             modelBuilder.Entity("Accessor.Planner.Domain.Model.Solicitation", b =>

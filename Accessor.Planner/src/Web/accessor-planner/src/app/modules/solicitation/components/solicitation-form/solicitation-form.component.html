@@ -2,10 +2,10 @@
 <div class="main">
     <div class="content">
         <div class="form-solicitation">
-            <po-upload p-label="Adicione a Solicitação" [p-drag-drop]="true" p-required>
-            </po-upload>
+            <!-- <po-upload p-label="Adicione a Solicitação" [p-drag-drop]="true" p-required>
+            </po-upload> -->
             <app-divider [title]="'Comodos da Solicitação'"></app-divider>
-            <app-modal-room (room)="addRoom($event)"></app-modal-room>
+            <app-modal-room #edit (roomRegister)="addRoom($event)" (roomEdit)="editRoom($event)"></app-modal-room>
             <div class="table-room">
                 <po-table p-height="400" p-hide-columns-manager p-sort="true" [p-items]="getItems()" [p-columns]="getColumns()" [p-striped]="true">
                 </po-table>
@@ -27,3 +27,15 @@
         </div>
     </div>
 </div>
+
+<app-show-informations [name]="'Descrição'" #information>
+    <div *ngIf="showRoom">
+        <div class="po-row d-flex justify-content-center">
+            <div class="col-md-11 po-mb-2">
+                <app-divider [title]="showRoom.name"></app-divider>
+                <textarea readonly [value]="showRoom.description" class="form-control description" id="description"
+                    rows="8"></textarea>
+            </div>
+        </div>
+    </div>
+</app-show-informations>

@@ -23,7 +23,7 @@ namespace Accessor.Planner.Domain.Model
             RegisterHistory(new SolicitationHistory(this, SubscribeType.Client));
         }
 
-        public DateTime SolicitationEndDate { get; private set; }
+        public DateTime? SolicitationEndDate { get; private set; }
         public StatusSolicitation Status { get; private set; }
         public List<Room> Rooms { get; private set; }
         public List<SolicitationHistory> SolicitationHistories { get; private set; }
@@ -39,65 +39,71 @@ namespace Accessor.Planner.Domain.Model
         public void RemoveRooms(Room room) => Rooms.Remove(room);
 
 
-        public void Cancel()
+        public void Approve(Client client)
         {
-            if (Status != StatusSolicitation.InReview || Client.Type != UserType.Client)
+            if (Status != StatusSolicitation.InReview || client.Type != UserType.Client || client.Id != Client.Id)
+                throw new DomainException("Status Solicitation is Invalid");
+
+            Status = StatusSolicitation.Approve;
+            UpdatedAt = DateTime.Now;
+            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
+        }
+
+        public void AcessorAccept(Client accessor)
+        {
+            if (( Status != StatusSolicitation.OnHold && Status != StatusSolicitation.Reject ) ||
+                accessor.Type == UserType.Client || (accessor.Id != AccessorId && AccessorId.HasValue ))
+                    throw new DomainException("Status Solicitation is Invalid");
+
+            Status = StatusSolicitation.Accept;
+            AccessorId = accessor.Id;
+            UpdatedAt = DateTime.Now;
+            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Accessor));
+        }
+
+        public void ProviderAccept(Provider provider)
+        {
+            if (Status != StatusSolicitation.OnHold || Client.Type != UserType.Client )
+                throw new DomainException("Status Solicitation is Invalid");
+
+            Status = StatusSolicitation.Accept;
+            Provider = provider;
+            UpdatedAt = DateTime.Now;
+            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Provider));
+        }
+
+        public void Send(Client accessor)
+        {
+            if (Status != StatusSolicitation.Accept || accessor.Type == UserType.Client || accessor.Id != AccessorId)
+                throw new DomainException("Status Solicitation is Invalid");
+
+            Status = StatusSolicitation.InReview;
+            UpdatedAt = DateTime.Now;
+            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Accessor));
+        }
+
+        public void Reject(Client client, string reason)
+        {
+            if (Status != StatusSolicitation.InReview || string.IsNullOrEmpty(reason) 
+                || client.Type != UserType.Client || client.Id != Client.Id)
+
+                throw new DomainException("Status Solicitation is Invalid");
+
+            Status = StatusSolicitation.Reject;
+            UpdatedAt = DateTime.Now;
+            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
+        }
+
+        public void Cancel(Client client, string reason)
+        {
+            if (string.IsNullOrEmpty(reason) || client.Type != UserType.Client || client.Id != Client.Id || SolicitationEndDate.HasValue)
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Canceled;
             DeletedAt = DateTime.Now;
             Activate = false;
 
-            SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
-        }
-
-        public void Approve()
-        {
-            if (Status != StatusSolicitation.InReview || Client.Type != UserType.Client)
-                throw new DomainException("Status Solicitation is Invalid");
-
-            Status = StatusSolicitation.Approve;
-            SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
-        }
-
-        public void AcessorAccept(Guid accessorId, UserType type)
-        {
-            if (( Status != StatusSolicitation.OnHold && Status != StatusSolicitation.Reject ) || type == UserType.Client || accessorId == Guid.Empty )
-                throw new DomainException("Status Solicitation is Invalid");
-
-            Status = StatusSolicitation.Accept;
-            AccessorId = accessorId;
-            SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Accessor));
-        }
-
-        public void ProviderAccept(Provider provider)
-        {
-            if (Status != StatusSolicitation.OnHold || Client.Type == UserType.Client || provider == null)
-                throw new DomainException("Status Solicitation is Invalid");
-
-            Status = StatusSolicitation.Accept;
-            Provider = provider;
-            SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Provider));
-        }
-
-
-
-        public void Reject(string reason)
-        {
-            if (Status != StatusSolicitation.InReview || string.IsNullOrEmpty(reason) || Client.Type != UserType.Client)
-                throw new DomainException("Status Solicitation is Invalid");
-
-            Status = StatusSolicitation.Reject;
-            SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
-        }
-
-        public void Send()
-        {
-            if(Status != StatusSolicitation.Accept || Client.Type == UserType.Client )
-                throw new DomainException("Status Solicitation is Invalid");
-
-            Status = StatusSolicitation.InReview;
-            SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Accessor));
+            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
         }
 
         private void AddRooms(List<Room> rooms)
