@@ -19,6 +19,7 @@ namespace Accessor.Planner.API.Controllers
             _clientService = clientService ?? throw new ArgumentNullException(nameof(clientService));
         }
 
+
         [HttpGet]
         [Route("me/{id:guid}")]
         public async Task<IActionResult> Get(Guid? id)
@@ -59,6 +60,18 @@ namespace Accessor.Planner.API.Controllers
             await _clientService.Create(clientDTO.ToClient());
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("type/{type:int}")]
+        public async Task<IActionResult> GetByUserType(int type)
+        {
+            var clients = await _clientService.GetAllByType(TransformDataEnums.GetTypeUser(type));
+
+            if (clients == null || clients.Count == 0)
+                return NotFound();
+
+            return Ok(clients.ToViewModel());
         }
 
 

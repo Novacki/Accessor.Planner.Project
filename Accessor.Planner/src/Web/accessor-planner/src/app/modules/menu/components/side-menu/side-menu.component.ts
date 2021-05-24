@@ -4,7 +4,7 @@ import { PoBreadcrumb, PoBreadcrumbItem, PoMenuItem } from '@po-ui/ng-components
 import { getMenuByUser } from './menu-items.model';
 import { filter } from 'rxjs/operators';
 import { BreadcrumbService } from 'src/app/Modules/shared/services/breadcrumb.service';
-import { ClientDataService } from 'src/app/modules/shared/services/client-data.service';
+import { ClientService } from 'src/app/modules/shared/services/client.service';
 
 @Component({
   selector: 'app-side-menu',
@@ -15,7 +15,7 @@ export class SideMenuComponent implements OnInit {
 
   constructor(private breadcrumbService: BreadcrumbService, private router: Router, 
     private activatedRoute: ActivatedRoute,
-    private clientDataService: ClientDataService) {}
+    private clientService: ClientService) {}
 
   public poBreadcrumb: PoBreadcrumb = { items: [ { label:'Accessor Planner' } ] };
   public menus: Array<PoMenuItem>;
@@ -30,7 +30,7 @@ export class SideMenuComponent implements OnInit {
 
     let user = JSON.parse(localStorage.getItem('auth'));
     
-    this.clientDataService.get(user.userId).subscribe(client => {
+    this.clientService.getByUserId(user.userId).subscribe(client => {
       localStorage.setItem('client', JSON.stringify(client));
       this.menus = getMenuByUser.get(client.type);
       this.loading = false;

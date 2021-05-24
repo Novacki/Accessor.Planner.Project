@@ -10,8 +10,9 @@ const commomMenus: Array<PoMenuItem> =  [
 
 const clientMenus: Array<PoMenuItem> = commomMenus.concat([
     { label: 'Solicitações', icon: 'po-icon po-icon-list', shortLabel: 'Solicitação', subItems: [
-      { label: 'Em Espera', link:'solicitations' },
-      { label: 'Aceitas', link:'' },
+      { label: 'Em Espera', link:'solicitations/on-hold' },
+      { label: 'Aceitas', link:'solicitations/accepted' },
+      { label: 'Retornadas', link:'solicitations/returned' },
       { label: 'Aprovadas', link:'' },
       { label: 'Recusadas', link:'' },
       { label: 'Canceladas', link:'' },

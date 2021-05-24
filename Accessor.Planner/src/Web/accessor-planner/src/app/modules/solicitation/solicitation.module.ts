@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SolicitationFormComponent } from './components/solicitation-form/solicitation-form.component';
-import { IndexComponent } from './pages/index/index.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { routes } from './solicitation.routes';
@@ -9,10 +8,15 @@ import { ModalRoomComponent } from './components/solicitation-form/modal-room/mo
 import { ModalFurnitureComponent } from './components/solicitation-form/modal-room/modal-furniture/modal-furniture.component';
 import { SolicitationTableComponent } from './components/solicitation-table/solicitation-table.component';
 
+import { SolicitationOnHoldComponent } from './pages/client/solicitation-on-hold/solicitation-on-hold.component';
+import { SolicitationAcceptedComponent } from './pages/client/solicitation-accepted/solicitation-accepted.component';
+import { SolicitationReturnedComponent } from './pages/client/solicitation-returned/solicitation-returned.component';
+
+
 
 
 @NgModule({
-  declarations: [SolicitationFormComponent, IndexComponent, ModalRoomComponent, ModalFurnitureComponent, SolicitationTableComponent],
+  declarations: [SolicitationFormComponent, ModalRoomComponent, ModalFurnitureComponent, SolicitationTableComponent, SolicitationOnHoldComponent, SolicitationAcceptedComponent, SolicitationReturnedComponent],
   imports: [
     CommonModule,
     SharedModule,

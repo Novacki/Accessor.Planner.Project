@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IndexComponent } from './index.component';
+import { SolicitationOnHoldComponent } from './solicitation-on-hold.component';
 
-describe('IndexComponent', () => {
-  let component: IndexComponent;
-  let fixture: ComponentFixture<IndexComponent>;
+describe('SolicitationOnHoldComponent', () => {
+  let component: SolicitationOnHoldComponent;
+  let fixture: ComponentFixture<SolicitationOnHoldComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IndexComponent ]
+      declarations: [ SolicitationOnHoldComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IndexComponent);
+    fixture = TestBed.createComponent(SolicitationOnHoldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
