@@ -7,7 +7,6 @@ import { SolicitationReturnedComponent } from "./pages/client/solicitation-retur
 
 
 export const routes: Routes = [
-    { path: '', data: { breadcrumb: 'Solicitações em Espera' }, component: SolicitationOnHoldComponent },
     { path: 'on-hold', data: { breadcrumb: 'Solicitações em Espera' }, component: SolicitationOnHoldComponent },
     { path: 'new-solicitation', data: { breadcrumb: 'Nova Solicitação' }, component: SolicitationFormComponent },
     { path: 'accepted', data: { breadcrumb: 'Solicitações Aceitas' }, component: SolicitationAcceptedComponent },

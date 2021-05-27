@@ -2,10 +2,6 @@
     width: 100%;
 }
 
-::ng-deep .po-table-header-fixed-inner {
-    color: brown;
-}
-
 .footer {
     margin-top: 4%;
 }
@@ -30,14 +26,6 @@
     color: brown;
     border-color: brown;
     background-color: white;
-}
-
-::ng-deep .po-table-main-container::-webkit-scrollbar-thumb{
-    background-color: brown;
-}
-
-::ng-deep .po-table-container-fixed-inner::-webkit-scrollbar-thumb {
-    background-color: brown;
 }
 
 ::ng-deep .po-icon.po-icon-delete:before {

@@ -6,20 +6,23 @@ import { RouterModule } from '@angular/router';
 import { routes } from './solicitation.routes';
 import { ModalRoomComponent } from './components/solicitation-form/modal-room/modal-room.component';
 import { ModalFurnitureComponent } from './components/solicitation-form/modal-room/modal-furniture/modal-furniture.component';
-import { SolicitationTableComponent } from './components/solicitation-table/solicitation-table.component';
+
 
 import { SolicitationOnHoldComponent } from './pages/client/solicitation-on-hold/solicitation-on-hold.component';
 import { SolicitationAcceptedComponent } from './pages/client/solicitation-accepted/solicitation-accepted.component';
 import { SolicitationReturnedComponent } from './pages/client/solicitation-returned/solicitation-returned.component';
+import { SolicitationOperationComponent } from './components/solicitation-operation/solicitation-operation.component';
+import { PoAccordionModule } from '@po-ui/ng-components';
 
 
 
 
 @NgModule({
-  declarations: [SolicitationFormComponent, ModalRoomComponent, ModalFurnitureComponent, SolicitationTableComponent, SolicitationOnHoldComponent, SolicitationAcceptedComponent, SolicitationReturnedComponent],
+  declarations: [SolicitationFormComponent, ModalRoomComponent, ModalFurnitureComponent, SolicitationOnHoldComponent, SolicitationAcceptedComponent, SolicitationReturnedComponent, SolicitationOperationComponent],
   imports: [
     CommonModule,
     SharedModule,
+    PoAccordionModule,
     RouterModule.forChild(routes)
   ]
 })

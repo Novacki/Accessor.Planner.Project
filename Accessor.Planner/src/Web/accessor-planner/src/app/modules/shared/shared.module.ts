@@ -11,11 +11,12 @@ import { HttpInterceptorModule } from './Interceptor/http-interceptor.module';
 import { ShowInformationsComponent } from './components/show-informations/show-informations.component';
 import { BreadcrumbService } from './services/breadcrumb.service';
 import { ClientService } from './services/client.service';
+import { TableComponent } from './components/table/table.component';
 
 
 
 @NgModule({
-  declarations: [CardComponent, DividerComponent, FormValidatorDirective, LoadingComponent, ShowInformationsComponent],
+  declarations: [CardComponent, DividerComponent, FormValidatorDirective, LoadingComponent, ShowInformationsComponent, TableComponent],
   imports: [
     CommonModule,
     PoLoadingModule,
@@ -24,7 +25,7 @@ import { ClientService } from './services/client.service';
     PoTableModule,
     HttpInterceptorModule
   ],
-  exports:[CardComponent, DividerComponent, FormValidatorDirective, ReactiveFormsModule, PoLoadingModule, PoModule, LoadingComponent, PoTableModule, ShowInformationsComponent],
+  exports:[CardComponent, DividerComponent, FormValidatorDirective, ReactiveFormsModule, PoLoadingModule, PoModule, LoadingComponent, PoTableModule, ShowInformationsComponent, TableComponent],
   providers:[HttpService, BreadcrumbService, ClientService]
 })
 export class SharedModule { }

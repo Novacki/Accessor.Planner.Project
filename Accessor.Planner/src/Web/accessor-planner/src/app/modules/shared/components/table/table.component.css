@@ -18,3 +18,12 @@
     text-align: center;
     color: brown;
 }
+
+::ng-deep .po-table-main-container::-webkit-scrollbar-thumb{
+    background-color: brown;
+}
+
+::ng-deep .po-modal-body::-webkit-scrollbar-thumb, .po-modal::-webkit-scrollbar-thumb {
+    background-color: brown;
+}
+

@@ -10,6 +10,8 @@ namespace Accessor.Planner.API.Application.Model.ViewModel
         public Guid Id { get; set; }
         public Guid? AccessorId { get; set; }
         public int Status { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         public ProviderViewModel Provider { get; set; }
         public FullDataClientViewModel Client { get; set; }
         public List<RoomViewModel> Rooms { get; set; }

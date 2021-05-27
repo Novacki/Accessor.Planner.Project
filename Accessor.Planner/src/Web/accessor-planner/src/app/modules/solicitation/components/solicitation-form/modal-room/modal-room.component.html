@@ -36,9 +36,7 @@
             <app-modal-furniture (addFurniture)="addFurniture($event)"></app-modal-furniture>
         </div>
         <div class="table-room">
-            <po-table p-height="400" p-hide-columns-manager p-sort="true" [p-items]="getItems()"
-                [p-columns]="getColumns()" [p-striped]="true">
-            </po-table>
+            <app-table [height]="400" [columns]="getColumns()" [items]="getItems()"></app-table>
         </div>
     </form>
 </po-modal>

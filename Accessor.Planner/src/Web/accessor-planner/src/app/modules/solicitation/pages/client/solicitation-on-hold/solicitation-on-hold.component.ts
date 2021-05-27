@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { PoTableColumn } from '@po-ui/ng-components';
+import { DatePipe } from '@angular/common';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { PoModalAction, PoModalComponent, PoTableColumn } from '@po-ui/ng-components';
 import { solicitationStatusLabel, StatusSolicitation } from 'src/app/modules/shared/enum/status-solicitation';
 import { UserType } from 'src/app/modules/shared/enum/user-type';
+import { DateFormat } from 'src/app/modules/shared/functions/date-format';
+import { Room } from 'src/app/modules/shared/model/room.model';
 import { Solicitation } from 'src/app/modules/shared/model/solicitation.model';
+import { SolicitationOperationComponent } from '../../../components/solicitation-operation/solicitation-operation.component';
+import { TransformDataColumns } from '../../../functions/transform-data-columns.function';
+import { RoomColumn } from '../../../model/room-column.model';
 import { SolicitationColumn } from '../../../model/solicitation-column.model';
 import { SolicitationFilter } from '../../../model/solicitation-filter.model';
 import { SolicitationService } from '../../../services/solicitation.service';
@@ -19,6 +25,8 @@ export class SolicitationOnHoldComponent implements OnInit {
     status: StatusSolicitation.onHold,
     userType: UserType.client
   }
+
+  @ViewChild('modal') modal: SolicitationOperationComponent;
 
   constructor(private solicitationService: SolicitationService) { }
 
@@ -39,7 +47,9 @@ export class SolicitationOnHoldComponent implements OnInit {
   public getColumns(): Array<PoTableColumn> {
     return [
       { property: 'status', label: 'Status', width: '15%' },
-      { property: 'rooms', label: 'Número de Comodos', width: '15%' },
+      { property: 'quantityRooms', label: 'Número de Comodos', width: '15%' },
+      { property: 'createdAt', label: 'Data de Criação', width: '15%' },
+      { property: 'updatedAt', label: 'Data de Atualização', width: '15%' },
       {
         property: 'options',
         label: 'Opções',
@@ -55,7 +65,8 @@ export class SolicitationOnHoldComponent implements OnInit {
             icon: 'po-icon po-icon-eye',
             tooltip: 'Visualizar',
             value: 'view',
-          },
+            action: this.openModalOperation.bind(this)
+          }
         ]
       }
     ]
@@ -64,8 +75,14 @@ export class SolicitationOnHoldComponent implements OnInit {
 
   public getItems(): SolicitationColumn[] {
     return this.solicitations.map(solicitation => {
-      return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), rooms: solicitation.rooms.length, options: ['edit', 'view'] }
+      return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), 
+        quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
     });
-
   }
+  
+  private openModalOperation(row: SolicitationColumn): void {
+    this.modal.openModal(row);
+  }
+
+ 
 }

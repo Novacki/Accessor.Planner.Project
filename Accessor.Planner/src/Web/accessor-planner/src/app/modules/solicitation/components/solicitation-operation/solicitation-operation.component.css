@@ -1,0 +1,46 @@
+::ng-deep .po-accordion-item-header-title {
+    color: maroon;
+    text-align: center;
+}
+
+::ng-deep .po-icon.po-icon-arrow-down:before, .po-icon.po-icon-arrow-down:before {
+    color: maroon; 
+}
+
+.po-icon.po-icon-upload-cloud:before {
+    font-size: 45px;
+    color: maroon;
+    margin-left: 100%;
+}
+
+.po-icon.po-icon-history:before {
+    font-size: 45px;
+    color: maroon;
+    margin-left: 100%;
+}
+
+.header-view {
+    padding: 3%;
+    margin: 1%;
+    border-radius: 6px;
+    font-size: 15px;
+    color: white;
+    background-color: rgba(178,34,34,0.6);
+}
+
+.strong-label {
+    font-weight: bolder;
+    color: maroon;
+    font-size: 16px;
+}
+
+.divider {
+    margin-top: 2%;
+    padding: 0 1%;
+}
+
+.accordion-style {
+    margin: 3% 0;
+    padding: 0 1%;
+}
+

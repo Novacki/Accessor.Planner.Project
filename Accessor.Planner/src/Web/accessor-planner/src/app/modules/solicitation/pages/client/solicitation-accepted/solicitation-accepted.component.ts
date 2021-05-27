@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PoTableColumn } from '@po-ui/ng-components';
 import { solicitationStatusLabel, StatusSolicitation } from 'src/app/modules/shared/enum/status-solicitation';
 import { UserType } from 'src/app/modules/shared/enum/user-type';
+import { DateFormat } from 'src/app/modules/shared/functions/date-format';
 import { Client } from 'src/app/modules/shared/model/client.model';
 import { Solicitation } from 'src/app/modules/shared/model/solicitation.model';
 import { ClientService } from 'src/app/Modules/shared/services/client.service';
@@ -47,8 +48,10 @@ export class SolicitationAcceptedComponent implements OnInit {
   public getColumns(): Array<PoTableColumn> {
     return [
       { property: 'status', label: 'Status', width: '15%' },
-      { property: 'rooms', label: 'Número de Comodos', width: '15%' },
+      { property: 'quantityRooms', label: 'Número de Comodos', width: '15%' },
       { property: 'accessor', label: 'Acessor', width: '15%' },
+      { property: 'createdAt', label: 'Data de Criação', width: '15%' },
+      { property: 'updatedAt', label: 'Data de Atualização', width: '15%' },
       {
         property: 'options',
         label: 'Opções',
@@ -72,7 +75,8 @@ export class SolicitationAcceptedComponent implements OnInit {
 
   public getItems(): SolicitationColumn[] {
     return this.solicitations.map(solicitation => {
-      return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status),accessor: this.getNameAcessorById(solicitation.accessorId), rooms: solicitation.rooms.length, options: ['edit', 'view'] }
+      return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status),accessor: this.getNameAcessorById(solicitation.accessorId), 
+        quantityRooms: solicitation.rooms.length,createdAt: DateFormat.format(solicitation.createdAt), updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
     });
 
   }

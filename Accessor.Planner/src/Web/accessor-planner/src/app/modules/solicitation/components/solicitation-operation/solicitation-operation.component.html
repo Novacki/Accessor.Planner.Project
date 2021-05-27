@@ -1,0 +1,120 @@
+<po-modal class="view-modal" [p-hide-close]="true" [p-primary-action]="close">
+    <div *ngIf="solicitation">
+        <div class="header-view">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="strong-label">Status</label>
+                </div>
+                <div class="col-md-3">
+                    <label class="strong-label">Data de Criação</label>
+                </div>
+                <div class="col-md-3">
+                    <label class="strong-label">Data de Atualização</label>
+                </div>
+                <div class="col-md-3">
+                    <label class="strong-label">Data de Entrega</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>{{ solicitation.status }}</label>
+                </div>
+                <div class="col-md-3">
+                    <label>{{ solicitation.createdAt }}</label>
+                </div>
+                <div class="col-md-3">
+                    <label>{{ solicitation.updatedAt }}</label>
+                </div>
+                <div class="col-md-3">
+                    <label></label>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-3">
+                    <label class="strong-label">Acessor</label>
+                </div>
+                <div class="col-md-3">
+                    <label class="strong-label">Fornecedor</label>
+                </div>
+                <div class="col-md-3">
+                    <span class="po-icon po-icon-upload-cloud"></span>
+                </div>
+                <div class="col-md-3">
+                    <span class="po-icon po-icon-history"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label></label>
+                </div>
+                <div class="col-md-3">
+                    <label></label>
+                </div>
+            </div>
+        </div>
+        <div class="divider">
+            <app-divider [title]="'Comodos'"></app-divider>
+        </div>
+        <app-table [height]="400" [columns]="getColumnsRoom()" [items]="solicitation.rooms"></app-table>
+    </div>
+</po-modal>
+<app-show-informations  #information>
+    <div *ngIf="roomColumn">
+        <app-divider [title]="roomColumn.name"></app-divider>
+        <div class="header-view">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="strong-label">Comodo</label>
+                </div>
+                <div class="col-md-6">
+                    <label class="strong-label">Metragem</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>{{ roomColumn.name }}</label>
+                </div>
+                <div class="col-md-6">
+                    <label>{{ roomColumn.metreage }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-style">
+            <div class="divider">
+                <app-divider [title]="'Móveis'"></app-divider>
+            </div>
+            <po-accordion>
+                <po-accordion-item *ngFor="let furniture of roomColumn.furnitures" [p-label]="furniture.name">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label class="strong-label">Móvel</label>  
+                        </div>
+                        <div class="col-md-3">
+                            <label class="strong-label">Altura</label>  
+                        </div>
+                        <div class="col-md-3">
+                            <label class="strong-label">Largura</label>  
+                        </div>
+                        <div class="col-md-3">
+                            <label class="strong-label">Comprimento</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>{{ furniture.name }}</label>  
+                        </div>
+                        <div class="col-md-3">
+                            <label>{{ furniture.height }}</label>  
+                        </div>
+                        <div class="col-md-3">
+                            <label>{{ furniture.width }}</label>  
+                        </div>
+                        <div class="col-md-3">
+                            <label>{{ furniture.length }}</label>
+                        </div>
+                    </div>
+                </po-accordion-item>
+            </po-accordion>
+        </div>
+    </div>
+</app-show-informations>
