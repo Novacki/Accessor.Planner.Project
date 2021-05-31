@@ -13,15 +13,15 @@ import { SolicitationFilter } from '../../../model/solicitation-filter.model';
 import { SolicitationService } from '../../../services/solicitation.service';
 
 @Component({
-  selector: 'app-solicitation-accepted',
-  templateUrl: './solicitation-accepted.component.html',
-  styleUrls: ['./solicitation-accepted.component.css']
+  selector: 'app-solicitation-approved',
+  templateUrl: './solicitation-approved.component.html',
+  styleUrls: ['./solicitation-approved.component.css']
 })
-export class SolicitationAcceptedComponent implements OnInit {
+export class SolicitationApprovedComponent implements OnInit {
 
   private filter: SolicitationFilter = {
     profileContextId: JSON.parse(localStorage.getItem('client')).id,
-    status: StatusSolicitation.accept,
+    status: StatusSolicitation.approve,
     userType: UserType.client
   }
 
@@ -88,4 +88,5 @@ export class SolicitationAcceptedComponent implements OnInit {
   private openModalOperation(row: SolicitationColumn): void {
     this.modal.openModal(row);
   }
+
 }

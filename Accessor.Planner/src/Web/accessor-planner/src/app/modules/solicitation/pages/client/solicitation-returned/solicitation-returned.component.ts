@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PoTableColumn } from '@po-ui/ng-components';
 import { solicitationStatusLabel, StatusSolicitation } from 'src/app/modules/shared/enum/status-solicitation';
 import { UserType } from 'src/app/modules/shared/enum/user-type';
 import { DateFormat } from 'src/app/modules/shared/functions/date-format';
+import { Client } from 'src/app/modules/shared/model/client.model';
 import { Solicitation } from 'src/app/modules/shared/model/solicitation.model';
+import { ClientService } from 'src/app/Modules/shared/services/client.service';
+import { SolicitationOperationComponent } from '../../../components/solicitation-operation/solicitation-operation.component';
+import { TransformDataColumns } from '../../../functions/transform-data-columns.function';
 import { SolicitationColumn } from '../../../model/solicitation-column.model';
 import { SolicitationFilter } from '../../../model/solicitation-filter.model';
 import { SolicitationService } from '../../../services/solicitation.service';
@@ -17,21 +21,28 @@ export class SolicitationReturnedComponent implements OnInit {
 
   private filter: SolicitationFilter = {
     profileContextId: JSON.parse(localStorage.getItem('client')).id,
-    status: StatusSolicitation.accept,
+    status: StatusSolicitation.inReview,
     userType: UserType.client
   }
 
-  constructor(private solicitationService: SolicitationService) { }
+  @ViewChild('modal') modal: SolicitationOperationComponent;
+
+  constructor(private solicitationService: SolicitationService, private clientService: ClientService) { }
+  private clients: Client[];
 
   ngOnInit() {
     this.loading = true;
     this.solicitationService.get(this.filter).subscribe(response => {
       this.solicitations = response;
     },
-      error => console.log(error),
-      () => {
-        this.loading = false;
-      });
+    error => console.log(error),
+    () => {
+      this.loading = false;
+    });
+
+    this.clientService.getAllByUserType(UserType.accessor).subscribe(clients => {
+      this.clients = clients;
+    });
   }
 
   public solicitations: Solicitation[];
@@ -51,26 +62,31 @@ export class SolicitationReturnedComponent implements OnInit {
         type: 'icon',
         icons: [
           {
-            icon: 'po-icon po-icon-edit',
-            tooltip: 'Editar',
-            value: 'edit',
-          },
-          {
             icon: 'po-icon po-icon-eye',
             tooltip: 'Visualizar',
             value: 'view',
-          },
+            action: this.openModalOperation.bind(this)
+          }
         ]
       }
     ]
   }
 
-
   public getItems(): SolicitationColumn[] {
-    return this.solicitations.map(solicitation => {
-      return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), 
-        accessor: solicitation.accessorId, provider: solicitation.provider ? solicitation.provider.fantasyName : 'Não Acionado',
-        quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
-    });
+    if(this.solicitations) {
+      return this.solicitations.map(solicitation => {
+        return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), accessor: this.getNameAcessorById(solicitation.accessorId), 
+          quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
+      });
+    }
   }
+
+  private getNameAcessorById(id: string): string {
+    return this.clients.find(c => c.id == id).name;
+  }
+
+  private openModalOperation(row: SolicitationColumn): void {
+    this.modal.openModal(row, StatusSolicitation.inReview, UserType.client);
+  }
+  
 }

@@ -13,12 +13,15 @@ import { SolicitationAcceptedComponent } from './pages/client/solicitation-accep
 import { SolicitationReturnedComponent } from './pages/client/solicitation-returned/solicitation-returned.component';
 import { SolicitationOperationComponent } from './components/solicitation-operation/solicitation-operation.component';
 import { PoAccordionModule } from '@po-ui/ng-components';
-
+import { SolicitationApprovedComponent } from './pages/client/solicitation-approved/solicitation-approved.component';
+import { SolicitationDoneComponent } from './pages/client/solicitation-done/solicitation-done.component';
+import { SolicitationCanceledComponent } from './pages/client/solicitation-canceled/solicitation-canceled.component';
+import { SolicitationRejectedComponent } from './pages/client/solicitation-rejected/solicitation-rejected.component';
 
 
 
 @NgModule({
-  declarations: [SolicitationFormComponent, ModalRoomComponent, ModalFurnitureComponent, SolicitationOnHoldComponent, SolicitationAcceptedComponent, SolicitationReturnedComponent, SolicitationOperationComponent],
+  declarations: [SolicitationFormComponent, ModalRoomComponent, ModalFurnitureComponent, SolicitationOnHoldComponent, SolicitationAcceptedComponent, SolicitationReturnedComponent, SolicitationOperationComponent, SolicitationApprovedComponent, SolicitationDoneComponent, SolicitationCanceledComponent, SolicitationRejectedComponent],
   imports: [
     CommonModule,
     SharedModule,

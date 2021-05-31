@@ -21,7 +21,6 @@
 
 .header-view {
     padding: 3%;
-    margin: 1%;
     border-radius: 6px;
     font-size: 15px;
     color: white;
@@ -35,12 +34,25 @@
 }
 
 .divider {
-    margin-top: 2%;
-    padding: 0 1%;
+    margin: 6% 0 4% 0;
+    padding: 0 0.5%;
+}
+
+.divider-information {
+    margin-bottom: 5%;
+    padding: 0 0.2%;
 }
 
 .accordion-style {
     margin: 3% 0;
     padding: 0 1%;
+}
+
+.description {
+    resize: none
+}
+
+.description-room {
+    padding: 1%;
 }
 

@@ -13,7 +13,8 @@ export class TransformDataColumns {
 
     public static transformFurnituresColumns(furnitures: Furniture[], descriptionIcon?: any, options?: any): FurnitureColumn[] {
         return furnitures.map(furniture => {
-            return {id: furniture.id,  name: furniture.name, height: furniture.height, width: furniture.width ,length: furniture.length, descriptionIcon: descriptionIcon, option: options }
+            return { id: furniture.id,  name: furniture.name, height: furniture.height, width: furniture.width ,length: furniture.length, 
+                descriptionIcon: descriptionIcon, description: furniture.description, option: options }
         });
     }
 }

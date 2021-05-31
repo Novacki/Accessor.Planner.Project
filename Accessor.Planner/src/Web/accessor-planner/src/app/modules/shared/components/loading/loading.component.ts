@@ -15,11 +15,9 @@ export class LoadingComponent implements OnInit {
     this.onLoad.next(value);
   }
 
-  public loading: boolean = true;
+  public loading: boolean = false;
   
   ngOnInit(): void {
-    this.onLoad.pipe(debounceTime(2)).subscribe(load => {
-      this.loading = load;
-    });
+ 
   }
 }

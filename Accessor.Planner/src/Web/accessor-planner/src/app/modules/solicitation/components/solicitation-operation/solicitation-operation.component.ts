@@ -1,8 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { PoModalAction, PoModalComponent, PoTableColumn } from '@po-ui/ng-components';
 import { ShowInformationsComponent } from 'src/app/Modules/shared/components/show-informations/show-informations.component';
+import { StatusSolicitation } from 'src/app/modules/shared/enum/status-solicitation';
+import { UserType } from 'src/app/modules/shared/enum/user-type';
 import { RoomColumn } from '../../model/room-column.model';
 import { SolicitationColumn } from '../../model/solicitation-column.model';
+import { SolicitationService } from '../../services/solicitation.service';
 
 @Component({
   selector: 'app-solicitation-operation',
@@ -12,11 +16,15 @@ import { SolicitationColumn } from '../../model/solicitation-column.model';
 export class SolicitationOperationComponent implements OnInit {
 
 
-  constructor() { }
+  constructor(private solicitationService: SolicitationService, private router: Router) { }
 
   @ViewChild('information') information: ShowInformationsComponent;
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
-  
+
+  public status: StatusSolicitation; 
+  public userType: UserType;
+  public statusCompare: StatusSolicitation;
+
   ngOnInit(): void {
   }
   
@@ -35,9 +43,10 @@ export class SolicitationOperationComponent implements OnInit {
     this.poModal.close();
   }
 
-  openModal(row: SolicitationColumn): void {
+  openModal(row: SolicitationColumn, status?: StatusSolicitation, user?: UserType): void {
     this.solicitation = row;
-    console.log(row);
+    this.status = status;
+    this.userType = user;
     this.poModal.open();
   }
 
@@ -66,5 +75,11 @@ export class SolicitationOperationComponent implements OnInit {
   private showInformation(row: RoomColumn): void {
     this.roomColumn = row;
     this.information.poModal.open();
+  }
+
+  public cancel(): void {
+    this.solicitationService.cancel(this.solicitation.id, "string").subscribe(response => {
+      this.closeModal();
+    });
   }
 }

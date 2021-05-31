@@ -10,3 +10,6 @@
     border-color: grey;
 }
 
+::ng-deep .po-icon.po-icon-export:before {
+    color: brown;
+}

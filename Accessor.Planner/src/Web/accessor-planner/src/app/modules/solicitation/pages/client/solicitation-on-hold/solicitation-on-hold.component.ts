@@ -62,8 +62,8 @@ export class SolicitationOnHoldComponent implements OnInit {
             value: 'edit',
           },
           {
-            icon: 'po-icon po-icon-eye',
-            tooltip: 'Visualizar',
+            icon: 'po-icon po-icon-export',
+            tooltip: 'Operações',
             value: 'view',
             action: this.openModalOperation.bind(this)
           }
@@ -74,15 +74,16 @@ export class SolicitationOnHoldComponent implements OnInit {
 
 
   public getItems(): SolicitationColumn[] {
-    return this.solicitations.map(solicitation => {
-      return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), 
-        quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
-    });
+    if(this.solicitations) {
+      return this.solicitations.map(solicitation => {
+        return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), 
+          quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
+      });
+    }
   }
   
   private openModalOperation(row: SolicitationColumn): void {
-    this.modal.openModal(row);
+    this.modal.openModal(row, StatusSolicitation.onHold, UserType.client);
   }
 
- 
 }

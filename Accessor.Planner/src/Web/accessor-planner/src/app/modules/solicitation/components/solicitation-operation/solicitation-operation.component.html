@@ -32,9 +32,15 @@
             <div class="row mt-5">
                 <div class="col-md-3">
                     <label class="strong-label">Acessor</label>
+                    <div>
+                        <label>{{ solicitation.accessor }}</label>
+                    </div>
                 </div>
                 <div class="col-md-3">
                     <label class="strong-label">Fornecedor</label>
+                    <div>
+                        <label>{{ solicitation.provider }}</label>
+                    </div>
                 </div>
                 <div class="col-md-3">
                     <span class="po-icon po-icon-upload-cloud"></span>
@@ -43,24 +49,42 @@
                     <span class="po-icon po-icon-history"></span>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-3">
-                    <label></label>
-                </div>
-                <div class="col-md-3">
-                    <label></label>
-                </div>
-            </div>
         </div>
         <div class="divider">
             <app-divider [title]="'Comodos'"></app-divider>
         </div>
         <app-table [height]="400" [columns]="getColumnsRoom()" [items]="solicitation.rooms"></app-table>
+
+        <div *ngIf="status == 2 && userType == 2" class="po-row po-mt-2 po-mb-3 operation-buttons">
+            <div class="po-md-3">
+                <button class="btn btn-primary form-control" type="button">
+                    Aprovar
+                </button>
+            </div>
+            <div class="po-md-3">
+                <button class="btn btn-default form-control" type="button">
+                    Recusar
+                </button>
+            </div>
+            <div class="po-md-3">
+                <div class="po-md-4">
+                    <po-button (p-click)="cancel()" p-icon="po-icon po-icon-delete" p-label="Cancelar solicitação" p-type="danger"></po-button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="status == 1 && userType == 2" class="po-row po-mt-2 po-mb-3 operation-buttons">
+            <div class="po-md-4">
+                <po-button (p-click)="cancel()" p-icon="po-icon po-icon-delete" p-label="Cancelar solicitação" p-type="danger"></po-button>
+            </div>
+        </div>
     </div>
 </po-modal>
-<app-show-informations  #information>
+<app-show-informations #information>
     <div *ngIf="roomColumn">
-        <app-divider [title]="roomColumn.name"></app-divider>
+        <div class="divider-information">
+            <app-divider [title]="roomColumn.name"></app-divider>
+        </div>
         <div class="header-view">
             <div class="row mb-3">
                 <div class="col-md-6">
@@ -79,21 +103,26 @@
                 </div>
             </div>
         </div>
+        <div class="po-row mt-3 description-room">
+            <label class="strong-label form-label">Descrição</label>
+            <textarea readonly [value]="roomColumn.description" class="form-control description" id="description"
+                rows="8"></textarea>
+        </div>
         <div class="accordion-style">
-            <div class="divider">
+            <div class="divider-information">
                 <app-divider [title]="'Móveis'"></app-divider>
             </div>
             <po-accordion>
                 <po-accordion-item *ngFor="let furniture of roomColumn.furnitures" [p-label]="furniture.name">
-                    <div class="row">
+                    <div class="row mt-3">
                         <div class="col-md-3">
-                            <label class="strong-label">Móvel</label>  
+                            <label class="strong-label">Móvel</label>
                         </div>
                         <div class="col-md-3">
-                            <label class="strong-label">Altura</label>  
+                            <label class="strong-label">Altura</label>
                         </div>
                         <div class="col-md-3">
-                            <label class="strong-label">Largura</label>  
+                            <label class="strong-label">Largura</label>
                         </div>
                         <div class="col-md-3">
                             <label class="strong-label">Comprimento</label>
@@ -101,17 +130,22 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3">
-                            <label>{{ furniture.name }}</label>  
+                            <label>{{ furniture.name }}</label>
                         </div>
                         <div class="col-md-3">
-                            <label>{{ furniture.height }}</label>  
+                            <label>{{ furniture.height }}</label>
                         </div>
                         <div class="col-md-3">
-                            <label>{{ furniture.width }}</label>  
+                            <label>{{ furniture.width }}</label>
                         </div>
                         <div class="col-md-3">
                             <label>{{ furniture.length }}</label>
                         </div>
+                    </div>
+                    <div class="po-row mt-3 mb-3">
+                        <label class="strong-label form-label">Descrição</label>
+                        <textarea readonly [value]="furniture.description" class="form-control description" id="description"
+                            rows="8"></textarea>
                     </div>
                 </po-accordion-item>
             </po-accordion>

@@ -13,10 +13,10 @@ const clientMenus: Array<PoMenuItem> = commomMenus.concat([
       { label: 'Em Espera', link:'solicitations/on-hold' },
       { label: 'Aceitas', link:'solicitations/accepted' },
       { label: 'Retornadas', link:'solicitations/returned' },
-      { label: 'Aprovadas', link:'' },
-      { label: 'Recusadas', link:'' },
-      { label: 'Canceladas', link:'' },
-      { label: 'Encerradas', link:'' }
+      { label: 'Aprovadas', link:'solicitations/approved' },
+      { label: 'Recusadas', link:'solicitations/rejected' },
+      { label: 'Canceladas', link:'solicitations/canceled' },
+      { label: 'Encerradas', link:'solicitations/done' }
     ]},
     { label: 'Acessores', icon: 'po-icon po-icon-weight', shortLabel: 'Acessor', subItems: [
       { label: 'Todos' },
