@@ -5,4 +5,4 @@
 </div>
 <app-table [height]="610" [columns]="getColumns()" [items]="getItems()"></app-table>
 
-<app-solicitation-operation #modal></app-solicitation-operation>
+<app-solicitation-operation #modal (change)="getSolicitations()"></app-solicitation-operation>

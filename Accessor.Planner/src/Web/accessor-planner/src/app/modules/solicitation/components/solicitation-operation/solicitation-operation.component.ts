@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { PoModalAction, PoModalComponent, PoTableColumn } from '@po-ui/ng-components';
 import { ShowInformationsComponent } from 'src/app/Modules/shared/components/show-informations/show-informations.component';
@@ -6,6 +6,7 @@ import { StatusSolicitation } from 'src/app/modules/shared/enum/status-solicitat
 import { UserType } from 'src/app/modules/shared/enum/user-type';
 import { RoomColumn } from '../../model/room-column.model';
 import { SolicitationColumn } from '../../model/solicitation-column.model';
+import { SolicitationFilter } from '../../model/solicitation-filter.model';
 import { SolicitationService } from '../../services/solicitation.service';
 
 @Component({
@@ -23,13 +24,13 @@ export class SolicitationOperationComponent implements OnInit {
 
   public status: StatusSolicitation; 
   public userType: UserType;
-  public statusCompare: StatusSolicitation;
-
+  private filter: SolicitationFilter;
   ngOnInit(): void {
   }
   
   public solicitation: SolicitationColumn;
   public roomColumn: RoomColumn;
+  @Output() public change: EventEmitter<void> = new EventEmitter();
 
   close: PoModalAction = {
     action: () => {
@@ -43,10 +44,10 @@ export class SolicitationOperationComponent implements OnInit {
     this.poModal.close();
   }
 
-  openModal(row: SolicitationColumn, status?: StatusSolicitation, user?: UserType): void {
+  openModal(row: SolicitationColumn,  filter?: SolicitationFilter): void {
     this.solicitation = row;
-    this.status = status;
-    this.userType = user;
+    this.status = filter.status;
+    this.userType = filter.userType;
     this.poModal.open();
   }
 
@@ -79,7 +80,31 @@ export class SolicitationOperationComponent implements OnInit {
 
   public cancel(): void {
     this.solicitationService.cancel(this.solicitation.id, "string").subscribe(response => {
-      this.closeModal();
+      this.emitChangeOperation();
     });
   }
+
+  public approve(): void {
+    this.solicitationService.approve(this.solicitation.id).subscribe(response => {
+      this.emitChangeOperation();
+    });
+  }
+
+  public reject(): void {
+    this.solicitationService.reject(this.solicitation.id, "string").subscribe(response => {
+      this.emitChangeOperation();
+    });
+  }
+
+  public accept(): void {
+    this.solicitationService.accept(this.solicitation.id).subscribe(response => {
+      this.emitChangeOperation();
+    });
+  }
+
+  private emitChangeOperation(): void {
+    this.change.emit();
+    this.closeModal();
+  }
+
 }

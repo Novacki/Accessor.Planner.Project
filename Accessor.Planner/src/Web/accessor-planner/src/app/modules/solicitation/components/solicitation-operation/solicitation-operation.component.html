@@ -31,10 +31,18 @@
             </div>
             <div class="row mt-5">
                 <div class="col-md-3">
-                    <label class="strong-label">Acessor</label>
-                    <div>
-                        <label>{{ solicitation.accessor }}</label>
+                    <div *ngIf="userType == 1; else client">
+                        <label class="strong-label">Cliente</label>
+                        <div>
+                            <label>{{ solicitation.client }}</label>
+                        </div>
                     </div>
+                    <ng-template #client>
+                        <label class="strong-label">Acessor</label>
+                        <div>
+                            <label>{{ solicitation.accessor }}</label>
+                        </div>
+                    </ng-template>
                 </div>
                 <div class="col-md-3">
                     <label class="strong-label">Fornecedor</label>
@@ -55,27 +63,32 @@
         </div>
         <app-table [height]="400" [columns]="getColumnsRoom()" [items]="solicitation.rooms"></app-table>
 
-        <div *ngIf="status == 2 && userType == 2" class="po-row po-mt-2 po-mb-3 operation-buttons">
-            <div class="po-md-3">
-                <button class="btn btn-primary form-control" type="button">
-                    Aprovar
-                </button>
+        <div *ngIf="status == 2 && userType == 2" class="po-row po-mt-2 po-mb-3  operation-buttons">
+            <div class="po-md-4">
+                <po-button (p-click)="approve()"  p-icon="po-icon po-icon-ok" p-label="Aprovar solicitação"
+                    p-type="primary"></po-button>
             </div>
-            <div class="po-md-3">
-                <button class="btn btn-default form-control" type="button">
-                    Recusar
-                </button>
+            <div class="po-md-4">
+                <po-button (p-click)="reject()" p-icon="po-icon po-icon-close" p-label="Recusar solicitação"
+                    p-type="danger"></po-button>
             </div>
-            <div class="po-md-3">
-                <div class="po-md-4">
-                    <po-button (p-click)="cancel()" p-icon="po-icon po-icon-delete" p-label="Cancelar solicitação" p-type="danger"></po-button>
-                </div>
+            <div class="po-md-4">
+                <po-button (p-click)="cancel()" class="cancel" p-label="Cancelar solicitação"
+                    p-type="danger"></po-button>
             </div>
         </div>
 
         <div *ngIf="status == 1 && userType == 2" class="po-row po-mt-2 po-mb-3 operation-buttons">
             <div class="po-md-4">
-                <po-button (p-click)="cancel()" p-icon="po-icon po-icon-delete" p-label="Cancelar solicitação" p-type="danger"></po-button>
+                <po-button (p-click)="cancel()" class="cancel" p-label="Cancelar solicitação"
+                    p-type="danger"></po-button>
+            </div>
+        </div>
+
+        <div *ngIf="status == 1 && userType == 1" class="po-row po-mt-2 po-mb-3  operation-buttons">
+            <div class="po-md-4">
+                <po-button (p-click)="accept()"  p-icon="po-icon po-icon-ok" p-label="Aceitar solicitação"
+                    p-type="primary"></po-button>
             </div>
         </div>
     </div>
@@ -144,8 +157,8 @@
                     </div>
                     <div class="po-row mt-3 mb-3">
                         <label class="strong-label form-label">Descrição</label>
-                        <textarea readonly [value]="furniture.description" class="form-control description" id="description"
-                            rows="8"></textarea>
+                        <textarea readonly [value]="furniture.description" class="form-control description"
+                            id="description" rows="8"></textarea>
                     </div>
                 </po-accordion-item>
             </po-accordion>

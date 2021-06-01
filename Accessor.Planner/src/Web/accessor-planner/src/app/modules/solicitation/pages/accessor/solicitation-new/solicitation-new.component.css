@@ -1,3 +1,11 @@
+::ng-deep .po-icon.po-icon-export:before {
+    color: brown;
+}
+
+::ng-deep .po-page-content::-webkit-scrollbar-thumb {
+    background-color: brown;
+}
+
 ::ng-deep .po-button-primary {
     color:white;
     background-color: brown;
@@ -8,8 +16,4 @@
     color:white;
     background-color: grey;
     border-color: grey;
-}
-
-::ng-deep .po-icon.po-icon-export:before {
-    color: brown;
 }

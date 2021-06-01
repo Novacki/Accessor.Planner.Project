@@ -80,7 +80,7 @@ export class SolicitationCanceledComponent implements OnInit {
   }
   
   private openModalOperation(row: SolicitationColumn): void {
-    this.modal.openModal(row, StatusSolicitation.onHold, UserType.client);
+    this.modal.openModal(row, this.filter);
   }
 
 }

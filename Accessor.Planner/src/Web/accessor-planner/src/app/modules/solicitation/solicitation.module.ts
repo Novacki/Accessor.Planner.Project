@@ -17,11 +17,13 @@ import { SolicitationApprovedComponent } from './pages/client/solicitation-appro
 import { SolicitationDoneComponent } from './pages/client/solicitation-done/solicitation-done.component';
 import { SolicitationCanceledComponent } from './pages/client/solicitation-canceled/solicitation-canceled.component';
 import { SolicitationRejectedComponent } from './pages/client/solicitation-rejected/solicitation-rejected.component';
+import { SolicitationNewComponent } from './pages/accessor/solicitation-new/solicitation-new.component';
+import { SolicitationToSendComponent } from './pages/accessor/solicitation-to-send/solicitation-to-send.component';
 
 
 
 @NgModule({
-  declarations: [SolicitationFormComponent, ModalRoomComponent, ModalFurnitureComponent, SolicitationOnHoldComponent, SolicitationAcceptedComponent, SolicitationReturnedComponent, SolicitationOperationComponent, SolicitationApprovedComponent, SolicitationDoneComponent, SolicitationCanceledComponent, SolicitationRejectedComponent],
+  declarations: [SolicitationFormComponent, ModalRoomComponent, ModalFurnitureComponent, SolicitationOnHoldComponent, SolicitationAcceptedComponent, SolicitationReturnedComponent, SolicitationOperationComponent, SolicitationApprovedComponent, SolicitationDoneComponent, SolicitationCanceledComponent, SolicitationRejectedComponent, SolicitationNewComponent, SolicitationToSendComponent],
   imports: [
     CommonModule,
     SharedModule,

@@ -38,4 +38,8 @@ export class SolicitationService {
   public cancel(id: string, reason: string): Observable<string> {
     return this.http.put<string>(`Solicitations/${this.user.userId}/cancel/${id}`);
   }
+
+  public accept(id: string): Observable<string> {
+    return this.http.put<string>(`Solicitations/${this.user.userId}/accept/${id}`);
+  }
 }

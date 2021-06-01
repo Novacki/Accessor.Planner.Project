@@ -32,13 +32,7 @@ export class SolicitationReturnedComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.solicitationService.get(this.filter).subscribe(response => {
-      this.solicitations = response;
-    },
-    error => console.log(error),
-    () => {
-      this.loading = false;
-    });
+    this.getSolicitations();
 
     this.clientService.getAllByUserType(UserType.accessor).subscribe(clients => {
       this.clients = clients;
@@ -62,8 +56,8 @@ export class SolicitationReturnedComponent implements OnInit {
         type: 'icon',
         icons: [
           {
-            icon: 'po-icon po-icon-eye',
-            tooltip: 'Visualizar',
+            icon: 'po-icon po-icon-export',
+            tooltip: 'Operações',
             value: 'view',
             action: this.openModalOperation.bind(this)
           }
@@ -73,7 +67,7 @@ export class SolicitationReturnedComponent implements OnInit {
   }
 
   public getItems(): SolicitationColumn[] {
-    if(this.solicitations) {
+    if(this.solicitations && this.clients) {
       return this.solicitations.map(solicitation => {
         return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), accessor: this.getNameAcessorById(solicitation.accessorId), 
           quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
@@ -86,7 +80,17 @@ export class SolicitationReturnedComponent implements OnInit {
   }
 
   private openModalOperation(row: SolicitationColumn): void {
-    this.modal.openModal(row, StatusSolicitation.inReview, UserType.client);
+    this.modal.openModal(row, this.filter);
+  }
+
+  public getSolicitations(): void {
+    this.solicitationService.get(this.filter).subscribe(response => {
+      this.solicitations = response;
+    },
+    error => console.log(error),
+    () => {
+      this.loading = false;
+    });
   }
   
 }

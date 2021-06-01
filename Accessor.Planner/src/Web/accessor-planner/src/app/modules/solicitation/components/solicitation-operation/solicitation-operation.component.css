@@ -7,6 +7,22 @@
     color: maroon; 
 }
 
+::ng-deep .po-icon.po-icon-arrow-down:before {
+    color: white;
+}
+
+.cancel ::ng-deep .po-button {
+    color:white;
+    background-color: red;
+    border-color: red;
+}
+
+.cancel ::ng-deep .po-button:hover {
+    color:white;
+    background-color: gray;
+    border-color: gray;
+}
+
 .po-icon.po-icon-upload-cloud:before {
     font-size: 45px;
     color: maroon;

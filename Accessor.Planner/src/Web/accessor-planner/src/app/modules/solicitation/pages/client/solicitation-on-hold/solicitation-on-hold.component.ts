@@ -32,13 +32,7 @@ export class SolicitationOnHoldComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.solicitationService.get(this.filter).subscribe(response => {
-      this.solicitations = response;
-    },
-      error => console.log(error),
-      () => {
-        this.loading = false;
-      });
+    this.getSolicitations();
   }
 
   public solicitations: Solicitation[];
@@ -83,7 +77,16 @@ export class SolicitationOnHoldComponent implements OnInit {
   }
   
   private openModalOperation(row: SolicitationColumn): void {
-    this.modal.openModal(row, StatusSolicitation.onHold, UserType.client);
+    this.modal.openModal(row, this.filter);
   }
 
+  public getSolicitations(): void {
+    this.solicitationService.get(this.filter).subscribe(response => {
+      this.solicitations = response;
+    },
+    error => console.log(error),
+    () => {
+      this.loading = false;
+    });
+  }
 }
