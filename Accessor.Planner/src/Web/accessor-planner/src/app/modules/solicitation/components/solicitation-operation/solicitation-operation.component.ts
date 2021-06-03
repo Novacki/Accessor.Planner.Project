@@ -25,11 +25,13 @@ export class SolicitationOperationComponent implements OnInit {
   public status: StatusSolicitation; 
   public userType: UserType;
   private filter: SolicitationFilter;
+  public loading: boolean = false;
   ngOnInit(): void {
   }
   
   public solicitation: SolicitationColumn;
   public roomColumn: RoomColumn;
+  public buttonActivate: boolean = true;
   @Output() public change: EventEmitter<void> = new EventEmitter();
 
   close: PoModalAction = {
@@ -81,28 +83,64 @@ export class SolicitationOperationComponent implements OnInit {
   public cancel(): void {
     this.solicitationService.cancel(this.solicitation.id, "string").subscribe(response => {
       this.emitChangeOperation();
+    },
+    error => console.log(error),
+    () => {
+      this.buttonActivate = true;
+      this.loading = false;
     });
   }
 
   public approve(): void {
+    this.loading = true;
     this.solicitationService.approve(this.solicitation.id).subscribe(response => {
       this.emitChangeOperation();
+    },
+    error => console.log(error),
+    () => {
+      this.buttonActivate = true;
+      this.loading = false;
     });
   }
 
   public reject(): void {
+    this.loading = true;
     this.solicitationService.reject(this.solicitation.id, "string").subscribe(response => {
       this.emitChangeOperation();
+    },
+    error => console.log(error),
+    () => {
+      this.buttonActivate = true;
+      this.loading = false;
     });
   }
 
   public accept(): void {
+    this.loading = true;
     this.solicitationService.accept(this.solicitation.id).subscribe(response => {
       this.emitChangeOperation();
-    });
+    },
+    error => console.log(error),
+    () => {
+      this.buttonActivate = true;
+      this.loading = false;
+    });;
+  }
+
+  public send(): void {
+    this.loading = true;
+    this.solicitationService.send(this.solicitation.id).subscribe(response => {
+      this.emitChangeOperation();
+    },
+    error => console.log(error),
+    () => {
+      this.buttonActivate = true;
+      this.loading = false;
+    });;
   }
 
   private emitChangeOperation(): void {
+    this.buttonActivate = false;
     this.change.emit();
     this.closeModal();
   }

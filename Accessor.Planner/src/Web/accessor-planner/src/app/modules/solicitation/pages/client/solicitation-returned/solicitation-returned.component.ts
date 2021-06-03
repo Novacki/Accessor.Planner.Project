@@ -31,7 +31,7 @@ export class SolicitationReturnedComponent implements OnInit {
   private clients: Client[];
 
   ngOnInit() {
-    this.loading = true;
+   
     this.getSolicitations();
 
     this.clientService.getAllByUserType(UserType.accessor).subscribe(clients => {
@@ -47,6 +47,7 @@ export class SolicitationReturnedComponent implements OnInit {
       { property: 'status', label: 'Status', width: '15%' },
       { property: 'quantityRooms', label: 'Número de Comodos', width: '15%' },
       { property: 'accessor', label: 'Acessor', width: '15%' },
+      { property: 'provider', label: 'Fornecedor', width: '15%' },
       { property: 'createdAt', label: 'Data de Criação', width: '15%' },
       { property: 'updatedAt', label: 'Data de Atualização', width: '15%' },
       {
@@ -69,7 +70,7 @@ export class SolicitationReturnedComponent implements OnInit {
   public getItems(): SolicitationColumn[] {
     if(this.solicitations && this.clients) {
       return this.solicitations.map(solicitation => {
-        return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), accessor: this.getNameAcessorById(solicitation.accessorId), 
+        return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), accessor: this.getNameAcessorById(solicitation.accessorId), provider: solicitation.provider ? solicitation.provider.fantasyName : 'Não Requisitado',
           quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
       });
     }
@@ -84,6 +85,7 @@ export class SolicitationReturnedComponent implements OnInit {
   }
 
   public getSolicitations(): void {
+    this.loading = true;
     this.solicitationService.get(this.filter).subscribe(response => {
       this.solicitations = response;
     },

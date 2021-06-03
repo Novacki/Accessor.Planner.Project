@@ -19,11 +19,16 @@ import { SolicitationCanceledComponent } from './pages/client/solicitation-cance
 import { SolicitationRejectedComponent } from './pages/client/solicitation-rejected/solicitation-rejected.component';
 import { SolicitationNewComponent } from './pages/accessor/solicitation-new/solicitation-new.component';
 import { SolicitationToSendComponent } from './pages/accessor/solicitation-to-send/solicitation-to-send.component';
+import { SolicitationAccessorApprovedComponent } from './pages/accessor/solicitation-accessor-approved/solicitation-accessor-approved.component';
+import { SolicitationAccessorRejectedComponent } from './pages/accessor/solicitation-accessor-rejected/solicitation-accessor-rejected.component';
+import { SolicitationAccessorDoneComponent } from './pages/accessor/solicitation-accessor-done/solicitation-accessor-done.component';
+import { SolicitationAccessorCanceledComponent } from './pages/accessor/solicitation-accessor-canceled/solicitation-accessor-canceled.component';
+import { SolicitationInReviewComponent } from './pages/accessor/solicitation-in-review/solicitation-in-review.component';
 
 
 
 @NgModule({
-  declarations: [SolicitationFormComponent, ModalRoomComponent, ModalFurnitureComponent, SolicitationOnHoldComponent, SolicitationAcceptedComponent, SolicitationReturnedComponent, SolicitationOperationComponent, SolicitationApprovedComponent, SolicitationDoneComponent, SolicitationCanceledComponent, SolicitationRejectedComponent, SolicitationNewComponent, SolicitationToSendComponent],
+  declarations: [SolicitationFormComponent, ModalRoomComponent, ModalFurnitureComponent, SolicitationOnHoldComponent, SolicitationAcceptedComponent, SolicitationReturnedComponent, SolicitationOperationComponent, SolicitationApprovedComponent, SolicitationDoneComponent, SolicitationCanceledComponent, SolicitationRejectedComponent, SolicitationNewComponent, SolicitationToSendComponent, SolicitationAccessorApprovedComponent, SolicitationAccessorRejectedComponent, SolicitationAccessorDoneComponent, SolicitationAccessorCanceledComponent, SolicitationInReviewComponent],
   imports: [
     CommonModule,
     SharedModule,

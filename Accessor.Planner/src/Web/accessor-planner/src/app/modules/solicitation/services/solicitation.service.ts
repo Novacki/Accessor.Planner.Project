@@ -42,4 +42,8 @@ export class SolicitationService {
   public accept(id: string): Observable<string> {
     return this.http.put<string>(`Solicitations/${this.user.userId}/accept/${id}`);
   }
+
+  public send(id: string): Observable<string> {
+    return this.http.put<string>(`Solicitations/${this.user.userId}/send/${id}`);
+  }
 }

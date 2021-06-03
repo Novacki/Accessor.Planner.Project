@@ -1,3 +1,4 @@
+<app-loading [loading]="loading"></app-loading>
 <po-modal class="view-modal" [p-hide-close]="true" [p-primary-action]="close">
     <div *ngIf="solicitation">
         <div class="header-view">
@@ -65,29 +66,36 @@
 
         <div *ngIf="status == 2 && userType == 2" class="po-row po-mt-2 po-mb-3  operation-buttons">
             <div class="po-md-4">
-                <po-button (p-click)="approve()"  p-icon="po-icon po-icon-ok" p-label="Aprovar solicitação"
+                <po-button (p-click)="approve()" [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Aprovar solicitação"
                     p-type="primary"></po-button>
             </div>
             <div class="po-md-4">
-                <po-button (p-click)="reject()" p-icon="po-icon po-icon-close" p-label="Recusar solicitação"
+                <po-button (p-click)="reject()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-close" p-label="Recusar solicitação"
                     p-type="danger"></po-button>
             </div>
             <div class="po-md-4">
-                <po-button (p-click)="cancel()" class="cancel" p-label="Cancelar solicitação"
+                <po-button (p-click)="cancel()" [p-disabled]="!buttonActivate" class="cancel" p-label="Cancelar solicitação"
                     p-type="danger"></po-button>
             </div>
         </div>
 
         <div *ngIf="status == 1 && userType == 2" class="po-row po-mt-2 po-mb-3 operation-buttons">
             <div class="po-md-4">
-                <po-button (p-click)="cancel()" class="cancel" p-label="Cancelar solicitação"
+                <po-button (p-click)="cancel()" [p-disabled]="!buttonActivate" class="cancel" p-label="Cancelar solicitação"
                     p-type="danger"></po-button>
             </div>
         </div>
 
-        <div *ngIf="status == 1 && userType == 1" class="po-row po-mt-2 po-mb-3  operation-buttons">
+        <div *ngIf="(status == 1 || status == 6) && userType == 1" class="po-row po-mt-2 po-mb-3  operation-buttons">
             <div class="po-md-4">
-                <po-button (p-click)="accept()"  p-icon="po-icon po-icon-ok" p-label="Aceitar solicitação"
+                <po-button (p-click)="accept()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Aceitar solicitação"
+                    p-type="primary"></po-button>
+            </div>
+        </div>
+
+        <div *ngIf="status == 3  && userType == 1" class="po-row po-mt-2 po-mb-3  operation-buttons">
+            <div class="po-md-4">
+                <po-button (p-click)="send()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Enviar solicitação"
                     p-type="primary"></po-button>
             </div>
         </div>

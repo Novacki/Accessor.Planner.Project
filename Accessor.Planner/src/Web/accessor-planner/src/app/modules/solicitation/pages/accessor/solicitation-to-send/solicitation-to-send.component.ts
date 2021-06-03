@@ -28,7 +28,6 @@ export class SolicitationToSendComponent implements OnInit {
   constructor(private solicitationService: SolicitationService) { }
 
   ngOnInit() {
-    this.loading = true;
     this.getSolicitations();
   }
 
@@ -74,6 +73,7 @@ export class SolicitationToSendComponent implements OnInit {
   }
 
   public getSolicitations(): void {
+    this.loading = true;
     this.solicitationService.get(this.filter).subscribe(response => {
       this.solicitations = response;
     },

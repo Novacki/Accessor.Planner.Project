@@ -15,9 +15,11 @@ export class LoadingComponent implements OnInit {
     this.onLoad.next(value);
   }
 
-  public loading: boolean = false;
+  public loading: boolean = true;
   
   ngOnInit(): void {
- 
+    this.onLoad.subscribe(loading => {
+      this.loading = loading;
+    });
   }
 }
