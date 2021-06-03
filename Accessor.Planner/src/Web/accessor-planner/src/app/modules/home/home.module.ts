@@ -17,9 +17,9 @@ import { ChooseRegisterComponent } from './components/choose-register/choose-reg
 import { ChooseComponent } from './pages/choose/choose.component';
 import { SharedModule } from '../shared/shared.module';
 import { AccessorDetailsComponent } from './components/accessor-details/accessor-details.component';
-import { ClientService } from './services/client.service';
 import { ProviderService } from './services/provider.service';
 import { AccountService } from './services/account.service';
+
 
 
 
@@ -32,7 +32,7 @@ import { AccountService } from './services/account.service';
     SharedModule
   ],
   exports:[],
-  providers:[ClientService, ProviderService, AccountService ],
+  providers:[ProviderService, AccountService ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class HomeModule { }

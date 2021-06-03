@@ -136,7 +136,7 @@ export class ModalRoomComponent implements OnInit {
       { property: 'width', label: 'Largura', width:"16%" },
       { property: 'length', label: 'Comprimento', width:"20%" },
       { 
-        property: 'description', 
+        property: 'descriptionIcon', 
         label: 'Descrição',
         width:"17%",
         type: 'icon',
@@ -169,7 +169,7 @@ export class ModalRoomComponent implements OnInit {
   public getItems(): FurnitureColumn[] {
     return this.furnitures.map(furniture => {
       return {name: furniture.name, width: furniture.width, height: furniture.height, length: furniture.length,
-        description: ['view'], option: ['remove'] }
+        descriptionIcon: ['view'], option: ['remove'] }
     });
   }
 
@@ -217,7 +217,7 @@ export class ModalRoomComponent implements OnInit {
   }
 
   private getFurnitureByRow(row: FurnitureColumn) : Furniture {
-    let furniture: Furniture = {name: row.name, width: row.width, height: row.height, length: row.length, description: row.description };
+    let furniture: Furniture = {name: row.name, width: row.width, height: row.height, length: row.length, description: row.descriptionIcon };
 
     return this.furnitures.find(value => value.name == furniture.name && 
       value.height == furniture.height && value.width == furniture.width && value.length == furniture.length);

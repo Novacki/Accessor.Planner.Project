@@ -106,7 +106,12 @@ namespace Accessor.Planner.Domain.Service
             if (!userType.HasValue)
                 solicitations = solicitations.Where(s => s.Provider.Id == profileContextId);
             else if (userType.Value == UserType.Accessor)
+            {
+                if (status == StatusSolicitation.OnHold)
+                    return solicitations.ToList();
+
                 solicitations = solicitations.Where(s => s.AccessorId == profileContextId);
+            }
             else
                 solicitations = solicitations.Where(s => s.Client.Id == profileContextId);
 

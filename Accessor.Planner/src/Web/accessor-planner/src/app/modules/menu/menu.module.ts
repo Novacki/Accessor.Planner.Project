@@ -19,6 +19,6 @@ import { MenuRoutingModule } from './menu-routing.module';
     PoBreadcrumbModule,
     MenuRoutingModule
   ],
-  providers:[IndexComponent]
+  providers:[]
 })
 export class MenuModule { }

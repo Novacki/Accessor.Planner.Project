@@ -32,7 +32,7 @@ namespace Accessor.Planner.API.Controllers
             var solicitations = await _solicitationService.GetSolicitationsByUserAsync(userId.Value);
 
             if (solicitations == null || solicitations.Count == 0)
-                return NotFound();
+                return NoContent();
 
             return Ok(solicitations.ToViewModel());
         }
@@ -48,7 +48,7 @@ namespace Accessor.Planner.API.Controllers
                 TransformDataEnums.GetStatusSolicitation(status.Value), TransformDataEnums.GetTypeUser(userType.Value));
 
             if (solicitations == null || solicitations.Count == 0)
-                return NotFound();
+                return NoContent();
 
             return Ok(solicitations.ToViewModel());
         }
@@ -63,7 +63,7 @@ namespace Accessor.Planner.API.Controllers
             var solicitation = await _solicitationService.GetByIdAsync(id.Value);
 
             if (solicitation == null)
-                return NotFound();
+                return NoContent();
 
             return Ok(solicitation.ToViewModel());
         }
@@ -118,24 +118,24 @@ namespace Accessor.Planner.API.Controllers
 
         [HttpPut]
         [Route("{userId:guid}/reject/{solicitationId:guid}")]
-        public async Task<IActionResult> Reject(Guid? userId, Guid? solicitationId, [FromBody] string reason)
+        public async Task<IActionResult> Reject(Guid? userId, Guid? solicitationId)
         {
-            if (!userId.HasValue || !solicitationId.HasValue || string.IsNullOrEmpty(reason))
+            if (!userId.HasValue || !solicitationId.HasValue || string.IsNullOrEmpty("A"))
                 return BadRequest();
 
-            await _solicitationService.Reject(userId.Value, solicitationId.Value, reason);
+            await _solicitationService.Reject(userId.Value, solicitationId.Value, "A");
 
             return Ok();
         }
 
         [HttpPut]
         [Route("{userId:guid}/cancel/{solicitationId:guid}")]
-        public async Task<IActionResult> Cancel(Guid? userId, Guid? solicitationId, [FromBody] string reason)
+        public async Task<IActionResult> Cancel(Guid? userId, Guid? solicitationId)
         {
             if (!userId.HasValue || !solicitationId.HasValue)
                 return BadRequest();
 
-            await _solicitationService.Cancel(userId.Value, solicitationId.Value, reason);
+            await _solicitationService.Cancel(userId.Value, solicitationId.Value, "Adicionar");
             return Ok();
         }
     }

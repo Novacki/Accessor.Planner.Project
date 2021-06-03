@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Room } from '../../shared/model/room.model';
@@ -12,10 +13,11 @@ import { SolicitationRequest } from '../requests/solicitation-request';
 export class SolicitationService {
 
   constructor(private http: HttpService) { }
+  
+  private readonly user: any = JSON.parse(localStorage.getItem('auth'));
 
   public create(rooms: Room[]): Observable<SolicitationRequest> {
-    let user = JSON.parse(localStorage.getItem('auth'));
-    return this.http.post<SolicitationRequest>('Solicitations/create', new SolicitationRequest(`${user.userId}`, rooms));
+    return this.http.post<SolicitationRequest>('Solicitations/create', new SolicitationRequest(`${this.user.userId}`, rooms));
   }
 
   public get(filter: SolicitationFilter):Observable<Solicitation[]> {
@@ -23,5 +25,25 @@ export class SolicitationService {
       (
         `Solicitations/filter?profileContextId=${filter.profileContextId}&status=${filter.status}&userType=${filter.userType}`
       );
+  }
+
+  public approve(id: string): Observable<void> {
+    return this.http.put<void>(`Solicitations/${this.user.userId}/approve/${id}`);
+  }
+
+  public reject(id: string, reason: string): Observable<string> {
+    return this.http.put<string>(`Solicitations/${this.user.userId}/reject/${id}`, reason);
+  }
+
+  public cancel(id: string, reason: string): Observable<string> {
+    return this.http.put<string>(`Solicitations/${this.user.userId}/cancel/${id}`);
+  }
+
+  public accept(id: string): Observable<string> {
+    return this.http.put<string>(`Solicitations/${this.user.userId}/accept/${id}`);
+  }
+
+  public send(id: string): Observable<string> {
+    return this.http.put<string>(`Solicitations/${this.user.userId}/send/${id}`);
   }
 }

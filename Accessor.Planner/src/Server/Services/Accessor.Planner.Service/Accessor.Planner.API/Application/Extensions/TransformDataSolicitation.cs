@@ -15,6 +15,8 @@ namespace Accessor.Planner.API.Application.Extensions
             {
                 Id = solicitation.Id,
                 AccessorId = solicitation.AccessorId,
+                CreatedAt = solicitation.CreatedAt,
+                UpdatedAt = solicitation.UpdatedAt,
                 Provider = solicitation.Provider == null ? null : solicitation.Provider.ToViewModel(),
                 Client = solicitation.Client.ToFullViewModel(),
                 Status = (int)solicitation.Status,
@@ -28,6 +30,8 @@ namespace Accessor.Planner.API.Application.Extensions
             {
                 Id = s.Id,
                 AccessorId = s.AccessorId,
+                CreatedAt = s.CreatedAt,
+                UpdatedAt = s.UpdatedAt,
                 Provider = s.Provider == null ? null : s.Provider.ToViewModel(),
                 Client = s.Client.ToFullViewModel(),
                 Status = (int)s.Status,

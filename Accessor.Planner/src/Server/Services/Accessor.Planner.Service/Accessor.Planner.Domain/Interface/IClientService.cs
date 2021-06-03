@@ -1,5 +1,7 @@
 ﻿using Accessor.Planner.Domain.Model;
+using Accessor.Planner.Domain.Model.Enum;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Accessor.Planner.Domain.Interface
@@ -13,5 +15,6 @@ namespace Accessor.Planner.Domain.Interface
         void AddAddress(Guid id, Address address);
         Client GetClientByUserId(Guid id);
         Task<Client> GetClientByUserIdAsync(Guid id);
+        Task<List<Client>> GetAllByType(UserType type);
     }
 }

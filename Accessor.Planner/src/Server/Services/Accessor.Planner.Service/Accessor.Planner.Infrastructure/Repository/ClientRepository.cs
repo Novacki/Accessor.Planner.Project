@@ -1,5 +1,6 @@
 ﻿using Accessor.Planner.Domain.Data.Repository;
 using Accessor.Planner.Domain.Model;
+using Accessor.Planner.Domain.Model.Enum;
 using Accessor.Planner.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,6 +16,8 @@ namespace Accessor.Planner.Infrastructure.Repository
         public ClientRepository( ApplicationDataContext context ): base(context) { }
 
         public override IQueryable<Client> GetAll() => base.GetAll().Include(c => c.Addresses).Include(c => c.Solicitations).Include(c => c.User);
+
+        public async Task<List<Client>> GetAllByType(UserType type) => await _entities.Where(c => c.Type == type).ToListAsync();
         
         public override async Task<Client> GetByIdAsync(Guid id) => await _entities.Where(c => c.Id == id).Include(c => c.Addresses).Include(c => c.User)
             .Include(c => c.Solicitations).FirstOrDefaultAsync().ConfigureAwait(false);

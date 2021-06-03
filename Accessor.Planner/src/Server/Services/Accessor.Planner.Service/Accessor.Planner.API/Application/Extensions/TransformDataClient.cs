@@ -38,5 +38,16 @@ namespace Accessor.Planner.API.Application.Extensions
                 Type = client.Type,
             };
         }
+
+        public static List<DataClientViewModel> ToViewModel(this List<Client> clients)
+        {
+            return clients.Select(c => new DataClientViewModel()
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Type = c.Type
+
+            }).ToList();
+        }
     }
 }

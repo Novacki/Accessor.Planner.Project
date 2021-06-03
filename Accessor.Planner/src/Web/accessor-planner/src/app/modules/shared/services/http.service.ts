@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -24,11 +24,11 @@ export class HttpService {
     return this.http.post<T>(`${baseUrl}${url}`, obj, options);
   }
 
-  public put<T>(url: string, obj: T): Observable<T> {
-    return this.http.put<T>(`${this.baseUrlAccessor}${url}`, obj);
+  public put<T>(url: string, obj?: T, options = {}): Observable<T> {
+    return this.http.put<T>(`${this.baseUrlAccessor}${url}`, obj, options);
   }
 
-  public delete<T>(url: string, obj: T): Observable<T> {
+  public delete<T>(url: string, obj: T, httpOptions?: any): Observable<T> {
     return this.http.put<T>(`${this.baseUrlAccessor}${url}`, obj);
   }
 }

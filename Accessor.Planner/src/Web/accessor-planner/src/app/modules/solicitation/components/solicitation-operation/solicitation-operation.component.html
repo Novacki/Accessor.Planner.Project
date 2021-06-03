@@ -1,0 +1,175 @@
+<app-loading [loading]="loading"></app-loading>
+<po-modal class="view-modal" [p-hide-close]="true" [p-primary-action]="close">
+    <div *ngIf="solicitation">
+        <div class="header-view">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="strong-label">Status</label>
+                </div>
+                <div class="col-md-3">
+                    <label class="strong-label">Data de Criação</label>
+                </div>
+                <div class="col-md-3">
+                    <label class="strong-label">Data de Atualização</label>
+                </div>
+                <div class="col-md-3">
+                    <label class="strong-label">Data de Entrega</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <label>{{ solicitation.status }}</label>
+                </div>
+                <div class="col-md-3">
+                    <label>{{ solicitation.createdAt }}</label>
+                </div>
+                <div class="col-md-3">
+                    <label>{{ solicitation.updatedAt }}</label>
+                </div>
+                <div class="col-md-3">
+                    <label></label>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-3">
+                    <div *ngIf="userType == 1; else client">
+                        <label class="strong-label">Cliente</label>
+                        <div>
+                            <label>{{ solicitation.client }}</label>
+                        </div>
+                    </div>
+                    <ng-template #client>
+                        <label class="strong-label">Acessor</label>
+                        <div>
+                            <label>{{ solicitation.accessor }}</label>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="col-md-3">
+                    <label class="strong-label">Fornecedor</label>
+                    <div>
+                        <label>{{ solicitation.provider }}</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <span class="po-icon po-icon-upload-cloud"></span>
+                </div>
+                <div class="col-md-3">
+                    <span class="po-icon po-icon-history"></span>
+                </div>
+            </div>
+        </div>
+        <div class="divider">
+            <app-divider [title]="'Comodos'"></app-divider>
+        </div>
+        <app-table [height]="400" [columns]="getColumnsRoom()" [items]="solicitation.rooms"></app-table>
+
+        <div *ngIf="status == 2 && userType == 2" class="po-row po-mt-2 po-mb-3  operation-buttons">
+            <div class="po-md-4">
+                <po-button (p-click)="approve()" [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Aprovar solicitação"
+                    p-type="primary"></po-button>
+            </div>
+            <div class="po-md-4">
+                <po-button (p-click)="reject()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-close" p-label="Recusar solicitação"
+                    p-type="danger"></po-button>
+            </div>
+            <div class="po-md-4">
+                <po-button (p-click)="cancel()" [p-disabled]="!buttonActivate" class="cancel" p-label="Cancelar solicitação"
+                    p-type="danger"></po-button>
+            </div>
+        </div>
+
+        <div *ngIf="status == 1 && userType == 2" class="po-row po-mt-2 po-mb-3 operation-buttons">
+            <div class="po-md-4">
+                <po-button (p-click)="cancel()" [p-disabled]="!buttonActivate" class="cancel" p-label="Cancelar solicitação"
+                    p-type="danger"></po-button>
+            </div>
+        </div>
+
+        <div *ngIf="(status == 1 || status == 6) && userType == 1" class="po-row po-mt-2 po-mb-3  operation-buttons">
+            <div class="po-md-4">
+                <po-button (p-click)="accept()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Aceitar solicitação"
+                    p-type="primary"></po-button>
+            </div>
+        </div>
+
+        <div *ngIf="status == 3  && userType == 1" class="po-row po-mt-2 po-mb-3  operation-buttons">
+            <div class="po-md-4">
+                <po-button (p-click)="send()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Enviar solicitação"
+                    p-type="primary"></po-button>
+            </div>
+        </div>
+    </div>
+</po-modal>
+<app-show-informations #information>
+    <div *ngIf="roomColumn">
+        <div class="divider-information">
+            <app-divider [title]="roomColumn.name"></app-divider>
+        </div>
+        <div class="header-view">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="strong-label">Comodo</label>
+                </div>
+                <div class="col-md-6">
+                    <label class="strong-label">Metragem</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>{{ roomColumn.name }}</label>
+                </div>
+                <div class="col-md-6">
+                    <label>{{ roomColumn.metreage }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="po-row mt-3 description-room">
+            <label class="strong-label form-label">Descrição</label>
+            <textarea readonly [value]="roomColumn.description" class="form-control description" id="description"
+                rows="8"></textarea>
+        </div>
+        <div class="accordion-style">
+            <div class="divider-information">
+                <app-divider [title]="'Móveis'"></app-divider>
+            </div>
+            <po-accordion>
+                <po-accordion-item *ngFor="let furniture of roomColumn.furnitures" [p-label]="furniture.name">
+                    <div class="row mt-3">
+                        <div class="col-md-3">
+                            <label class="strong-label">Móvel</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="strong-label">Altura</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="strong-label">Largura</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="strong-label">Comprimento</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>{{ furniture.name }}</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label>{{ furniture.height }}</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label>{{ furniture.width }}</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label>{{ furniture.length }}</label>
+                        </div>
+                    </div>
+                    <div class="po-row mt-3 mb-3">
+                        <label class="strong-label form-label">Descrição</label>
+                        <textarea readonly [value]="furniture.description" class="form-control description"
+                            id="description" rows="8"></textarea>
+                    </div>
+                </po-accordion-item>
+            </po-accordion>
+        </div>
+    </div>
+</app-show-informations>

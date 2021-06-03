@@ -25,13 +25,14 @@ export class SolicitationFormComponent implements OnInit {
   }
 
   public loading: boolean = false;
+
   public getColumns(): Array<PoTableColumn> {
     return [
       { property: 'name', label: 'Comodo', width: '15%' },
       { property: 'metreage', label: 'Metragem', width: '15%' },
-      { property: 'furnitures', label: 'Quantidade de Móveis', width: '15%' },
+      { property: 'quantityFurnitures', label: 'Quantidade de Móveis', width: '15%' },
       { 
-        property: 'description', 
+        property: 'descriptionIcon', 
         label: 'Descrição',
         width:"10%",
         type: 'icon',
@@ -80,7 +81,7 @@ export class SolicitationFormComponent implements OnInit {
 
   public getItems(): RoomColumn[] {
     return this.rooms.map(room => {
-      return {  name: room.name, metreage: room.metreage, description:['viewDescription'], furnitures: room.furnitures.length, option: ['remove', 'edit'] };
+      return {  name: room.name, metreage: room.metreage, descriptionIcon:['viewDescription'], quantityFurnitures: room.furnitures.length, option: ['remove', 'edit'] };
     });
   }
 
@@ -92,7 +93,7 @@ export class SolicitationFormComponent implements OnInit {
     error => console.log(error)
     ,() => {
       this.loading = false;
-      this.router.navigate(['../solicitations'])
+      this.router.navigate(['../solicitations/on-hold'])
     });
   }
 
@@ -119,6 +120,6 @@ export class SolicitationFormComponent implements OnInit {
   private getRoomByRow(row: RoomColumn): Room {
     let room: Room = { metreage: row.metreage, name: row.name };
     return this.rooms.find(value => value.metreage == room.metreage && value.name == room.name
-      && value.furnitures.length == row.furnitures );
+      && value.furnitures.length == row.quantityFurnitures );
   }
 }

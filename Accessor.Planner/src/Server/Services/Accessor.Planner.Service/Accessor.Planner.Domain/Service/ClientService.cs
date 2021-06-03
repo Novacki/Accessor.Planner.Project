@@ -3,6 +3,7 @@ using Accessor.Planner.Domain.Exceptions.Service;
 using Accessor.Planner.Domain.IntegrationRequest;
 using Accessor.Planner.Domain.Interface;
 using Accessor.Planner.Domain.Model;
+using Accessor.Planner.Domain.Model.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,6 +101,8 @@ namespace Accessor.Planner.Domain.Service
         }
 
         public async Task<Client> GetClientByUserIdAsync(Guid id) => await _clientRepository.GetByUserIdAsync(id).ConfigureAwait(false);
-      
+
+        public async Task<List<Client>> GetAllByType(UserType type) => await _clientRepository.GetAllByType(type).ConfigureAwait(false);
+       
     }
 }

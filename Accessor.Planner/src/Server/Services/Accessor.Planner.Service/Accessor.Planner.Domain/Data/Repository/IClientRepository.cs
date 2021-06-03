@@ -1,4 +1,5 @@
 ﻿using Accessor.Planner.Domain.Model;
+using Accessor.Planner.Domain.Model.Enum;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Accessor.Planner.Domain.Data.Repository
         public bool ExistCpf(string cpf);
         public Client GetByUserId(Guid id);
         public Task<Client> GetByUserIdAsync(Guid id);
+        Task<List<Client>> GetAllByType(UserType type);
 
     }
 }
