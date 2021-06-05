@@ -12,7 +12,7 @@ namespace Accessor.Planner.API.Application.Model.ViewModel
         public int Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public ProviderViewModel Provider { get; set; }
+        public FullDataProviderViewModel Provider { get; set; }
         public FullDataClientViewModel Client { get; set; }
         public List<RoomViewModel> Rooms { get; set; }
 

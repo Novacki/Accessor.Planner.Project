@@ -12,6 +12,7 @@ namespace Accessor.Planner.Domain.Interface {
         Task Delete(Guid id);
         Task AcceptSolicitation(Guid userId, Guid solicitationId);
         Task SendSolicitation(Guid userId, Guid solicitationId);
+        Task<Provider> GetByUserId(Guid id);
 
     }
 }

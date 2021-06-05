@@ -93,6 +93,7 @@ namespace Accessor.Planner.API
             services.AddScoped<IProviderRepository, ProviderRepository>();
             services.AddScoped<ISolicitationRepository, SolicitationRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<ISolicitationHistoryRepository, SolicitationHistoryRepository>();
 
         }
 
@@ -103,6 +104,7 @@ namespace Accessor.Planner.API
             services.AddScoped<ISolicitationService, SolicitationService>();
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IIntegrationService, IntegrationService>();
+            services.AddScoped<ISolicitationHistoryService, SolicitationHistoryService>();
         }
 
         public void IntegrationInject(IServiceCollection services)

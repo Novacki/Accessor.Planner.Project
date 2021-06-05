@@ -15,9 +15,9 @@ namespace Accessor.Planner.API.Application.Extensions
             return new Provider(provider.FantasyName, provider.SocialReason, provider.Cnpj, provider.Phone, provider.Address.ToAddress(), provider.User.ToUser());
         }
 
-        public static ProviderViewModel ToViewModel(this Provider provider)
+        public static FullDataProviderViewModel ToFullViewModel(this Provider provider)
         {
-            return new ProviderViewModel()
+            return new FullDataProviderViewModel()
             {
                 Id = provider.Id,
                 Address = provider.Address.ToViewModel(),
@@ -25,6 +25,15 @@ namespace Accessor.Planner.API.Application.Extensions
                 FantasyName = provider.FantasyName,
                 SocialReason = provider.SocialReason,
                 Phone = provider.Phone
+            };
+        }
+
+        public static DataProviderViewModel ToViewModel(this Provider provider)
+        {
+            return new DataProviderViewModel()
+            {
+                Id = provider.Id,
+                FantasyName = provider.FantasyName,
             };
         }
     }

@@ -13,4 +13,8 @@ export class ProviderService {
   public create(provider: Provider) : Observable<Provider> {
     return this.http.post("Providers", provider);
   }
+
+  public getByUserId(userId: string): Observable<Provider> {
+    return this.http.getById<Provider>(`Providers/${userId}`);
+  }
 }

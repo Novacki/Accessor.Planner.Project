@@ -19,8 +19,6 @@ namespace Accessor.Planner.Domain.Model
             UpdatedAt = DateTime.Now;
             Activate = true;
             AddRooms(rooms);
-
-            RegisterHistory(new SolicitationHistory(this, SubscribeType.Client));
         }
 
         public DateTime? SolicitationEndDate { get; private set; }
@@ -46,7 +44,6 @@ namespace Accessor.Planner.Domain.Model
 
             Status = StatusSolicitation.Approve;
             UpdatedAt = DateTime.Now;
-            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
         }
 
         public void AcessorAccept(Client accessor)
@@ -58,7 +55,7 @@ namespace Accessor.Planner.Domain.Model
             Status = StatusSolicitation.Accept;
             AccessorId = accessor.Id;
             UpdatedAt = DateTime.Now;
-            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Accessor));
+
         }
 
         public void ProviderAccept(Provider provider)
@@ -69,7 +66,7 @@ namespace Accessor.Planner.Domain.Model
             Status = StatusSolicitation.Accept;
             Provider = provider;
             UpdatedAt = DateTime.Now;
-            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Provider));
+
         }
 
         public void Send(Client accessor)
@@ -79,7 +76,7 @@ namespace Accessor.Planner.Domain.Model
 
             Status = StatusSolicitation.InReview;
             UpdatedAt = DateTime.Now;
-            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Accessor));
+   
         }
 
         public void Reject(Client client, string reason)
@@ -91,7 +88,7 @@ namespace Accessor.Planner.Domain.Model
 
             Status = StatusSolicitation.Reject;
             UpdatedAt = DateTime.Now;
-            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
+     
         }
 
         public void Cancel(Client client, string reason)
@@ -103,7 +100,7 @@ namespace Accessor.Planner.Domain.Model
             DeletedAt = DateTime.Now;
             Activate = false;
 
-            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
+ 
         }
 
         private void AddRooms(List<Room> rooms)
@@ -112,10 +109,5 @@ namespace Accessor.Planner.Domain.Model
             Rooms.AddRange(rooms);
         }
 
-        private void RegisterHistory(SolicitationHistory solicitationHistory)
-        {
-            SolicitationHistories = new List<SolicitationHistory>();
-            SolicitationHistories.Add(solicitationHistory);
-        }
     }
 }

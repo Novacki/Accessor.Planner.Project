@@ -55,6 +55,8 @@ namespace Accessor.Planner.Domain.Service
      
         public async Task<Provider> GetByIdAsync(Guid id) => await _providerRepository.GetByIdAsync(id).ConfigureAwait(false);
 
+        public async Task<Provider> GetByUserId(Guid id) => await  _providerRepository.GetByUserId(id).ConfigureAwait(false);
+        
         public Task SendSolicitation(Guid userId, Guid solicitationId)
         {
             throw new NotImplementedException();

@@ -5,6 +5,7 @@ import { UserType } from 'src/app/modules/shared/enum/user-type';
 import { DateFormat } from 'src/app/modules/shared/functions/date-format';
 import { Solicitation } from 'src/app/modules/shared/model/solicitation.model';
 import { SolicitationOperationComponent } from '../../../components/solicitation-operation/solicitation-operation.component';
+import { SelectProfile } from '../../../functions/select-profile.function';
 import { TransformDataColumns } from '../../../functions/transform-data-columns.function';
 import { SolicitationColumn } from '../../../model/solicitation-column.model';
 import { SolicitationFilter } from '../../../model/solicitation-filter.model';
@@ -17,17 +18,14 @@ import { SolicitationService } from '../../../services/solicitation.service';
 })
 export class SolicitationInReviewComponent implements OnInit {
 
-  private filter: SolicitationFilter = {
-    profileContextId: JSON.parse(localStorage.getItem('client')).id,
-    status: StatusSolicitation.inReview,
-    userType: UserType.accessor
-  }
+ private filter: SolicitationFilter; 
 
   @ViewChild('modal') modal: SolicitationOperationComponent;
 
   constructor(private solicitationService: SolicitationService) { }
 
   ngOnInit() {
+    this.setFilter();
     this.getSolicitations();
   }
 
@@ -82,5 +80,11 @@ export class SolicitationInReviewComponent implements OnInit {
     () => {
       this.loading = false;
     });
+  }
+
+  private setFilter(): void {
+    let client = JSON.parse(localStorage.getItem('client'));
+    let provider = JSON.parse(localStorage.getItem('provider'));
+    this.filter = SelectProfile.selectFilterByProfile(StatusSolicitation.inReview, client, provider);
   }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ProviderService } from '../../services/provider.service';
+import { ProviderService } from 'src/app/modules/shared/services/provider.service';
+
 
 @Component({
   selector: 'app-provider-form',

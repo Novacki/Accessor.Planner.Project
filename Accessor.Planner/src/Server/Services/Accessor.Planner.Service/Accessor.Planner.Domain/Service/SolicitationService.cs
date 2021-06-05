@@ -15,10 +15,12 @@ namespace Accessor.Planner.Domain.Service
     {
         private readonly ISolicitationRepository _solicitationRepository;
         private readonly IClientService _clientService;
-        public SolicitationService(ISolicitationRepository solicitationRepository, IClientService clientService)
+        private readonly ISolicitationHistoryService _solicitationHistoryService;
+        public SolicitationService(ISolicitationRepository solicitationRepository, IClientService clientService, ISolicitationHistoryService solicitationHistoryService)
         {
             _solicitationRepository = solicitationRepository ?? throw new ArgumentNullException(nameof(solicitationRepository));
             _clientService = clientService ?? throw new ArgumentNullException(nameof(clientService));
+            _solicitationHistoryService = solicitationHistoryService ?? throw new ArgumentNullException(nameof(solicitationHistoryService));
         }
 
         public async Task Create(Guid userId, List<Room> rooms)
@@ -28,8 +30,10 @@ namespace Accessor.Planner.Domain.Service
             if(client.Type != UserType.Client)
                 throw new SolicitationServiceException("Accessor can't create solicitation");
 
-            _solicitationRepository.Create(new Solicitation(client, rooms));
+            var solicitation = new Solicitation(client, rooms);
+            _solicitationRepository.Create(solicitation);
 
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Client));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
@@ -39,7 +43,8 @@ namespace Accessor.Planner.Domain.Service
             var solicitation = GetById(solicitationId);
 
             solicitation.AcessorAccept(client);
-  
+
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Accessor));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
@@ -50,6 +55,7 @@ namespace Accessor.Planner.Domain.Service
 
             solicitation.Send(client);
 
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Accessor));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
@@ -59,6 +65,8 @@ namespace Accessor.Planner.Domain.Service
             var solicitation = GetById(solicitationId);
 
             solicitation.Approve(client);
+
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Client));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
@@ -68,6 +76,8 @@ namespace Accessor.Planner.Domain.Service
             var solicitation = GetById(solicitationId);
 
             solicitation.Reject(client, reason);
+
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Client));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
@@ -77,6 +87,7 @@ namespace Accessor.Planner.Domain.Service
             var solicitation = GetById(solicitationId);
 
             solicitation.Cancel(client, reason);
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Client));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
        
@@ -103,19 +114,25 @@ namespace Accessor.Planner.Domain.Service
             if(userType.Value == 0)
                 throw new SolicitationServiceException("This user don't exist");
 
-            if (!userType.HasValue)
+            if (userType.Value == UserType.Provider)
+            {
+                if (status == StatusSolicitation.Approve)
+                    return solicitations.Where(s => !s.ProviderId.HasValue).ToList();
+
                 solicitations = solicitations.Where(s => s.Provider.Id == profileContextId);
+            }
             else if (userType.Value == UserType.Accessor)
             {
                 if (status == StatusSolicitation.OnHold)
                     return solicitations.ToList();
 
-                solicitations = solicitations.Where(s => s.AccessorId == profileContextId);
+                solicitations = solicitations.Where(s => s.AccessorId == profileContextId && !s.ProviderId.HasValue);
             }
             else
                 solicitations = solicitations.Where(s => s.Client.Id == profileContextId);
 
             return solicitations.ToList();
-        }       
+        }
+
     }
 }
