@@ -82,25 +82,49 @@ namespace Accessor.Planner.API.Controllers
         }
 
         [HttpPut]
-        [Route("{userId:guid}/accept/{solicitationId:guid}")]
-        public async Task<IActionResult> Accept(Guid? userId, Guid? solicitationId)
+        [Route("{userId:guid}/accept-accessor/{solicitationId:guid}")]
+        public async Task<IActionResult> AccessorAccept(Guid? userId, Guid? solicitationId)
         {
             if (!userId.HasValue || !solicitationId.HasValue)
                 return BadRequest();
 
-            await _solicitationService.Accept(userId.Value, solicitationId.Value);
+            await _solicitationService.AccessorAccept(userId.Value, solicitationId.Value);
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("accept-provider")]
+        public async Task<IActionResult> ProviderrAccept(SolicitationOperationDTO solicitationDTO)
+        {
+            if (solicitationDTO == null)
+                return BadRequest();
+
+            await _solicitationService.ProviderAccept(solicitationDTO.UserId, solicitationDTO.SolicitationId);
             return Ok();
         }
 
 
         [HttpPut]
-        [Route("{userId:guid}/send/{solicitationId:guid}")]
-        public async Task<IActionResult> Send(Guid? userId, Guid? solicitationId)
+        [Route("{userId:guid}/send-accessor/{solicitationId:guid}")]
+        public async Task<IActionResult> AccessorSend(Guid? userId, Guid? solicitationId)
         {
             if (!userId.HasValue || !solicitationId.HasValue)
                 return BadRequest();
 
-            await _solicitationService.Send(userId.Value, solicitationId.Value);
+            await _solicitationService.AccessorSend(userId.Value, solicitationId.Value);
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("send-provider")]
+        public async Task<IActionResult> ProviderSend(SolicitationResponseValueDTO solicitationDTO)
+        {
+            if (solicitationDTO == null)
+                return BadRequest();
+
+            await _solicitationService.ProviderSend(solicitationDTO.UserId, 
+                solicitationDTO.SolicitationId, solicitationDTO.Value);
 
             return Ok();
         }

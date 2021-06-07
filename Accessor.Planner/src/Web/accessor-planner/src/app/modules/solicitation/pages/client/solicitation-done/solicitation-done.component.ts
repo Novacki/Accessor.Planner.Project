@@ -79,9 +79,9 @@ export class SolicitationDoneComponent implements OnInit {
 
 
   public getItems(): SolicitationColumn[] {
-    if(this.solicitations) {
+    if(this.solicitations && this.clients) {
       return this.solicitations.map(solicitation => {
-        return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), 
+        return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), accessor: solicitation.accessorId ? this.getNameAcessorById(solicitation.accessorId) : 'Não Requisitado', provider: solicitation.provider ? solicitation.provider.fantasyName : 'Não Requisitado',
           quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
       });
     }
@@ -94,7 +94,5 @@ export class SolicitationDoneComponent implements OnInit {
   private getNameAcessorById(id: string): string {
     return this.clients.find(c => c.id == id).name;
   }
-
-
 
 }

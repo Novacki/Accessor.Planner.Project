@@ -16,11 +16,14 @@ namespace Accessor.Planner.Domain.Service
         private readonly ISolicitationRepository _solicitationRepository;
         private readonly IClientService _clientService;
         private readonly ISolicitationHistoryService _solicitationHistoryService;
-        public SolicitationService(ISolicitationRepository solicitationRepository, IClientService clientService, ISolicitationHistoryService solicitationHistoryService)
+        private readonly IProviderService _providerService;
+        public SolicitationService(ISolicitationRepository solicitationRepository, IClientService clientService, 
+            ISolicitationHistoryService solicitationHistoryService, IProviderService providerService)
         {
             _solicitationRepository = solicitationRepository ?? throw new ArgumentNullException(nameof(solicitationRepository));
             _clientService = clientService ?? throw new ArgumentNullException(nameof(clientService));
             _solicitationHistoryService = solicitationHistoryService ?? throw new ArgumentNullException(nameof(solicitationHistoryService));
+            _providerService = providerService ?? throw new ArgumentNullException(nameof(providerService));
         }
 
         public async Task Create(Guid userId, List<Room> rooms)
@@ -37,18 +40,29 @@ namespace Accessor.Planner.Domain.Service
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task Accept(Guid userId, Guid solicitationId)
+        public async Task AccessorAccept(Guid userId, Guid solicitationId)
         {
             var client = _clientService.GetClientByUserId(userId);
             var solicitation = GetById(solicitationId);
 
-            solicitation.AcessorAccept(client);
+            solicitation.Accept(client);
 
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Accessor));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task Send(Guid userId, Guid solicitationId)
+        public async Task ProviderAccept(Guid userId, Guid solicitationId)
+        {
+            var provider = await _providerService.GetByIdAsync(userId);
+            var solicitation = GetById(solicitationId);
+
+            solicitation.Accept(provider);
+
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Provider));
+            await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task AccessorSend(Guid userId, Guid solicitationId)
         {
             var client = _clientService.GetClientByUserId(userId);
             var solicitation = GetById(solicitationId);
@@ -56,6 +70,17 @@ namespace Accessor.Planner.Domain.Service
             solicitation.Send(client);
 
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Accessor));
+            await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task ProviderSend(Guid userId, Guid solicitationId, double value)
+        {
+            var provider = await _providerService.GetByIdAsync(userId);
+            var solicitation = GetById(solicitationId);
+
+            solicitation.Send(provider);
+
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, value ,SubscribeType.Provider));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
@@ -117,7 +142,7 @@ namespace Accessor.Planner.Domain.Service
             if (userType.Value == UserType.Provider)
             {
                 if (status == StatusSolicitation.Approve)
-                    return solicitations.Where(s => !s.ProviderId.HasValue).ToList();
+                    return solicitations.ToList();
 
                 solicitations = solicitations.Where(s => s.Provider.Id == profileContextId);
             }
@@ -133,6 +158,5 @@ namespace Accessor.Planner.Domain.Service
 
             return solicitations.ToList();
         }
-
     }
 }

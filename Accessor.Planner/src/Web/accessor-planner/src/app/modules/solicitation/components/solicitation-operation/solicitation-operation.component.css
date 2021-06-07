@@ -29,12 +29,17 @@
     margin-left: 100%;
 }
 
-.po-icon.po-icon-history:before {
+.history {
     font-size: 45px;
-    color: maroon;
-    margin-left: 100%;
+    color: white;
+    display: inline-block;
+    margin-left: 20%;
 }
 
+.history:hover {
+    color: maroon;
+}
+ 
 .header-view {
     padding: 3%;
     border-radius: 6px;
@@ -72,3 +77,10 @@
     padding: 1%;
 }
 
+.provider-confirmation {
+    padding: 2%;
+}
+
+.provider-confirmation-buttons ::ng-deep .po-md-3  {
+    margin-left: 0.7%;
+}

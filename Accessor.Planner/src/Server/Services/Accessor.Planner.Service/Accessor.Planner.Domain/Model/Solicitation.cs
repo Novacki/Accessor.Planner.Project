@@ -46,7 +46,7 @@ namespace Accessor.Planner.Domain.Model
             UpdatedAt = DateTime.Now;
         }
 
-        public void AcessorAccept(Client accessor)
+        public void Accept(Client accessor)
         {
             if (( Status != StatusSolicitation.OnHold && Status != StatusSolicitation.Reject ) ||
                 accessor.Type == UserType.Client || (accessor.Id != AccessorId && AccessorId.HasValue ))
@@ -58,13 +58,23 @@ namespace Accessor.Planner.Domain.Model
 
         }
 
-        public void ProviderAccept(Provider provider)
+        public void Accept(Provider provider)
         {
-            if (Status != StatusSolicitation.OnHold || Client.Type != UserType.Client )
+            if ((Status != StatusSolicitation.Approve && Status != StatusSolicitation.Reject) || (provider.Id != ProviderId && ProviderId.HasValue))
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Accept;
             Provider = provider;
+            UpdatedAt = DateTime.Now;
+
+        }
+
+        public void Send(Provider provider)
+        {
+            if (Status != StatusSolicitation.Accept || provider.Id != ProviderId)
+                throw new DomainException("Status Solicitation is Invalid");
+
+            Status = StatusSolicitation.InReview;
             UpdatedAt = DateTime.Now;
 
         }

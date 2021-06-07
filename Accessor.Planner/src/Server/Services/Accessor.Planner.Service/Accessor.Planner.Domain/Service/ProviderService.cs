@@ -14,22 +14,11 @@ namespace Accessor.Planner.Domain.Service
     public class ProviderService : IProviderService
     {
         private readonly IProviderRepository _providerRepository;
-        private readonly ISolicitationService _solicitationService;
         private readonly IIntegrationService _integrationService;
-        public ProviderService(IProviderRepository providerRepository, ISolicitationService solicitationService, IIntegrationService integrationService)
+        public ProviderService(IProviderRepository providerRepository, IIntegrationService integrationService)
         {
             _providerRepository = providerRepository ?? throw new ArgumentNullException(nameof(providerRepository));
-            _solicitationService = solicitationService ?? throw new ArgumentNullException(nameof(solicitationService));
-            _integrationService = integrationService ?? throw new ArgumentNullException(nameof(solicitationService));
-        }
-
-        public async Task AcceptSolicitation(Guid userId, Guid solicitationId)
-        {
-            var provider = GetProviderByUserId(userId);
-            var solicitation = _solicitationService.GetById(solicitationId);
-
-            solicitation.ProviderAccept(provider);
-            await _providerRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+            _integrationService = integrationService ?? throw new ArgumentNullException(nameof(integrationService));
         }
 
         public async Task Create(Provider provider)
@@ -55,7 +44,7 @@ namespace Accessor.Planner.Domain.Service
      
         public async Task<Provider> GetByIdAsync(Guid id) => await _providerRepository.GetByIdAsync(id).ConfigureAwait(false);
 
-        public async Task<Provider> GetByUserId(Guid id) => await  _providerRepository.GetByUserId(id).ConfigureAwait(false);
+        public async Task<Provider> GetByUserIdAsync(Guid id) => await  _providerRepository.GetByUserIdAsync(id).ConfigureAwait(false);
         
         public Task SendSolicitation(Guid userId, Guid solicitationId)
         {

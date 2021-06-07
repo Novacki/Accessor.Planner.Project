@@ -44,7 +44,7 @@ namespace Accessor.Planner.API.Controllers
             if (!userId.HasValue)
                 return BadRequest();
 
-            var provider = await _providerService.GetByUserId(userId.Value);
+            var provider = await _providerService.GetByUserIdAsync(userId.Value);
 
             if (provider == null)
                 return NoContent();

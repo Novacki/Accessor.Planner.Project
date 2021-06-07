@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PoModalAction, PoModalComponent, PoTableColumn } from '@po-ui/ng-components';
 import { ShowInformationsComponent } from 'src/app/Modules/shared/components/show-informations/show-informations.component';
@@ -17,18 +18,22 @@ import { SolicitationService } from '../../services/solicitation.service';
 export class SolicitationOperationComponent implements OnInit {
 
 
-  constructor(private solicitationService: SolicitationService, private router: Router) { }
+  constructor(private solicitationService: SolicitationService, private fb: FormBuilder) { }
 
   @ViewChild('information') information: ShowInformationsComponent;
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
+  @ViewChild('providerConfirmation') providerConfirmation: ShowInformationsComponent;
 
   public status: StatusSolicitation; 
   public userType: UserType;
   private filter: SolicitationFilter;
   public loading: boolean = false;
+  public form: FormGroup;
+
   ngOnInit(): void {
+    this.contructForm();
   }
-  
+
   public solicitation: SolicitationColumn;
   public roomColumn: RoomColumn;
   public buttonActivate: boolean = true;
@@ -47,6 +52,7 @@ export class SolicitationOperationComponent implements OnInit {
   }
 
   openModal(row: SolicitationColumn,  filter?: SolicitationFilter): void {
+    this.filter = filter;
     this.solicitation = row;
     this.status = filter.status;
     this.userType = filter.userType;
@@ -115,9 +121,9 @@ export class SolicitationOperationComponent implements OnInit {
     });
   }
 
-  public accept(): void {
+  public accessorAccept(): void {
     this.loading = true;
-    this.solicitationService.accept(this.solicitation.id).subscribe(response => {
+    this.solicitationService.accessorAccept(this.solicitation.id).subscribe(response => {
       this.emitChangeOperation();
     },
     error => console.log(error),
@@ -127,9 +133,9 @@ export class SolicitationOperationComponent implements OnInit {
     });;
   }
 
-  public send(): void {
+  public accessorSend(): void {
     this.loading = true;
-    this.solicitationService.send(this.solicitation.id).subscribe(response => {
+    this.solicitationService.accessorSend(this.solicitation.id).subscribe(response => {
       this.emitChangeOperation();
     },
     error => console.log(error),
@@ -137,6 +143,36 @@ export class SolicitationOperationComponent implements OnInit {
       this.buttonActivate = true;
       this.loading = false;
     });;
+  }
+
+  public providerAccept(): void {
+    this.loading = true;
+    this.solicitationService.providerAccept({userId: this.filter.profileContextId, solicitationId: this.solicitation.id})
+      .subscribe(response => {
+      this.emitChangeOperation();
+    },
+    error => console.log(error),
+    () => {
+      this.buttonActivate = true;
+      this.loading = false;
+    });;
+  }
+
+  public providerSend(): void {
+    this.loading = true;
+    this.solicitationService.providerSend({ userId: this.filter.profileContextId, solicitationId: this.solicitation.id, value: this.form.controls.value.value }).subscribe(response => {
+      this.providerConfirmation.poModal.close();
+      this.emitChangeOperation();
+    },
+    error => console.log(error),
+    () => {
+      this.buttonActivate = true;
+      this.loading = false;
+    });;
+  }
+
+  public validProviderExist(): boolean {
+    return this.solicitation.provider != 'Não Requisitado';
   }
 
   private emitChangeOperation(): void {
@@ -145,4 +181,13 @@ export class SolicitationOperationComponent implements OnInit {
     this.closeModal();
   }
 
+  public openSendValue(): void {
+    this.providerConfirmation.poModal.open();
+  }
+
+  private contructForm(): void {
+    this.form = this.fb.group({
+      value: ['', Validators.required]
+    });
+  }
 }

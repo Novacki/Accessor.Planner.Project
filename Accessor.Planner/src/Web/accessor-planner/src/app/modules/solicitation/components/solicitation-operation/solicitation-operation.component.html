@@ -55,7 +55,9 @@
                     <span class="po-icon po-icon-upload-cloud"></span>
                 </div>
                 <div class="col-md-3">
-                    <span class="po-icon po-icon-history"></span>
+                    <div class="history">
+                        <span class="po-icon po-icon-history"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -88,14 +90,28 @@
 
         <div *ngIf="(status == 1 || status == 6) && userType == 1" class="po-row po-mt-2 po-mb-3  operation-buttons">
             <div class="po-md-4">
-                <po-button (p-click)="accept()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Aceitar solicitação"
+                <po-button (p-click)="accessorAccept()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Aceitar solicitação"
                     p-type="primary"></po-button>
             </div>
         </div>
 
         <div *ngIf="status == 3  && userType == 1" class="po-row po-mt-2 po-mb-3  operation-buttons">
             <div class="po-md-4">
-                <po-button (p-click)="send()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Enviar solicitação"
+                <po-button (p-click)="accessorSend()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Enviar solicitação"
+                    p-type="primary"></po-button>
+            </div>
+        </div>
+
+        <div *ngIf="((status == 4 && !validProviderExist()) || status == 6 ) && userType == 3" class="po-row po-mt-2 po-mb-3  operation-buttons">
+            <div class="po-md-4">
+                <po-button (p-click)="providerAccept()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Aceitar solicitação"
+                    p-type="primary"></po-button>
+            </div>
+        </div>
+
+        <div *ngIf="status == 3  && userType == 3" class="po-row po-mt-2 po-mb-3  operation-buttons">
+            <div class="po-md-4">
+                <po-button (p-click)="openSendValue()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Enviar solicitação"
                     p-type="primary"></po-button>
             </div>
         </div>
@@ -172,4 +188,18 @@
             </po-accordion>
         </div>
     </div>
+</app-show-informations>
+<app-show-informations #providerConfirmation>
+    <form [formGroup]="form">
+        <div class="po-row provider-confirmation">
+            <label for="value" class="form-label">Valor da Solicitação* </label>
+            <input formControlName="value" type="number" class="form-control" id="value">
+        </div>
+        <div class="po-row provider-confirmation-buttons">
+            <div class="po-md-3">
+                <po-button (p-click)="providerSend()" [p-disabled]="!form.valid" p-icon="po-icon po-icon-ok" p-label="Confirmar valor"
+                    p-type="primary"></po-button>
+            </div>
+        </div>
+    </form>
 </app-show-informations>

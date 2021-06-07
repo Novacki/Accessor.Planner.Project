@@ -8,6 +8,6 @@ namespace Accessor.Planner.Domain.Data.Repository
 {
     public interface IProviderRepository : IRepository<Provider>
     {
-        Task<Provider> GetByUserId(Guid id);
+        Task<Provider> GetByUserIdAsync(Guid id);
     }
 }
