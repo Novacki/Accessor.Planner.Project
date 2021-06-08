@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { PoNotificationService } from '@po-ui/ng-components';
 import { AccountService } from '../../services/account.service';
 
 @Component({
@@ -10,7 +11,11 @@ import { AccountService } from '../../services/account.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router) { }
+  constructor(
+    private fb: FormBuilder, 
+    private accountService: AccountService, 
+    private router: Router,
+    private poNotification: PoNotificationService) { }
 
   public form: FormGroup;
   public loading: boolean = false;
@@ -32,7 +37,10 @@ export class LoginComponent implements OnInit {
       localStorage.clear();
       localStorage.setItem('auth', response);
       this.router.navigate(['../menu'])
-    }, error => console.log(error),
+    }, error => {
+      this.loading = false;
+      this.poNotification.error("Usuário ou Senha Incorretos!");
+    },
     () => {
       this.loading = false;
     });

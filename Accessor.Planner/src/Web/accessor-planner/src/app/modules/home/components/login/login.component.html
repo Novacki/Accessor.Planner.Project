@@ -10,22 +10,15 @@
 		<div class="form-container">
 			<form [formGroup]="form">
 				<app-divider [title]="'Login'"></app-divider>
-				<div class="row mt-3">
-					<div class="col-2 mt-2">
-						<label for="firstName" class="form-label">E-mail:</label>
-					</div>
-					<div class="col-10">
-						<input formControlName="email" type="email" class="form-control" id="name" placeholder="E-mail"
-							required />
+				<div class="po-row">
+					<div class="col-12 email-style">
+						<po-email formControlName="email" p-placeholder="E-mail" p-label="E-mail*" required></po-email>
 					</div>
 				</div>
-				<div class="row mt-3">
-					<div class="col-2 mt-2">
-						<label for="firstName" class="form-label">Password: </label>
-					</div>
-					<div class="col-10">
-						<input formControlName="password" type="password" class="form-control" id="name"
-							placeholder="Password" required />
+				<div class="po-row">
+					<div class="col-12 password-style">
+						<po-password p-minlength="6" p-maxlength="20" formControlName="password" p-placeholder="Senha*"
+              				name="password" p-label="Senha*" required></po-password>
 					</div>
 				</div>
 				<div class="row mt-3">
