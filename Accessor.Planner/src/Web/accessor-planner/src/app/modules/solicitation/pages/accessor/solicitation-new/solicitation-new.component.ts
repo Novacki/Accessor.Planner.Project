@@ -71,13 +71,20 @@ export class SolicitationNewComponent implements OnInit {
 
   public getItems(): SolicitationColumn[] {
     if (this.solicitations && this.clients) {
-      let withoutProvider = this.solicitations.filter(s => !s.provider);
-      return withoutProvider.map(solicitation => {
-        return {
-          id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), client: solicitation.client.name, accessor: this.getNameAcessorById(solicitation.accessorId), provider: solicitation.provider ? solicitation.provider.fantasyName : 'Não Requisitado',
-          quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null, ['viewDescription']), updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view']
-        }
-      });
+      if(this.client) {
+        return this.solicitations.map(solicitation => {
+          return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), client: solicitation.client.name, 
+            provider: solicitation.provider ? solicitation.provider.fantasyName : 'Não Requisitado', solicitationEndDate: solicitation.solicitationEndDate ? DateFormat.format(solicitation.solicitationEndDate)  : 'Não Definido',
+            quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
+        });
+      } else {
+        let withoutProvider = this.solicitations.filter(s => !s.provider);
+        return withoutProvider.map(solicitation => {
+          return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), client: solicitation.client.name, accessor: this.getNameAcessorById(solicitation.accessorId), 
+            provider:  solicitation.provider ? solicitation.provider.fantasyName : 'Não Requisitado', solicitationEndDate: solicitation.solicitationEndDate ? DateFormat.format(solicitation.solicitationEndDate)  : 'Não Definido',
+            quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
+        });
+      }
     }
   }
 

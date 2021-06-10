@@ -20,13 +20,13 @@ namespace Accessor.Planner.Infrastructure.Data.EntityConfiguration
                 .HasColumnType("float");
 
             builder.Property(room => room.Name)
-                .HasColumnType("nvarchar(20)");
+                .HasColumnType("nvarchar(50)");
 
             builder.Property(room => room.SolicitationId)
                 .HasColumnType("uniqueidentifier");
 
             builder.Property(room => room.Description)
-                .HasColumnType("nvarchar(20)");
+                .HasColumnType("nvarchar(300)");
 
             builder.Property(room => room.CreatedAt)
                .HasColumnType("datetime2")

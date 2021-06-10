@@ -20,7 +20,10 @@ namespace Accessor.Planner.API.Application.Extensions
                 Provider = solicitation.Provider == null ? null : solicitation.Provider.ToFullViewModel(),
                 Client = solicitation.Client.ToFullViewModel(),
                 Status = (int)solicitation.Status,
-                Rooms = solicitation.Rooms.ToViewModel()
+                SolicitationEndDate = solicitation.SolicitationEndDate,
+                Rooms = solicitation.Rooms.ToViewModel(),
+                SolicitationHistories = solicitation.SolicitationHistories.ToViewModel()
+
             };
         }
 
@@ -35,7 +38,9 @@ namespace Accessor.Planner.API.Application.Extensions
                 Provider = s.Provider == null ? null : s.Provider.ToFullViewModel(),
                 Client = s.Client.ToFullViewModel(),
                 Status = (int)s.Status,
-                Rooms = s.Rooms.ToViewModel()
+                SolicitationEndDate = s.SolicitationEndDate,
+                Rooms = s.Rooms.ToViewModel(),
+                SolicitationHistories = s.SolicitationHistories.ToViewModel()
 
             }).ToList();
             

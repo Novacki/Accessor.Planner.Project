@@ -73,13 +73,15 @@ export class SolicitationAccessorApprovedComponent implements OnInit {
     if(this.solicitations && this.clients) {
       if(this.client) {
         return this.solicitations.map(solicitation => {
-          return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), client: solicitation.client.name, provider: solicitation.provider ? solicitation.provider.fantasyName : 'Não Requisitado',
+          return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), client: solicitation.client.name, 
+            provider: solicitation.provider ? solicitation.provider.fantasyName : 'Não Requisitado', solicitationEndDate: solicitation.solicitationEndDate ? DateFormat.format(solicitation.solicitationEndDate)  : 'Não Definido',
             quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
         });
       } else {
         let withProvider = this.solicitations.filter(s => s.provider);
         return withProvider.map(solicitation => {
-          return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), client: solicitation.client.name, accessor: this.getNameAcessorById(solicitation.accessorId), provider: solicitation.provider.fantasyName,
+          return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), client: solicitation.client.name, accessor: this.getNameAcessorById(solicitation.accessorId), 
+            provider: solicitation.provider.fantasyName, solicitationEndDate: solicitation.solicitationEndDate ? DateFormat.format(solicitation.solicitationEndDate)  : 'Não Definido',
             quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
         });
       }
@@ -94,6 +96,7 @@ export class SolicitationAccessorApprovedComponent implements OnInit {
     this.loading = true;
     this.solicitationService.get(this.filter).subscribe(response => {
       this.solicitations = response;
+      console.log(this.solicitations)
     },
     error => console.log(error),
     () => {

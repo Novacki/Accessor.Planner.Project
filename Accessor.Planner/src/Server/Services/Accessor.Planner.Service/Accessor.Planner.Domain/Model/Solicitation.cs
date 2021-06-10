@@ -69,14 +69,14 @@ namespace Accessor.Planner.Domain.Model
 
         }
 
-        public void Send(Provider provider)
+        public void Send(Provider provider, DateTime solicitationEndDate)
         {
             if (Status != StatusSolicitation.Accept || provider.Id != ProviderId)
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.InReview;
             UpdatedAt = DateTime.Now;
-
+            SolicitationEndDate = solicitationEndDate;
         }
 
         public void Send(Client accessor)

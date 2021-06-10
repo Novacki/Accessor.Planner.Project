@@ -28,16 +28,16 @@ namespace Accessor.Planner.Infrastructure.Data.EntityConfiguration
             .HasColumnType("uniqueidentifier");
 
             builder.Property(address => address.Complement)
-            .HasColumnType("nvarchar(50)");
+            .HasColumnType("nvarchar(100)");
 
             builder.Property(address => address.Number)
             .HasColumnType("nvarchar(20)");
 
             builder.Property(address => address.State)
-            .HasColumnType("nvarchar(30)");
+            .HasColumnType("nvarchar(50)");
 
             builder.Property(address => address.Street)
-            .HasColumnType("nvarchar(50)");
+            .HasColumnType("nvarchar(100)");
 
             builder.Property(address => address.CreatedAt)
                 .HasColumnType("datetime2")

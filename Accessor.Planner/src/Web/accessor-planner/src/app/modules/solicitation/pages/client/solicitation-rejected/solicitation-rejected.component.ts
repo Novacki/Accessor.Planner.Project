@@ -82,8 +82,10 @@ export class SolicitationRejectedComponent implements OnInit {
   public getItems(): SolicitationColumn[] {
     if(this.solicitations && this.clients) {
       return this.solicitations.map(solicitation => {
-        return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), accessor: this.getNameAcessorById(solicitation.accessorId), provider: solicitation.provider ? solicitation.provider.fantasyName : 'Não Requisitado',
-          quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
+        return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), accessor: this.getNameAcessorById(solicitation.accessorId), 
+          provider: solicitation.provider ? solicitation.provider.fantasyName : 'Não Requisitado', solicitationEndDate: solicitation.solicitationEndDate ? DateFormat.format(solicitation.solicitationEndDate)  : 'Não Definido',
+          quantityRooms: solicitation.rooms.length, solicitationHistories: TransformDataColumns.transformSolicitationHistoryColumns(solicitation.solicitationHistories),
+          createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
       });
     }
   }

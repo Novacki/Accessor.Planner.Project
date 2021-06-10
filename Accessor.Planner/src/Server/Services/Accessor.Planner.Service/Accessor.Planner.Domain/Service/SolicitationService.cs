@@ -73,12 +73,12 @@ namespace Accessor.Planner.Domain.Service
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task ProviderSend(Guid userId, Guid solicitationId, double value)
+        public async Task ProviderSend(Guid userId, Guid solicitationId, double value, DateTime solicitationEndDate)
         {
             var provider = await _providerService.GetByIdAsync(userId);
             var solicitation = GetById(solicitationId);
 
-            solicitation.Send(provider);
+            solicitation.Send(provider, solicitationEndDate);
 
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, value ,SubscribeType.Provider));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);

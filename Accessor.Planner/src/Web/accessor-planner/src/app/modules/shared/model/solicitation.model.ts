@@ -2,6 +2,7 @@ import { StatusSolicitation } from "../enum/status-solicitation";
 import { Client } from "./client.model";
 import { Provider } from "./provider.model";
 import { Room } from "./room.model";
+import { SolicitationHistory } from "./solicitation-history.model";
 
 export interface Solicitation {
     id?: string;
@@ -10,6 +11,8 @@ export interface Solicitation {
     createdAt: Date; 
     updatedAt: Date;
     client: Client;
-    status:StatusSolicitation;
+    solicitationEndDate?: Date;
+    status: StatusSolicitation;
+    solicitationHistories?: SolicitationHistory[];
     rooms: Room[];
 }

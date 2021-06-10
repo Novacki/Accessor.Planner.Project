@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PoModalAction, PoModalComponent, PoTableColumn } from '@po-ui/ng-components';
+import { PoModalAction, PoModalComponent, PoNotificationService, PoTableColumn } from '@po-ui/ng-components';
 import { ShowInformationsComponent } from 'src/app/Modules/shared/components/show-informations/show-informations.component';
 import { StatusSolicitation } from 'src/app/modules/shared/enum/status-solicitation';
 import { UserType } from 'src/app/modules/shared/enum/user-type';
@@ -18,11 +18,12 @@ import { SolicitationService } from '../../services/solicitation.service';
 export class SolicitationOperationComponent implements OnInit {
 
 
-  constructor(private solicitationService: SolicitationService, private fb: FormBuilder) { }
+  constructor(private solicitationService: SolicitationService, private fb: FormBuilder, private poNotification: PoNotificationService) { }
 
   @ViewChild('information') information: ShowInformationsComponent;
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
   @ViewChild('providerConfirmation') providerConfirmation: ShowInformationsComponent;
+  @ViewChild('historySolicitation') historySolicitation: ShowInformationsComponent;
 
   public status: StatusSolicitation; 
   public userType: UserType;
@@ -59,6 +60,10 @@ export class SolicitationOperationComponent implements OnInit {
     this.poModal.open();
   }
 
+  openHistory() {
+    this.historySolicitation.poModal.open();
+  }
+
   public getColumnsRoom(): Array<PoTableColumn> {
     return [
       { property: 'name', label: 'Comodo', width: '11%' },
@@ -81,6 +86,17 @@ export class SolicitationOperationComponent implements OnInit {
     ]
   }
 
+  public getColumnsSolicitationsHistory(): Array<PoTableColumn> {
+    return [
+      { property: 'status', label: 'Status', width: '15%' },
+      { property: 'type', label: 'Último Assinante', width: '15%' },
+      { property: 'client', label: 'Cliente', width: '15%' },
+      { property: 'accessor', label: 'Acessor', width: '15%' },
+      { property: 'provider', label: 'Fornecedor', width: '15%' },
+      { property: 'value', label: 'Valor', width: '15%' }
+    ]
+  }
+
   private showInformation(row: RoomColumn): void {
     this.roomColumn = row;
     this.information.poModal.open();
@@ -88,9 +104,13 @@ export class SolicitationOperationComponent implements OnInit {
 
   public cancel(): void {
     this.solicitationService.cancel(this.solicitation.id, "string").subscribe(response => {
+      this.poNotification.success("Solicitação cancelada com sucesso!");
       this.emitChangeOperation();
     },
-    error => console.log(error),
+    error => {
+      this.poNotification.error("Erro ao cancelar solicitação!");
+      this.loading = false;
+    },
     () => {
       this.buttonActivate = true;
       this.loading = false;
@@ -100,9 +120,13 @@ export class SolicitationOperationComponent implements OnInit {
   public approve(): void {
     this.loading = true;
     this.solicitationService.approve(this.solicitation.id).subscribe(response => {
+      this.poNotification.success("Solicitação aprovada com sucesso!");
       this.emitChangeOperation();
     },
-    error => console.log(error),
+    error => {
+      this.poNotification.error("Erro ao aprovar solicitação!");
+      this.loading = false;
+    },
     () => {
       this.buttonActivate = true;
       this.loading = false;
@@ -112,9 +136,13 @@ export class SolicitationOperationComponent implements OnInit {
   public reject(): void {
     this.loading = true;
     this.solicitationService.reject(this.solicitation.id, "string").subscribe(response => {
+      this.poNotification.success("Solicitação rejeitada com sucesso!");
       this.emitChangeOperation();
     },
-    error => console.log(error),
+    error => {
+      this.poNotification.error("Erro ao rejeitar solicitação!");
+      this.loading = false;
+    },
     () => {
       this.buttonActivate = true;
       this.loading = false;
@@ -124,9 +152,13 @@ export class SolicitationOperationComponent implements OnInit {
   public accessorAccept(): void {
     this.loading = true;
     this.solicitationService.accessorAccept(this.solicitation.id).subscribe(response => {
+      this.poNotification.success("Solicitação aceita com sucesso!");
       this.emitChangeOperation();
     },
-    error => console.log(error),
+    error => {
+      this.poNotification.error("Erro ao aceitar solicitação!");
+      this.loading = false;
+    },
     () => {
       this.buttonActivate = true;
       this.loading = false;
@@ -136,9 +168,13 @@ export class SolicitationOperationComponent implements OnInit {
   public accessorSend(): void {
     this.loading = true;
     this.solicitationService.accessorSend(this.solicitation.id).subscribe(response => {
+      this.poNotification.success("Solicitação enviada com sucesso!");
       this.emitChangeOperation();
     },
-    error => console.log(error),
+    error => {
+      this.poNotification.error("Erro ao enviar solicitação!");
+      this.loading = false;
+    },
     () => {
       this.buttonActivate = true;
       this.loading = false;
@@ -149,9 +185,13 @@ export class SolicitationOperationComponent implements OnInit {
     this.loading = true;
     this.solicitationService.providerAccept({userId: this.filter.profileContextId, solicitationId: this.solicitation.id})
       .subscribe(response => {
+      this.poNotification.success("Solicitação aceita com sucesso!");
       this.emitChangeOperation();
     },
-    error => console.log(error),
+    error => {
+      this.poNotification.error("Erro ao aceitar solicitação!");
+      this.loading = false;
+    },
     () => {
       this.buttonActivate = true;
       this.loading = false;
@@ -160,11 +200,18 @@ export class SolicitationOperationComponent implements OnInit {
 
   public providerSend(): void {
     this.loading = true;
-    this.solicitationService.providerSend({ userId: this.filter.profileContextId, solicitationId: this.solicitation.id, value: this.form.controls.value.value }).subscribe(response => {
+    this.solicitationService.providerSend({ userId: this.filter.profileContextId, solicitationId: this.solicitation.id, 
+        value: this.form.controls.value.value, solicitationEndDate: this.form.controls.solicitationEndDate.value }).subscribe(response => {
+
+      this.poNotification.success("Solicitação enviada com sucesso!");
       this.providerConfirmation.poModal.close();
       this.emitChangeOperation();
+
     },
-    error => console.log(error),
+    error => {
+      this.poNotification.error("Erro ao enviar solicitação!");
+      this.loading = false;
+    },
     () => {
       this.buttonActivate = true;
       this.loading = false;
@@ -187,7 +234,19 @@ export class SolicitationOperationComponent implements OnInit {
 
   private contructForm(): void {
     this.form = this.fb.group({
-      value: ['', Validators.required]
+      value: [null, Validators.required],
+      solicitationEndDate: [null, [Validators.required]]
     });
   }
+
+  // private validateDate(control: any): ValidationErrors {
+  //   let result = new Date(control.value).getTime() > new Date().getTime();
+  //   console.log(result)
+  //   console.log(new Date(control.value).getTime())
+  //   console.log(new Date().getTime())
+  //   if(!result)
+  //     return ['invalidDate', 'Data inválida']
+  //   else
+  //     return null;
+  // }
 }

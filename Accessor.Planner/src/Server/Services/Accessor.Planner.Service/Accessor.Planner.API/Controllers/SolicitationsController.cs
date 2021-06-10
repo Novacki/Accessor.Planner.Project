@@ -124,7 +124,7 @@ namespace Accessor.Planner.API.Controllers
                 return BadRequest();
 
             await _solicitationService.ProviderSend(solicitationDTO.UserId, 
-                solicitationDTO.SolicitationId, solicitationDTO.Value);
+                solicitationDTO.SolicitationId, solicitationDTO.Value, solicitationDTO.SolicitationEndDate);
 
             return Ok();
         }

@@ -81,8 +81,10 @@ export class SolicitationCanceledComponent implements OnInit {
   public getItems(): SolicitationColumn[] {
     if(this.solicitations && this.clients) {
       return this.solicitations.map(solicitation => {
-        return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), accessor: solicitation.accessorId ? this.getNameAcessorById(solicitation.accessorId) : 'Não Requisitado', provider: solicitation.provider ? solicitation.provider.fantasyName : 'Não Requisitado',
-          quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
+        return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), accessor: solicitation.accessorId ? this.getNameAcessorById(solicitation.accessorId) : 'Não Requisitado', 
+          provider: solicitation.provider ? solicitation.provider.fantasyName : 'Não Requisitado', solicitationEndDate: solicitation.solicitationEndDate ? DateFormat.format(solicitation.solicitationEndDate)  : 'Não Definido',
+          quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt),solicitationHistories: TransformDataColumns.transformSolicitationHistoryColumns(solicitation.solicitationHistories),
+          rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
       });
     }
   }
