@@ -8,6 +8,7 @@ import { UserType } from 'src/app/modules/shared/enum/user-type';
 import { RoomColumn } from '../../model/room-column.model';
 import { SolicitationColumn } from '../../model/solicitation-column.model';
 import { SolicitationFilter } from '../../model/solicitation-filter.model';
+import { SolicitationHistoryColumn } from '../../model/solicitation-history-column.model';
 import { SolicitationService } from '../../services/solicitation.service';
 
 @Component({
@@ -28,6 +29,7 @@ export class SolicitationOperationComponent implements OnInit {
   public status: StatusSolicitation; 
   public userType: UserType;
   private filter: SolicitationFilter;
+  public value: string;
   public loading: boolean = false;
   public form: FormGroup;
 
@@ -57,6 +59,7 @@ export class SolicitationOperationComponent implements OnInit {
     this.solicitation = row;
     this.status = filter.status;
     this.userType = filter.userType;
+    this.getValueSolicitation(this.solicitation.solicitationHistories);
     this.poModal.open();
   }
 
@@ -237,6 +240,12 @@ export class SolicitationOperationComponent implements OnInit {
       value: [null, Validators.required],
       solicitationEndDate: [null, [Validators.required]]
     });
+  }
+
+  private getValueSolicitation(solicitationHistories: SolicitationHistoryColumn[]): void {
+    if(solicitationHistories) {
+      this.value = solicitationHistories[solicitationHistories.length - 1].value;
+    }
   }
 
   // private validateDate(control: any): ValidationErrors {

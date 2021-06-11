@@ -43,10 +43,19 @@
                         <label>{{ solicitation.provider }}</label>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                    <label class="strong-label">Valor</label>
+                    <div>
+                        <label *ngIf="value != 'Não Definido'; else undefinedValue">{{ value | currency: 'BRL' }}</label>
+                        <ng-template #undefinedValue>
+                            <label>{{value}}</label>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="col-md-2">
                     <span class="po-icon po-icon-upload-cloud"></span>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="history">
                         <span (click)="openHistory()" class="po-icon po-icon-history"></span>
                     </div>
@@ -65,10 +74,19 @@
                         <label>{{ solicitation.provider }}</label>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                    <label class="strong-label">Valor</label>
+                    <div>
+                        <label *ngIf="value != 'Não Definido'; else undefinedValue">{{ value | currency: 'BRL' }}</label>
+                        <ng-template #undefinedValue>
+                            <label>{{value}}</label>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="col-md-2">
                     <span class="po-icon po-icon-upload-cloud"></span>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="history">
                         <span (click)="openHistory()" class="po-icon po-icon-history"></span>
                     </div>
@@ -87,10 +105,19 @@
                         <label>{{ solicitation.client }}</label>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                    <label class="strong-label">Valor</label>
+                    <div>
+                        <label *ngIf="value != 'Não Definido'; else undefinedValue">{{ value | currency: 'BRL' }}</label>
+                        <ng-template #undefinedValue>
+                            <label>{{value}}</label>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="col-md-2">
                     <span class="po-icon po-icon-upload-cloud"></span>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="history">
                         <span (click)="openHistory()" class="po-icon po-icon-history"></span>
                     </div>
@@ -150,6 +177,13 @@
             <div class="po-md-4">
                 <po-button (p-click)="openSendValue()" [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok"
                     p-label="Enviar solicitação" p-type="primary"></po-button>
+            </div>
+        </div>
+
+        <div *ngIf="status == 4  && userType == 3 && validProviderExist()" class="po-row po-mt-2 po-mb-3  operation-buttons">
+            <div class="po-md-4">
+                <po-button (p-click)="openSendValue()" [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok"
+                    p-label="Encerrar solicitação" p-type="primary"></po-button>
             </div>
         </div>
     </div>
@@ -220,12 +254,12 @@
 <app-show-informations [name]="'Enviar Solicitação'" #providerConfirmation>
     <form [formGroup]="form">
         <div class="po-row provider-confirmation">
-            <div class="col-md-5 po-mr-5 value-style">
+            <div class="col-md-4 po-mr-5 value-style">
                 <po-decimal p-icon="po-icon-finance" p-min="0" formControlName="value" p-placeholder="Valor"
                     p-label="Valor*"></po-decimal>
                 <div class="invalid" formValidator [form]="form" [control]="form.controls.value">Campo inválido.</div>
             </div>
-            <div class="col-md-5 date-style">
+            <div class="col-md-7 date-style">
                 <po-datepicker p-placeholder="Data de Encerramento" formControlName="solicitationEndDate"
                     p-label="Data de Encerramento*" required></po-datepicker>
             </div>

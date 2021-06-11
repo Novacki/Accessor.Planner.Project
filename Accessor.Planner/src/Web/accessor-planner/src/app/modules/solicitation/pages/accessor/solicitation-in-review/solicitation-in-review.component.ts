@@ -4,8 +4,10 @@ import { StatusSolicitation, solicitationStatusLabel } from 'src/app/modules/sha
 import { UserType } from 'src/app/modules/shared/enum/user-type';
 import { DateFormat } from 'src/app/modules/shared/functions/date-format';
 import { Client } from 'src/app/modules/shared/model/client.model';
+import { Provider } from 'src/app/modules/shared/model/provider.model';
 import { Solicitation } from 'src/app/modules/shared/model/solicitation.model';
 import { ClientService } from 'src/app/Modules/shared/services/client.service';
+import { ProviderService } from 'src/app/modules/shared/services/provider.service';
 import { SolicitationOperationComponent } from '../../../components/solicitation-operation/solicitation-operation.component';
 import { SelectProfile } from '../../../functions/select-profile.function';
 import { TransformDataColumns } from '../../../functions/transform-data-columns.function';
@@ -26,7 +28,9 @@ export class SolicitationInReviewComponent implements OnInit {
 
   @ViewChild('modal') modal: SolicitationOperationComponent;
 
-  constructor(private solicitationService: SolicitationService, private clientService: ClientService) { }
+  constructor(private solicitationService: SolicitationService, private clientService: ClientService, private providerServide: ProviderService) { }
+  private clients: Client[];
+  private providers: Provider[];
 
   ngOnInit() {
     this.setFilter();
@@ -34,10 +38,13 @@ export class SolicitationInReviewComponent implements OnInit {
     this.clientService.getAllByUserType(UserType.accessor).subscribe(clients => {
       this.clients = clients;
     });
+
+    this.providerServide.getAll().subscribe(response => {
+      this.providers = response;
+    });
   }
 
   public solicitations: Solicitation[];
-  private clients: Client[];
   public loading: boolean = false;
 
   public getColumns(): Array<PoTableColumn> {
@@ -73,14 +80,14 @@ export class SolicitationInReviewComponent implements OnInit {
     if(this.solicitations && this.clients) {
       if(this.client) {
         return this.solicitations.map(solicitation => {
-          return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), client: solicitation.client.name, 
+          return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), client: solicitation.client.name, solicitationHistories: TransformDataColumns.transformSolicitationHistoryColumns(solicitation.solicitationHistories, this.providers, this.clients),
             provider: solicitation.provider ? solicitation.provider.fantasyName : 'Não Requisitado', solicitationEndDate: solicitation.solicitationEndDate ? DateFormat.format(solicitation.solicitationEndDate)  : 'Não Definido',
             quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
         });
       } else {
         return this.solicitations.map(solicitation => {
           return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), client: solicitation.client.name, accessor: this.getNameAcessorById(solicitation.accessorId), 
-            provider:  solicitation.provider.fantasyName, solicitationEndDate: solicitation.solicitationEndDate ? DateFormat.format(solicitation.solicitationEndDate)  : 'Não Definido',
+            provider:  solicitation.provider.fantasyName, solicitationEndDate: solicitation.solicitationEndDate ? DateFormat.format(solicitation.solicitationEndDate)  : 'Não Definido', solicitationHistories: TransformDataColumns.transformSolicitationHistoryColumns(solicitation.solicitationHistories, this.providers, this.clients),
             quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
         });
       }
