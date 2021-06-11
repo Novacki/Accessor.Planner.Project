@@ -25,7 +25,7 @@ namespace Accessor.Planner.Infrastructure.Repository
                 .ThenInclude(c => c.Addresses)
                 .Include(s => s.Rooms)
                 .ThenInclude(r => r.Furnitures)
-                .Include(s => s.SolicitationHistories);
+                .Include(s => s.SolicitationHistories.OrderBy(s => s.CreatedAt));
         }
 
         public override async Task<Solicitation> GetByIdAsync(Guid id)

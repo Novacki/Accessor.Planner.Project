@@ -4,8 +4,12 @@ import { PoModalAction, PoModalComponent, PoTableColumn } from '@po-ui/ng-compon
 import { solicitationStatusLabel, StatusSolicitation } from 'src/app/modules/shared/enum/status-solicitation';
 import { UserType } from 'src/app/modules/shared/enum/user-type';
 import { DateFormat } from 'src/app/modules/shared/functions/date-format';
+import { Client } from 'src/app/modules/shared/model/client.model';
+import { Provider } from 'src/app/modules/shared/model/provider.model';
 import { Room } from 'src/app/modules/shared/model/room.model';
 import { Solicitation } from 'src/app/modules/shared/model/solicitation.model';
+import { ClientService } from 'src/app/Modules/shared/services/client.service';
+import { ProviderService } from 'src/app/modules/shared/services/provider.service';
 import { SolicitationOperationComponent } from '../../../components/solicitation-operation/solicitation-operation.component';
 import { TransformDataColumns } from '../../../functions/transform-data-columns.function';
 import { RoomColumn } from '../../../model/room-column.model';
@@ -28,10 +32,20 @@ export class SolicitationOnHoldComponent implements OnInit {
 
   @ViewChild('modal') modal: SolicitationOperationComponent;
 
-  constructor(private solicitationService: SolicitationService) { }
+  constructor(private solicitationService: SolicitationService, private clientService: ClientService, private providerServide: ProviderService) { }
+  private clients: Client[];
+  private providers: Provider[];
 
   ngOnInit() {
     this.getSolicitations();
+
+    this.clientService.getAllByUserType(UserType.accessor).subscribe(clients => {
+      this.clients = clients;
+    });
+
+    this.providerServide.getAll().subscribe(response => {
+      this.providers = response;
+    });
   }
 
   public solicitations: Solicitation[];
@@ -69,9 +83,9 @@ export class SolicitationOnHoldComponent implements OnInit {
   public getItems(): SolicitationColumn[] {
     if(this.solicitations) {
       return this.solicitations.map(solicitation => {
-        return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), 
+        return { id: solicitation.id, status: solicitationStatusLabel.get(solicitation.status), accessor: 'Não Requisitado',
           solicitationEndDate: solicitation.solicitationEndDate ? DateFormat.format(solicitation.solicitationEndDate)  : 'Não Definido', provider: solicitation.provider ? solicitation.provider.fantasyName : 'Não Requisitado',
-          quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), solicitationHistories: TransformDataColumns.transformSolicitationHistoryColumns(solicitation.solicitationHistories),
+          quantityRooms: solicitation.rooms.length, createdAt: DateFormat.format(solicitation.createdAt), solicitationHistories: TransformDataColumns.transformSolicitationHistoryColumns(solicitation.solicitationHistories, this.providers, this.clients),
           rooms: TransformDataColumns.transformRoomColumns(solicitation.rooms, null ,['viewDescription']) , updatedAt: DateFormat.format(solicitation.updatedAt), options: ['edit', 'view'] }
       });
     }

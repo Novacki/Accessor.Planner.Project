@@ -88,12 +88,12 @@ export class SolicitationOperationComponent implements OnInit {
 
   public getColumnsSolicitationsHistory(): Array<PoTableColumn> {
     return [
-      { property: 'status', label: 'Status', width: '15%' },
-      { property: 'type', label: 'Último Assinante', width: '15%' },
-      { property: 'client', label: 'Cliente', width: '15%' },
+      { property: 'status', label: 'Status', width: '10%' },
+      { property: 'type', label: 'Assinante', width: '10%' },
       { property: 'accessor', label: 'Acessor', width: '15%' },
       { property: 'provider', label: 'Fornecedor', width: '15%' },
-      { property: 'value', label: 'Valor', width: '15%' }
+      { property: 'value', label: 'Valor', width: '10%' },
+      { property: 'createdAt', label: 'Data', width: '15%' }
     ]
   }
 

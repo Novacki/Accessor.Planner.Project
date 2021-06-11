@@ -1,6 +1,9 @@
 import { solicitationStatusLabel } from "../../shared/enum/status-solicitation";
 import { subscribeTypeLabel } from "../../shared/enum/subscribe-type.model";
+import { DateFormat } from "../../shared/functions/date-format";
+import { Client } from "../../shared/model/client.model";
 import { Furniture } from "../../shared/model/furniture.model";
+import { Provider } from "../../shared/model/provider.model";
 import { Room } from "../../shared/model/room.model";
 import { SolicitationHistory } from "../../shared/model/solicitation-history.model";
 import { FurnitureColumn } from "../model/furniture-column.model";
@@ -22,10 +25,22 @@ export class TransformDataColumns {
         });
     }
 
-    public static transformSolicitationHistoryColumns(solicitationHistories: SolicitationHistory[], descriptionIcon?: any, options?: any): SolicitationHistoryColumn[] {
+    public static transformSolicitationHistoryColumns(solicitationHistories: SolicitationHistory[], providers?: Provider[], accessors?: Client[], descriptionIcon?: any, options?: any): SolicitationHistoryColumn[] {
         return solicitationHistories.map(solicitation => {
-            return { accessor: solicitation.accessorId, provider: solicitation.providerId, 
-                value: solicitation.value, status: solicitationStatusLabel.get(solicitation.status), type: subscribeTypeLabel.get(solicitation.type) }
+            let provider: Provider;
+            let accessor: Client;
+            
+            if( providers )
+                provider = providers.find(provider => provider.id == solicitation.providerId);
+            if( accessors ) 
+                accessor = accessors.find(accessor => accessor.id == solicitation.accessorId);
+            
+                
+            return { accessor: accessor ? accessor.name : 'Não Requisitado', 
+                     provider: provider ? provider.fantasyName : 'Não Requisitado', 
+                     createdAt: DateFormat.format(solicitation.createdAt), 
+                     value: solicitation.value ? solicitation.value.toLocaleString() : 'Não Definido', status: solicitationStatusLabel.get(solicitation.status), 
+                     type: subscribeTypeLabel.get(solicitation.type) }
         });
     }
 }

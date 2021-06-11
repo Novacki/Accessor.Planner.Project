@@ -1,0 +1,16 @@
+::ng-deep .po-modal-content {
+    width: 100%;
+    max-width: 1000px;
+}
+
+::ng-deep .po-modal-title{
+    width: 100%;
+    max-width: 1000px;
+}
+
+::ng-deep .po-modal-body{
+    width: 100%;
+    max-width: 1000px;
+}
+
+

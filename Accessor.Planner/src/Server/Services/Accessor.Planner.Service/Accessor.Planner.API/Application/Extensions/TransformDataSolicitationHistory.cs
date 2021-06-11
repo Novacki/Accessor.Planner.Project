@@ -13,11 +13,12 @@ namespace Accessor.Planner.API.Application.Extensions
         {
             return new SolicitationHistoryViewModel()
             {
-                AcessorId = solicitationHistory.AcessorId,
+                AccessorId = solicitationHistory.AcessorId,
                 ProviderId = solicitationHistory.ProviderId,
                 Status = (int)solicitationHistory.Status,
                 Type = (int)solicitationHistory.Type,
-                Value = solicitationHistory.Value
+                Value = solicitationHistory.Value,
+                CreatedAt = solicitationHistory.CreatedAt
             };
         }
 
@@ -25,11 +26,12 @@ namespace Accessor.Planner.API.Application.Extensions
         {
             return solicitationHistories.Select(s => new SolicitationHistoryViewModel() 
             { 
-                AcessorId = s.AcessorId,
+                AccessorId = s.AcessorId,
                 ProviderId = s.ProviderId,
                 Status = (int)s.Status,
                 Type = (int)s.Type,
-                Value = s.Value
+                Value = s.Value,
+                CreatedAt = s.CreatedAt
 
             }).ToList();
         }

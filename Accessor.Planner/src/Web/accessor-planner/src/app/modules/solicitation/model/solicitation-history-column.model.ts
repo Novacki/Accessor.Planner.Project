@@ -1,7 +1,8 @@
 export interface SolicitationHistoryColumn {
     accessor?: string;
     provider?: string;
-    value?: number;
+    value?: string;
     status: string;
     type: string;
+    createdAt: string;
 }

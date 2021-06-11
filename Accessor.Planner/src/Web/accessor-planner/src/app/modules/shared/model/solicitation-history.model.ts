@@ -7,4 +7,5 @@ export interface SolicitationHistory {
     value?: number;
     status: StatusSolicitation;
     type: SubscribeType;
+    createdAt: Date;
 }

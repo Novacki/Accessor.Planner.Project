@@ -17,4 +17,8 @@ export class ProviderService {
   public getByUserId(userId: string): Observable<Provider> {
     return this.http.getById<Provider>(`Providers/${userId}`);
   }
+
+  public getAll(): Observable<Provider[]> {
+    return this.http.getById<Provider[]>(`Providers`);
+  }
 }
