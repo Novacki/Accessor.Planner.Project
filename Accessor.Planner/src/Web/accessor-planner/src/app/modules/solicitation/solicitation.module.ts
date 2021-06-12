@@ -27,8 +27,9 @@ import { SolicitationInReviewComponent } from './pages/accessor/solicitation-in-
 
 
 
+
 @NgModule({
-  declarations: [SolicitationFormComponent, ModalRoomComponent, ModalFurnitureComponent, SolicitationOnHoldComponent, SolicitationAcceptedComponent, SolicitationReturnedComponent, SolicitationOperationComponent, SolicitationApprovedComponent, SolicitationDoneComponent, SolicitationCanceledComponent, SolicitationRejectedComponent, SolicitationNewComponent, SolicitationToSendComponent, SolicitationAccessorApprovedComponent, SolicitationAccessorRejectedComponent, SolicitationAccessorDoneComponent, SolicitationAccessorCanceledComponent, SolicitationInReviewComponent],
+  declarations: [SolicitationFormComponent, ModalRoomComponent, ModalFurnitureComponent, SolicitationOnHoldComponent, SolicitationAcceptedComponent, SolicitationReturnedComponent, SolicitationOperationComponent, SolicitationApprovedComponent, SolicitationDoneComponent, SolicitationCanceledComponent, SolicitationRejectedComponent, SolicitationNewComponent, SolicitationToSendComponent, SolicitationAccessorApprovedComponent, SolicitationAccessorRejectedComponent, SolicitationAccessorDoneComponent, SolicitationAccessorCanceledComponent, SolicitationInReviewComponent ],
   imports: [
     CommonModule,
     SharedModule,

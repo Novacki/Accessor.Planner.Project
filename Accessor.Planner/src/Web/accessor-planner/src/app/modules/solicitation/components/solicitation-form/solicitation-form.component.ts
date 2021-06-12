@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { PoTableColumn } from '@po-ui/ng-components';
+import { PoNotificationService, PoTableColumn } from '@po-ui/ng-components';
 import { Subject } from 'rxjs';
 import { ShowInformationsComponent } from 'src/app/Modules/shared/components/show-informations/show-informations.component';
 import { Room } from 'src/app/modules/shared/model/room.model';
@@ -15,7 +15,11 @@ import { ModalRoomComponent } from './modal-room/modal-room.component';
 })
 export class SolicitationFormComponent implements OnInit {
 
-  constructor(private solicitationService: SolicitationService, private router: Router) { }
+  constructor(
+    private solicitationService: SolicitationService, 
+    private router: Router,
+    private poNotification: PoNotificationService ) { }
+
   public rooms: Room[] = [];
   public showRoom: Room;
   @ViewChild('information') information: ShowInformationsComponent;
@@ -29,7 +33,7 @@ export class SolicitationFormComponent implements OnInit {
   public getColumns(): Array<PoTableColumn> {
     return [
       { property: 'name', label: 'Comodo', width: '15%' },
-      { property: 'metreage', label: 'Metragem', width: '15%' },
+      { property: 'metreage', label: 'M²', width: '15%' },
       { property: 'quantityFurnitures', label: 'Quantidade de Móveis', width: '15%' },
       { 
         property: 'descriptionIcon', 
@@ -70,6 +74,7 @@ export class SolicitationFormComponent implements OnInit {
 
   public addRoom(room: Room): void {
     this.rooms.push(room);
+    this.poNotification.success(`Comodo adicionado com sucesso! ${room.name}`);
   }
 
   public editRoom(room: Room): void {
@@ -77,6 +82,7 @@ export class SolicitationFormComponent implements OnInit {
     this.showRoom.metreage = room.metreage;
     this.showRoom.description = room.description;
     this.showRoom.furnitures = room.furnitures;
+    this.poNotification.success(`Comodo editado com sucesso! ${room.name}`);
   }
 
   public getItems(): RoomColumn[] {
@@ -88,20 +94,21 @@ export class SolicitationFormComponent implements OnInit {
   public registerSolicitation(): void {
     this.loading = true;
     this.solicitationService.create(this.rooms).subscribe(response => {
-      console.log(response);
+      this.poNotification.success('Solicitação criada com sucesso!');
     },
-    error => console.log(error)
-    ,() => {
+    error => {
+      this.poNotification.error('Erro ao Salvar a solicitação!');
+      this.loading = false;
+    },() => {
       this.loading = false;
       this.router.navigate(['../solicitations/on-hold'])
     });
   }
 
-  private removeRoom(row: RoomColumn) {
-   
+  private removeRoom(row: RoomColumn) {  
     let roomResult = this.getRoomByRow(row);
- 
     this.rooms.splice(this.rooms.indexOf(roomResult), 1);
+    this.poNotification.success('Comodo removido com sucesso!');
   }
  
 

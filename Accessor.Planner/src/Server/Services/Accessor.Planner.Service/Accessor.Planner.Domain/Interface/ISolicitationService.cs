@@ -13,10 +13,14 @@ namespace Accessor.Planner.Domain.Interface
         Solicitation GetById(Guid id);
         Task<List<Solicitation>> GetSolicitationsByUserAsync(Guid userId);
         List<Solicitation> GetSolicitationsByFilter(Guid profileContextId, StatusSolicitation status, UserType? userType);
-        Task Accept(Guid userId, Guid solicitationId);
-        Task Send(Guid userId, Guid solicitationId);
-        Task Approve(Guid userId, Guid solicitationId);
-        Task Reject(Guid userId, Guid solicitationId, string reason);
+        Task AccessorAccept(Guid userId, Guid solicitationId);
+        Task ProviderAccept(Guid userId, Guid solicitationId);
+        Task AccessorSend(Guid userId, Guid solicitationId);
+        Task ProviderSend(Guid userId, Guid solicitationId, double value, DateTime solicitationEndDate);
+        Task Approve(Guid userId, Guid solicitationId, double value, DateTime solicitationEndDate);
+        Task Reject(Guid userId, Guid solicitationId, string reason, double value, DateTime solicitationEndDate);
+        Task Done(Guid userId, Guid solicitationId, double value);
         Task Cancel(Guid userId, Guid solicitationId, string reason);
+
     }
 }

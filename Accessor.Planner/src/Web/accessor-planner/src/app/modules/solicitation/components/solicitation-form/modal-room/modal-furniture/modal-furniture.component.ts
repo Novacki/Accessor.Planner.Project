@@ -58,11 +58,7 @@ export class ModalFurnitureComponent implements OnInit {
   }
 
   private clearFields(): void {
-    this.form.get('name').setValue('');
-    this.form.get('width').setValue('');
-    this.form.get('height').setValue('');
-    this.form.get('length').setValue('');
-    this.form.get('description').setValue('');
+    this.form.reset();
   }
 
   @HostListener('change')

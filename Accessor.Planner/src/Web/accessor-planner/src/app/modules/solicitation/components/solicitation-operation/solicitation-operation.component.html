@@ -1,5 +1,5 @@
 <app-loading [loading]="loading"></app-loading>
-<po-modal class="view-modal" [p-hide-close]="true" [p-primary-action]="close">
+<po-modal p-size="xl" class="view-modal" [p-hide-close]="true" [p-primary-action]="close">
     <div *ngIf="solicitation">
         <div class="header-view">
             <div class="row">
@@ -27,23 +27,15 @@
                     <label>{{ solicitation.updatedAt }}</label>
                 </div>
                 <div class="col-md-3">
-                    <label></label>
+                    <label>{{ solicitation.solicitationEndDate }}</label>
                 </div>
             </div>
-            <div class="row mt-5">
+            <div class="row mt-5" *ngIf="userType == 2">
                 <div class="col-md-3">
-                    <div *ngIf="userType == 1; else client">
-                        <label class="strong-label">Cliente</label>
-                        <div>
-                            <label>{{ solicitation.client }}</label>
-                        </div>
+                    <label class="strong-label">Acessor</label>
+                    <div>
+                        <label>{{ solicitation.accessor }}</label>
                     </div>
-                    <ng-template #client>
-                        <label class="strong-label">Acessor</label>
-                        <div>
-                            <label>{{ solicitation.accessor }}</label>
-                        </div>
-                    </ng-template>
                 </div>
                 <div class="col-md-3">
                     <label class="strong-label">Fornecedor</label>
@@ -51,11 +43,84 @@
                         <label>{{ solicitation.provider }}</label>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                    <label class="strong-label">Valor</label>
+                    <div>
+                        <label *ngIf="value != 'Não Definido'; else undefinedValue">{{ value | currency: 'BRL' }}</label>
+                        <ng-template #undefinedValue>
+                            <label>{{value}}</label>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="col-md-2">
                     <span class="po-icon po-icon-upload-cloud"></span>
                 </div>
+                <div class="col-md-2">
+                    <div class="history">
+                        <span (click)="openHistory()" class="po-icon po-icon-history"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5" *ngIf="userType == 1">
                 <div class="col-md-3">
-                    <span class="po-icon po-icon-history"></span>
+                    <label class="strong-label">Cliente</label>
+                    <div>
+                        <label>{{ solicitation.client }}</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="strong-label">Fornecedor</label>
+                    <div>
+                        <label>{{ solicitation.provider }}</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="strong-label">Valor</label>
+                    <div>
+                        <label *ngIf="value != 'Não Definido'; else undefinedValue">{{ value | currency: 'BRL' }}</label>
+                        <ng-template #undefinedValue>
+                            <label>{{value}}</label>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <span class="po-icon po-icon-upload-cloud"></span>
+                </div>
+                <div class="col-md-2">
+                    <div class="history">
+                        <span (click)="openHistory()" class="po-icon po-icon-history"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5" *ngIf="userType == 3">
+                <div class="col-md-3">
+                    <label class="strong-label">Acessor</label>
+                    <div>
+                        <label>{{ solicitation.accessor }}</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="strong-label">Cliente</label>
+                    <div>
+                        <label>{{ solicitation.client }}</label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <label class="strong-label">Valor</label>
+                    <div>
+                        <label *ngIf="value != 'Não Definido'; else undefinedValue">{{ value | currency: 'BRL' }}</label>
+                        <ng-template #undefinedValue>
+                            <label>{{value}}</label>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <span class="po-icon po-icon-upload-cloud"></span>
+                </div>
+                <div class="col-md-2">
+                    <div class="history">
+                        <span (click)="openHistory()" class="po-icon po-icon-history"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -65,65 +130,78 @@
         <app-table [height]="400" [columns]="getColumnsRoom()" [items]="solicitation.rooms"></app-table>
 
         <div *ngIf="status == 2 && userType == 2" class="po-row po-mt-2 po-mb-3  operation-buttons">
-            <div class="po-md-4">
-                <po-button (p-click)="approve()" [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Aprovar solicitação"
-                    p-type="primary"></po-button>
+            <div class="po-md-3">
+                <po-button (p-click)="approve()" [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok"
+                    p-label="Aprovar solicitação" p-type="primary"></po-button>
             </div>
-            <div class="po-md-4">
-                <po-button (p-click)="reject()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-close" p-label="Recusar solicitação"
-                    p-type="danger"></po-button>
+            <div class="po-md-3">
+                <po-button (p-click)="reject()" class="reject" [p-disabled]="!buttonActivate"
+                    p-icon="po-icon po-icon-close" p-label="Recusar solicitação" p-type="danger"></po-button>
             </div>
-            <div class="po-md-4">
-                <po-button (p-click)="cancel()" [p-disabled]="!buttonActivate" class="cancel" p-label="Cancelar solicitação"
-                    p-type="danger"></po-button>
+            <div class="po-md-3">
+                <po-button (p-click)="cancel()" p-icon="po-icon po-icon-delete" [p-disabled]="!buttonActivate"
+                    class="cancel" p-label="Cancelar solicitação" p-type="danger"></po-button>
             </div>
         </div>
 
         <div *ngIf="status == 1 && userType == 2" class="po-row po-mt-2 po-mb-3 operation-buttons">
             <div class="po-md-4">
-                <po-button (p-click)="cancel()" [p-disabled]="!buttonActivate" class="cancel" p-label="Cancelar solicitação"
-                    p-type="danger"></po-button>
+                <po-button (p-click)="cancel()" p-icon="po-icon po-icon-delete" [p-disabled]="!buttonActivate"
+                    class="cancel" p-label="Cancelar solicitação" p-type="danger"></po-button>
             </div>
         </div>
 
         <div *ngIf="(status == 1 || status == 6) && userType == 1" class="po-row po-mt-2 po-mb-3  operation-buttons">
             <div class="po-md-4">
-                <po-button (p-click)="accept()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Aceitar solicitação"
-                    p-type="primary"></po-button>
+                <po-button (p-click)="accessorAccept()" [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok"
+                    p-label="Aceitar solicitação" p-type="primary"></po-button>
             </div>
         </div>
 
         <div *ngIf="status == 3  && userType == 1" class="po-row po-mt-2 po-mb-3  operation-buttons">
             <div class="po-md-4">
-                <po-button (p-click)="send()"  [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok" p-label="Enviar solicitação"
-                    p-type="primary"></po-button>
+                <po-button (p-click)="accessorSend()" [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok"
+                    p-label="Enviar solicitação" p-type="primary"></po-button>
+            </div>
+        </div>
+
+        <div *ngIf="((status == 4 && !validProviderExist()) || status == 6 ) && userType == 3"
+            class="po-row po-mt-2 po-mb-3  operation-buttons">
+            <div class="po-md-4">
+                <po-button (p-click)="providerAccept()" [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok"
+                    p-label="Aceitar solicitação" p-type="primary"></po-button>
+            </div>
+        </div>
+
+        <div *ngIf="status == 3  && userType == 3" class="po-row po-mt-2 po-mb-3  operation-buttons">
+            <div class="po-md-4">
+                <po-button (p-click)="openSendValue()" [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok"
+                    p-label="Enviar solicitação" p-type="primary"></po-button>
+            </div>
+        </div>
+
+        <div *ngIf="status == 4  && userType == 3 && validProviderExist()" class="po-row po-mt-2 po-mb-3  operation-buttons">
+            <div class="po-md-4">
+                <po-button (p-click)="done()" [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok"
+                    p-label="Encerrar solicitação" p-type="primary"></po-button>
             </div>
         </div>
     </div>
 </po-modal>
 <app-show-informations #information>
     <div *ngIf="roomColumn">
-        <div class="divider-information">
-            <app-divider [title]="roomColumn.name"></app-divider>
-        </div>
-        <div class="header-view">
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="strong-label">Comodo</label>
-                </div>
-                <div class="col-md-6">
-                    <label class="strong-label">Metragem</label>
+        <din class="po-row">
+            <div class="col-md-6">
+                <div class="divider-information">
+                    <app-divider [title]="'Comodo: ' + roomColumn.name"></app-divider>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label>{{ roomColumn.name }}</label>
-                </div>
-                <div class="col-md-6">
-                    <label>{{ roomColumn.metreage }}</label>
+            <div class="col-md-6">
+                <div class="divider-information">
+                    <app-divider [title]="'M²: ' + roomColumn.metreage"></app-divider>
                 </div>
             </div>
-        </div>
+        </din>
         <div class="po-row mt-3 description-room">
             <label class="strong-label form-label">Descrição</label>
             <textarea readonly [value]="roomColumn.description" class="form-control description" id="description"
@@ -140,13 +218,13 @@
                             <label class="strong-label">Móvel</label>
                         </div>
                         <div class="col-md-3">
-                            <label class="strong-label">Altura</label>
+                            <label class="strong-label">Altura (M)</label>
                         </div>
                         <div class="col-md-3">
-                            <label class="strong-label">Largura</label>
+                            <label class="strong-label">Largura (M)</label>
                         </div>
                         <div class="col-md-3">
-                            <label class="strong-label">Comprimento</label>
+                            <label class="strong-label">Comprimento (M)</label>
                         </div>
                     </div>
                     <div class="row">
@@ -171,5 +249,33 @@
                 </po-accordion-item>
             </po-accordion>
         </div>
+    </div>
+</app-show-informations>
+<app-show-informations [name]="'Enviar Solicitação'" #providerConfirmation>
+    <form [formGroup]="form">
+        <div class="po-row provider-confirmation">
+            <div class="col-md-4 po-mr-5 value-style">
+                <po-decimal p-icon="po-icon-finance" p-min="0" formControlName="value" p-placeholder="Valor"
+                    p-label="Valor*"></po-decimal>
+                <div class="invalid" formValidator [form]="form" [control]="form.controls.value">Campo inválido.</div>
+            </div>
+            <div class="col-md-7 date-style">
+                <po-datepicker p-placeholder="Data de Encerramento" formControlName="solicitationEndDate"
+                    p-label="Data de Encerramento*" required></po-datepicker>
+            </div>
+        </div>
+        <div class="po-row provider-confirmation-buttons">
+            <div class="po-md-3">
+                <po-button (p-click)="providerSend()" [p-disabled]="!form.valid" p-icon="po-icon po-icon-ok"
+                    p-label="Confirmar valor" p-type="primary"></po-button>
+            </div>
+        </div>
+    </form>
+</app-show-informations>
+
+<app-show-informations [name]="'Histórico de Solicitações'" #historySolicitation>
+    <div *ngIf="solicitation && solicitation?.solicitationHistories">
+        <app-table [height]="400" [columns]="getColumnsSolicitationsHistory()"
+            [items]="solicitation.solicitationHistories"></app-table>
     </div>
 </app-show-informations>

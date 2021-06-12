@@ -7,34 +7,27 @@
         <app-divider></app-divider>
         <div class="po-row mt-3 po-mb-2 d-flex justify-content-center">
             <div class="col-md-4 po-mr-3">
-                <label for="name" class="form-label">Móvel* </label>
-                <input formControlName="name"  type="text" class="form-control" id="name" placeholder="Móvel"
-                    required />
-                <div class="invalid-feedback">O campo Móvel é obrigatório.</div>
+                <po-input p-minlength="2" p-maxlength="30" formControlName="name" id="name" p-placeholder="Móvel"
+                    required p-label="Móvel*"></po-input>
+                <div class="invalid" formValidator [form]="form" [control]="form.controls.name">Campo inválido.</div>
             </div>
             <div class="col-md-2 po-mr-2">
-                <label for="height" class="form-label">Altura* </label>
-                <input  formControlName="height" type="number" class="form-control" id="height" placeholder="Altura"
-                    required />
-                <div class="invalid-feedback">O campo Altura é obrigatório.</div>
+                <po-decimal p-min="0" formControlName="height"  p-placeholder="Altura"  p-label="Altura (M)*"> </po-decimal>
+                <div class="invalid" formValidator [form]="form" [control]="form.controls.height">Campo inválido.</div>
             </div>
             <div class="col-md-2 po-mr-2">
-                <label for="width" class="form-label">Largura* </label>
-                <input formControlName="width" type="number" class="form-control" id="width" placeholder="Largura"
-                    required />
-                <div class="invalid-feedback">O campo Largura é obrigatório.</div>
+                <po-decimal p-min="0" formControlName="width"  p-placeholder="Largura"  p-label="Largura (M)*"></po-decimal>
+                <div class="invalid" formValidator [form]="form" [control]="form.controls.width">Campo inválido.</div>
             </div>
             <div class="col-md-3">
-                <label for="length" class="form-label">Comprimento* </label>
-                <input formControlName="length" type="number" class="form-control" id="length" placeholder="Comprimento"
-                    required />
-                <div class="invalid-feedback">O campo Comprimento é obrigatório.</div>
+                <po-decimal p-min="0" formControlName="length"  p-placeholder="Comprimento"  p-label="Comprimento (M)*"></po-decimal>
+                <div class="invalid" formValidator [form]="form" [control]="form.controls.length">Campo inválido.</div>
             </div>
         </div>  
         <div class="po-row d-flex justify-content-center">
             <div class="col-md-11 po-mb-2">
-                <label for="description" class="form-label">Descrição* </label>
-                <textarea formControlName="description" class="form-control description" id="description" rows="8"></textarea>
+                <po-textarea p-minlength="5" class="description" p-rows="8" formControlName="description" p-label="Descrição*"></po-textarea>
+                <div class="invalid" formValidator [form]="form" [control]="form.controls.description">Campo inválido.</div>
             </div>
         </div>
     </form>

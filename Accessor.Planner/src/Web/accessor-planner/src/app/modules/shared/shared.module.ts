@@ -12,6 +12,7 @@ import { ShowInformationsComponent } from './components/show-informations/show-i
 import { BreadcrumbService } from './services/breadcrumb.service';
 import { ClientService } from './services/client.service';
 import { TableComponent } from './components/table/table.component';
+import { ProviderService } from './services/provider.service';
 
 
 
@@ -26,6 +27,6 @@ import { TableComponent } from './components/table/table.component';
     HttpInterceptorModule
   ],
   exports:[CardComponent, DividerComponent, FormValidatorDirective, ReactiveFormsModule, PoLoadingModule, PoModule, LoadingComponent, PoTableModule, ShowInformationsComponent, TableComponent],
-  providers:[HttpService, BreadcrumbService, ClientService]
+  providers:[HttpService, BreadcrumbService, ClientService, ProviderService]
 })
 export class SharedModule { }

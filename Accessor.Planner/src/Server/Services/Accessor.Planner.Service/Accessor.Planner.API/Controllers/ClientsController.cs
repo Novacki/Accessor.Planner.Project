@@ -45,7 +45,7 @@ namespace Accessor.Planner.API.Controllers
             var client = await _clientService.GetClientByUserIdAsync(userId.Value);
 
             if (client == null)
-                return NotFound();
+                return NoContent();
 
             return Ok(client.ToViewModel());
         }

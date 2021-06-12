@@ -46,3 +46,10 @@
   color:white;
 }
 
+.email-style ::ng-deep .po-field-icon {
+  color: maroon;
+}
+
+.password-style ::ng-deep .po-field-icon {
+  color: maroon;
+}

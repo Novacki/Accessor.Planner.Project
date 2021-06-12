@@ -17,10 +17,13 @@ namespace Accessor.Planner.API.Application.Extensions
                 AccessorId = solicitation.AccessorId,
                 CreatedAt = solicitation.CreatedAt,
                 UpdatedAt = solicitation.UpdatedAt,
-                Provider = solicitation.Provider == null ? null : solicitation.Provider.ToViewModel(),
+                Provider = solicitation.Provider == null ? null : solicitation.Provider.ToFullViewModel(),
                 Client = solicitation.Client.ToFullViewModel(),
                 Status = (int)solicitation.Status,
-                Rooms = solicitation.Rooms.ToViewModel()
+                SolicitationEndDate = solicitation.SolicitationEndDate,
+                Rooms = solicitation.Rooms.ToViewModel(),
+                SolicitationHistories = solicitation.SolicitationHistories.ToViewModel()
+
             };
         }
 
@@ -32,10 +35,12 @@ namespace Accessor.Planner.API.Application.Extensions
                 AccessorId = s.AccessorId,
                 CreatedAt = s.CreatedAt,
                 UpdatedAt = s.UpdatedAt,
-                Provider = s.Provider == null ? null : s.Provider.ToViewModel(),
+                Provider = s.Provider == null ? null : s.Provider.ToFullViewModel(),
                 Client = s.Client.ToFullViewModel(),
                 Status = (int)s.Status,
-                Rooms = s.Rooms.ToViewModel()
+                SolicitationEndDate = s.SolicitationEndDate,
+                Rooms = s.Rooms.ToViewModel(),
+                SolicitationHistories = s.SolicitationHistories.ToViewModel()
 
             }).ToList();
             

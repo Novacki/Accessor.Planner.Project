@@ -5,6 +5,8 @@ import { Room } from '../../shared/model/room.model';
 import { Solicitation } from '../../shared/model/solicitation.model';
 import { HttpService } from '../../shared/services/http.service';
 import { SolicitationFilter } from '../model/solicitation-filter.model';
+import { SolicitationOperation } from '../model/solicitation-operation.model';
+import { SolicitationResponseValue } from '../model/solicitation-response-value.model';
 import { SolicitationRequest } from '../requests/solicitation-request';
 
 @Injectable({
@@ -27,23 +29,35 @@ export class SolicitationService {
       );
   }
 
-  public approve(id: string): Observable<void> {
-    return this.http.put<void>(`Solicitations/${this.user.userId}/approve/${id}`);
+  public approve(solicitation: SolicitationResponseValue): Observable<SolicitationResponseValue> {
+    return this.http.put<SolicitationResponseValue>(`Solicitations/approve`, solicitation);
   }
 
-  public reject(id: string, reason: string): Observable<string> {
-    return this.http.put<string>(`Solicitations/${this.user.userId}/reject/${id}`, reason);
+  public reject(solicitation: SolicitationResponseValue): Observable<SolicitationResponseValue> {
+    return this.http.put<SolicitationResponseValue>(`Solicitations/reject`, solicitation);
+  }
+
+  public done(solicitation: SolicitationResponseValue): Observable<SolicitationResponseValue> {
+    return this.http.put<SolicitationResponseValue>(`Solicitations/done`, solicitation);
   }
 
   public cancel(id: string, reason: string): Observable<string> {
     return this.http.put<string>(`Solicitations/${this.user.userId}/cancel/${id}`);
   }
 
-  public accept(id: string): Observable<string> {
-    return this.http.put<string>(`Solicitations/${this.user.userId}/accept/${id}`);
+  public accessorAccept(id: string): Observable<string> {
+    return this.http.put<string>(`Solicitations/${this.user.userId}/accept-accessor/${id}`);
   }
 
-  public send(id: string): Observable<string> {
-    return this.http.put<string>(`Solicitations/${this.user.userId}/send/${id}`);
+  public accessorSend(id: string): Observable<string> {
+    return this.http.put<string>(`Solicitations/${this.user.userId}/send-accessor/${id}`);
+  }
+
+  public providerAccept(solicitation: SolicitationOperation): Observable<SolicitationOperation> {
+    return this.http.put<SolicitationOperation>(`Solicitations/accept-provider`, solicitation);
+  }
+
+  public providerSend(solicitation: SolicitationResponseValue): Observable<SolicitationOperation> {
+    return this.http.put<SolicitationOperation>(`Solicitations/send-provider`, solicitation);
   }
 }

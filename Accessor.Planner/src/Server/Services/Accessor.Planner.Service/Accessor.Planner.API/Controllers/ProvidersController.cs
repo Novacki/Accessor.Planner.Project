@@ -25,7 +25,7 @@ namespace Accessor.Planner.API.Controllers
 
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<ProviderViewModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(List<FullDataProviderViewModel>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         public async Task<IActionResult> GetAll()
         {
@@ -38,10 +38,25 @@ namespace Accessor.Planner.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(ProviderViewModel), (int)HttpStatusCode.OK)]
+        [Route("{userId:guid}")]
+        public async Task<IActionResult> GetByUser(Guid? userId)
+        {
+            if (!userId.HasValue)
+                return BadRequest();
+
+            var provider = await _providerService.GetByUserIdAsync(userId.Value);
+
+            if (provider == null)
+                return NoContent();
+
+            return Ok(provider.ToViewModel());
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(FullDataProviderViewModel), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [Route("{id:Guid}")]
+        [Route("me/{id:Guid}")]
         public async Task<IActionResult> Get(Guid? id)
         {
             if (!id.HasValue)

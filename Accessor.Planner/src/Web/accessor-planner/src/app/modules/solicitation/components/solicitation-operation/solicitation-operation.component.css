@@ -11,36 +11,46 @@
     color: white;
 }
 
+.reject ::ng-deep .po-button-danger:hover {
+    background-color: #c64840;
+    border: 1px solid #c64840;
+    color: white;
+}
+
 .cancel ::ng-deep .po-button {
-    color:white;
-    background-color: red;
+    color:red;
+    background-color: white;
     border-color: red;
 }
 
 .cancel ::ng-deep .po-button:hover {
     color:white;
-    background-color: gray;
-    border-color: gray;
+    background-color: red;
+    border-color: red;
 }
 
 .po-icon.po-icon-upload-cloud:before {
     font-size: 45px;
     color: maroon;
-    margin-left: 100%;
+    margin-left: 10%;
 }
 
-.po-icon.po-icon-history:before {
+.history {
     font-size: 45px;
-    color: maroon;
-    margin-left: 100%;
+    color: grey;
+    display: inline-block;
+    margin-left: 20%;
 }
 
+.history:hover {
+    color: maroon;
+}
+ 
 .header-view {
-    padding: 3%;
+    padding: 2%;
     border-radius: 6px;
     font-size: 15px;
-    color: white;
-    background-color: rgba(178,34,34,0.6);
+    color: grey;
 }
 
 .strong-label {
@@ -72,3 +82,34 @@
     padding: 1%;
 }
 
+.provider-confirmation {
+    padding: 2%;
+}
+
+.provider-confirmation-buttons ::ng-deep .po-md-3  {
+    margin-left: 0.7%;
+}
+
+.invalid {
+    opacity: 0;
+}
+
+.date-style ::ng-deep .po-icon.po-icon-arrow-right:before {
+    color: maroon;
+}
+  
+.date-style ::ng-deep .po-icon.po-icon-arrow-left:before{
+    color: maroon;
+}
+
+.date-style ::ng-deep .po-icon.po-icon-calendar:before {
+    color: maroon;
+}
+.date-style ::ng-deep .po-calendar-nav .po-calendar-nav-title{
+    color: maroon;
+}
+
+.value-style ::ng-deep .po-field-icon {
+    color: maroon;
+}
+  

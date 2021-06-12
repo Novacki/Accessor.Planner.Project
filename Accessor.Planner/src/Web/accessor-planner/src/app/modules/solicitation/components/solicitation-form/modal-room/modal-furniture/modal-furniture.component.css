@@ -1,3 +1,7 @@
 .description {
     resize: none
 }
+
+.invalid {
+    opacity: 0;
+}

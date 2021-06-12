@@ -1,6 +1,6 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PoModalAction, PoModalComponent, PoTableColumn, PoUploadComponent } from '@po-ui/ng-components';
+import { PoModalAction, PoModalComponent, PoNotificationService, PoTableColumn, PoUploadComponent } from '@po-ui/ng-components';
 import { ShowInformationsComponent } from 'src/app/Modules/shared/components/show-informations/show-informations.component';
 import { Furniture } from 'src/app/modules/shared/model/furniture.model';
 import { Room } from 'src/app/modules/shared/model/room.model';
@@ -13,7 +13,7 @@ import { FurnitureColumn } from '../../../model/furniture-column.model';
 })
 export class ModalRoomComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private poNotification: PoNotificationService) { }
 
   
   @Output() public roomRegister = new EventEmitter<Room>();
@@ -120,12 +120,13 @@ export class ModalRoomComponent implements OnInit {
       description: this.form.get('description').value,
       furnitures: this.furnitures,
     }
-
+  
     this.roomEdit.emit(room);
   }
 
   public addFurniture(furniture: Furniture) {
     this.furnitures.push(furniture);
+    this.poNotification.success(`Móvel adicionado com sucesso! ${furniture.name}`);
     this.validForm();
   } 
 
@@ -178,23 +179,20 @@ export class ModalRoomComponent implements OnInit {
     let furnitureResult = this.getFurnitureByRow(row);
 
     this.furnitures.splice(this.furnitures.indexOf(furnitureResult), 1);
+    this.poNotification.success(`Móvel removido com sucesso!`);
     this.validForm();
   }
 
   private clearFields(): void {
-    this.form.get('name').setValue('');
-    this.form.get('metreage').setValue('');
-    this.form.get('description').setValue('');
+    this.form.reset();
     this.furnitures = [];
     this.initialRooms = null;
     this.room = null;
   }
 
   private showDescription(row: FurnitureColumn) {
-
     this.showFurniture = this.getFurnitureByRow(row);
-
-      this.information.poModal.open();
+    this.information.poModal.open();
   }
 
   @HostListener('change')

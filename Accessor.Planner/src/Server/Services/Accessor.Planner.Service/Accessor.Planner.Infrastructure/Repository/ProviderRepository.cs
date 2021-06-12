@@ -16,6 +16,8 @@ namespace Accessor.Planner.Infrastructure.Repository
 
         public override IQueryable<Provider> GetAll() => base.GetAll().Include(provider => provider.Address);
 
+        public async Task<Provider> GetByUserIdAsync(Guid id) => await _entities.Where(p => p.User.Id == id).Include(provider => provider.Address).FirstOrDefaultAsync().ConfigureAwait(false);
+
         public override async Task<Provider> GetByIdAsync(Guid id) => await _entities.Where(provider => provider.Id == id).Include(provider => provider.Address).FirstOrDefaultAsync();
 
     }

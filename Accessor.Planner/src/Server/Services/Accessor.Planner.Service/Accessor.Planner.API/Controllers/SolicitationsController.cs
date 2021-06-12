@@ -82,48 +82,87 @@ namespace Accessor.Planner.API.Controllers
         }
 
         [HttpPut]
-        [Route("{userId:guid}/accept/{solicitationId:guid}")]
-        public async Task<IActionResult> Accept(Guid? userId, Guid? solicitationId)
+        [Route("{userId:guid}/accept-accessor/{solicitationId:guid}")]
+        public async Task<IActionResult> AccessorAccept(Guid? userId, Guid? solicitationId)
         {
             if (!userId.HasValue || !solicitationId.HasValue)
                 return BadRequest();
 
-            await _solicitationService.Accept(userId.Value, solicitationId.Value);
+            await _solicitationService.AccessorAccept(userId.Value, solicitationId.Value);
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("accept-provider")]
+        public async Task<IActionResult> ProviderrAccept(SolicitationOperationDTO solicitationDTO)
+        {
+            if (solicitationDTO == null)
+                return BadRequest();
+
+            await _solicitationService.ProviderAccept(solicitationDTO.UserId, solicitationDTO.SolicitationId);
             return Ok();
         }
 
 
         [HttpPut]
-        [Route("{userId:guid}/send/{solicitationId:guid}")]
-        public async Task<IActionResult> Send(Guid? userId, Guid? solicitationId)
+        [Route("{userId:guid}/send-accessor/{solicitationId:guid}")]
+        public async Task<IActionResult> AccessorSend(Guid? userId, Guid? solicitationId)
         {
             if (!userId.HasValue || !solicitationId.HasValue)
                 return BadRequest();
 
-            await _solicitationService.Send(userId.Value, solicitationId.Value);
+            await _solicitationService.AccessorSend(userId.Value, solicitationId.Value);
 
             return Ok();
         }
 
         [HttpPut]
-        [Route("{userId:guid}/approve/{solicitationId:guid}")]
-        public async Task<IActionResult> Approve(Guid? userId, Guid? solicitationId)
+        [Route("send-provider")]
+        public async Task<IActionResult> ProviderSend(SolicitationResponseValueDTO solicitationDTO)
         {
-            if (!userId.HasValue || !solicitationId.HasValue)
+            if (solicitationDTO == null)
                 return BadRequest();
 
-            await _solicitationService.Approve(userId.Value, solicitationId.Value);
+            await _solicitationService.ProviderSend(solicitationDTO.UserId, 
+                solicitationDTO.SolicitationId, solicitationDTO.Value, solicitationDTO.SolicitationEndDate);
+
             return Ok();
         }
 
         [HttpPut]
-        [Route("{userId:guid}/reject/{solicitationId:guid}")]
-        public async Task<IActionResult> Reject(Guid? userId, Guid? solicitationId)
+        [Route("approve")]
+        public async Task<IActionResult> Approve(SolicitationResponseValueDTO solicitationDTO)
         {
-            if (!userId.HasValue || !solicitationId.HasValue || string.IsNullOrEmpty("A"))
+            if (solicitationDTO == null)
                 return BadRequest();
 
-            await _solicitationService.Reject(userId.Value, solicitationId.Value, "A");
+            await _solicitationService.Approve(solicitationDTO.UserId, solicitationDTO.SolicitationId, 
+                solicitationDTO.Value, solicitationDTO.SolicitationEndDate);
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("reject")]
+        public async Task<IActionResult> Reject(SolicitationFullResponseDTO solicitationDTO)
+        {
+            if (solicitationDTO == null)
+                return BadRequest();
+
+            await _solicitationService.Reject(solicitationDTO.UserId, solicitationDTO.SolicitationId, 
+                "A", solicitationDTO.Value, solicitationDTO.SolicitationEndDate);
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("done")]
+        public async Task<IActionResult> Done(SolicitationResponseValueDTO solicitationDTO)
+        {
+            if (solicitationDTO == null)
+                return BadRequest();
+
+            await _solicitationService.Done(solicitationDTO.UserId, solicitationDTO.SolicitationId, solicitationDTO.Value);
 
             return Ok();
         }

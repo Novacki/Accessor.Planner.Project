@@ -10,107 +10,101 @@
         <app-divider [title]="'Dados Pessoais'"></app-divider>
         <div class="row g-3 mb-3">
           <div class="col-sm-6">
-            <label for="firstName" class="form-label">Nome Completo* </label>
-            <input formControlName="name" type="text" class="form-control" id="name" placeholder="Nome" required />
-            <div class="invalid-feedback">O campo Nome é obrigatório.</div>
+            <po-input p-minlength="5" p-maxlength="30" formControlName="name" id="name" p-placeholder="Nome" required
+              p-label="Nome Completo*"></po-input>
+            <div class="invalid" formValidator [form]="form" [control]="form.controls.name">Campo inválido.</div>
           </div>
-  
+
           <div class="col-sm-3">
-            <label for="cpf" class="form-label">CPF* </label>
-            <input formControlName="cpf" type="text" class="form-control" id="cpf" placeholder="CPF" required />
-            <div class="invalid-feedback">O campo CPF é obrigatório.</div>
+            <po-input p-minlength="14" formControlName="cpf" p-mask="999.999.999-99" id="cpf" p-placeholder="CPF"
+              required p-label="CPF*"></po-input>
+            <div class="invalid" formValidator [form]="form" [control]="form.controls.cpf">Campo inválido.</div>
           </div>
-  
+
           <div class="col-sm-3">
-            <label for="telefone" class="form-label">Telefone* </label>
-            <input type="text" formControlName="phone" class="form-control" placeholder="Telefone" />
-            <div class="invalid-feedback">
-              O campo telefone é obrigatório.
+            <po-input p-maxlength="15" formControlName="phone" p-mask="(99) 99999-9999" id="phone"
+              p-placeholder="Telefone" required p-label="Telefone*"></po-input>
+            <div class="invalid" formValidator [form]="form" [control]="form.controls.phone">
+              Campo inválido.
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-6">
-            <label for="Data de Nascimento" class="form-label">Data de Nascimento* </label>
-            <input formControlName="birthDate" type="date" class="form-control" id="date" required />
-            <div class="invalid-feedback">O campo Data de Nascimento é obrigatório.</div>
+          <div class="col-sm-6 date-style">
+            <po-datepicker p-placeholder="Data de Nascimento" formControlName="birthDate" p-label="Data de Nascimento*" required></po-datepicker>
           </div>
-          <div class="col-sm-4">
-            <label for="sexo" class="form-label">Sexo* </label>
-            <select formControlName="sex" class="form-select">
-              <option value="">Selecione...</option>
-              <option value="m">Masculino</option>
-              <option value="f">Feminino</option>
-            </select>
-            <div class="invalid-feedback">O campo Sexo é obrigatório.</div>
+          <div class="col-sm-4 select-style">
+            <po-select p-placeholder="Selecione..."  formControlName="sex"  p-label="Sexo*" [p-options]="sexSelectOptions()" 
+               [p-required]="true">
+            </po-select>
+            <div class="invalid" formValidator [form]="form" [control]="form.controls.sex">Campo inválido..</div>
           </div>
-          <div class="col-sm-2">
-            <label for="type" class="form-label">Perfil* </label>
-            <select formControlName="type" class="form-select">
-              <option value="">Selecione...</option>
-              <option value="2">Cliente</option>
-              <option value="1">Acessor</option>
-            </select>
-            <div class="invalid-feedback">O campo Perfil é obrigatório.</div>
+          <div class="col-sm-2 select-style">
+            <po-select p-placeholder="Selecione..." formControlName="type"  p-label="Perfil*" [p-options]="userTypeSelectOptions()" 
+               [p-required]="true">
+            </po-select>
+            <div class="invalid" formValidator [form]="form" [control]="form.controls.type">Campo inválido.</div>
           </div>
         </div>
         <app-divider [title]="'Dados de Endereço'"></app-divider>
         <div formGroupName="address">
           <div class="row mb-3">
             <div class="col-sm-6">
-              <label for="street" class="form-label">Rua* </label>
-              <input formControlName="street" placeholder="Rua" type="text" class="form-control" id="street" required />
-              <div class="invalid-feedback">O campo Rua é obrigatório.</div>
+              <po-input p-minlength="5" p-maxlength="50" formControlName="street" id="street" required
+                p-placeholder="Rua" required p-label="Rua*"></po-input>
+              <div class="invalid" formValidator [form]="form.controls.address"
+                [control]="form.controls.address.get('street')">Campo inválido.</div>
             </div>
             <div class="col-sm-6">
-              <label for="complement" class="form-label">Complemento* </label>
-              <input formControlName="complement" placeholder="Complemento" type="text" class="form-control"
-                id="complement" required />
-              <div class="invalid-feedback">O campo Complemento é obrigatório.</div>
+              <po-input formControlName="complement" required p-placeholder="Complemento" required
+                p-label="Complemento"></po-input>
             </div>
           </div>
           <div class="row">
             <div class="col-sm-3">
-              <label for="number" class="form-label">Número* </label>
-              <input formControlName="number" placeholder="Numero" type="text" class="form-control" id="number"
-                required />
-              <div class="invalid-feedback">O campo Número é obrigatório.</div>
+              <po-input p-minlength="1" p-maxlength="10" formControlName="number" p-placeholder="Numero"
+                p-label="Numero*" required></po-input>
+              <div class="invalid" formValidator [form]="form.controls.address"
+                [control]="form.controls.address.get('number')">Campo inválido.</div>
             </div>
             <div class="col-sm-3">
-              <label for="Cep" class="form-label">CEP* </label>
-              <input formControlName="cep" placeholder="CEP" type="text" class="form-control" id="cep" required />
-              <div class="invalid-feedback">O campo CEP é obrigatório.</div>
+              <po-input p-minlength="9" formControlName="cep" p-mask="99999-999" p-placeholder="CEP" p-label="CEP*"
+                required></po-input>
+              <div class="invalid" formValidator [form]="form.controls.address"
+                [control]="form.controls.address.get('cep')">Campo inválido.</div>
             </div>
             <div class="col-sm-3">
-              <label for="Sates" class="form-label">Estatdo* </label>
-              <input formControlName="state" placeholder="Estado" type="text" class="form-control" id="cep" required />
-              <div class="invalid-feedback">O campo Estado é obrigatório.</div>
+              <po-input p-minlength="5" p-maxlength="30" formControlName="state" 
+                p-placeholder="Estado" p-label="Estado*" required></po-input>
+              <div class="invalid" formValidator [form]="form.controls.address"
+                [control]="form.controls.address.get('state')">Campo inválido.</div>
             </div>
             <div class="col-sm-3">
-              <label for="City" class="form-label">Cidade* </label>
-              <input formControlName="city" placeholder="Cidade" type="text" class="form-control" id="city" required />
-              <div class="invalid-feedback">O campo Cidade é obrigatório.</div>
+              <po-input p-minlength="5" p-maxlength="30" formControlName="city" p-placeholder="Cidade" p-label="Cidade*"
+                required></po-input>
+              <div class="invalid" formValidator [form]="form.controls.address"
+                [control]="form.controls.address.get('city')">Campo inválido.</div>
             </div>
           </div>
         </div>
         <app-divider [title]="'Dados de Usuário'"></app-divider>
         <div class="row mb-3" formGroupName="user">
           <div class="col-sm-4">
-            <label for="userName" class="form-label">Nome de Usuário* </label>
-            <input formControlName="userName" placeholder="Nome de Usuário" type="text" class="form-control" id="userName"
-              required />
-            <div class="invalid-feedback">O campo Nome de Usuário é obrigatório.</div>
+            <po-input p-minlength="3" p-maxlength="20" formControlName="userName" p-placeholder="Nome de Usuário"
+              p-label="Nome de Usuário*" required></po-input>
+            <div class="invalid" formValidator [form]="form.controls.user"
+              [control]="form.controls.user.get('userName')">Campo inválido.</div>
           </div>
-          <div class="col-sm-4">
-            <label for="email" class="form-label">E-mail* </label>
-            <input formControlName="email" placeholder="E-mail" type="email" class="form-control" id="email" required />
-            <div class="invalid-feedback">O campo E-mail é obrigatório.</div>
+          <div class="col-sm-4 email-style">
+            <po-email formControlName="email" p-placeholder="E-mail" p-label="E-mail*" required></po-email>
+            <div class="invalid" formValidator [form]="form.controls.user" [control]="form.controls.user.get('email')">
+              Campo inválido.</div>
           </div>
-          <div class="col-sm-4">
-            <label for="password" class="form-label">Senha* </label>
-            <input formControlName="password" placeholder="Senha" type="password" class="form-control" id="password"
-              required />
-            <div class="invalid-feedback">O campo Senha é obrigatório.</div>
+          <div class="col-sm-4 password-style">
+            <po-password p-minlength="6" p-maxlength="20" formControlName="password" p-placeholder="Senha*"
+              name="password" p-label="Senha*" required></po-password>
+            <div class="invalid" formValidator [form]="form.controls.user"
+              [control]="form.controls.user.get('password')">Campo inválido.</div>
           </div>
         </div>
         <div class="row mt-4 mb-5">

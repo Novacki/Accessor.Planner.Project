@@ -18,7 +18,7 @@ namespace Accessor.Planner.Infrastructure.Data.EntityConfiguration
                 .UseIdentityColumn();
 
             builder.Property(furniture => furniture.Name)
-              .HasColumnType("nvarchar(max)");
+              .HasColumnType("nvarchar(50)");
 
             builder.Property(furniture => furniture.Width)
               .HasColumnType("float");
@@ -30,7 +30,7 @@ namespace Accessor.Planner.Infrastructure.Data.EntityConfiguration
                .HasColumnType("float");
 
             builder.Property(furniture => furniture.Description)
-               .HasColumnType("nvarchar(max)");
+               .HasColumnType("nvarchar(300)");
 
             builder.Property(furniture => furniture.RoomId)
                 .HasColumnType("int");

@@ -19,8 +19,6 @@ namespace Accessor.Planner.Domain.Model
             UpdatedAt = DateTime.Now;
             Activate = true;
             AddRooms(rooms);
-
-            RegisterHistory(new SolicitationHistory(this, SubscribeType.Client));
         }
 
         public DateTime? SolicitationEndDate { get; private set; }
@@ -39,17 +37,17 @@ namespace Accessor.Planner.Domain.Model
         public void RemoveRooms(Room room) => Rooms.Remove(room);
 
 
-        public void Approve(Client client)
+        public void Approve(Client client, DateTime solicitationEndDate)
         {
             if (Status != StatusSolicitation.InReview || client.Type != UserType.Client || client.Id != Client.Id)
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Approve;
             UpdatedAt = DateTime.Now;
-            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
+            SolicitationEndDate = solicitationEndDate;
         }
 
-        public void AcessorAccept(Client accessor)
+        public void Accept(Client accessor)
         {
             if (( Status != StatusSolicitation.OnHold && Status != StatusSolicitation.Reject ) ||
                 accessor.Type == UserType.Client || (accessor.Id != AccessorId && AccessorId.HasValue ))
@@ -58,18 +56,28 @@ namespace Accessor.Planner.Domain.Model
             Status = StatusSolicitation.Accept;
             AccessorId = accessor.Id;
             UpdatedAt = DateTime.Now;
-            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Accessor));
+
         }
 
-        public void ProviderAccept(Provider provider)
+        public void Accept(Provider provider)
         {
-            if (Status != StatusSolicitation.OnHold || Client.Type != UserType.Client )
+            if ((Status != StatusSolicitation.Approve && Status != StatusSolicitation.Reject) || (provider.Id != ProviderId && ProviderId.HasValue))
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Accept;
             Provider = provider;
             UpdatedAt = DateTime.Now;
-            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Provider));
+
+        }
+
+        public void Send(Provider provider, DateTime solicitationEndDate)
+        {
+            if (Status != StatusSolicitation.Accept || provider.Id != ProviderId)
+                throw new DomainException("Status Solicitation is Invalid");
+
+            Status = StatusSolicitation.InReview;
+            UpdatedAt = DateTime.Now;
+            SolicitationEndDate = solicitationEndDate;
         }
 
         public void Send(Client accessor)
@@ -79,10 +87,10 @@ namespace Accessor.Planner.Domain.Model
 
             Status = StatusSolicitation.InReview;
             UpdatedAt = DateTime.Now;
-            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Accessor));
+   
         }
 
-        public void Reject(Client client, string reason)
+        public void Reject(Client client, string reason, DateTime solicitationEndDate)
         {
             if (Status != StatusSolicitation.InReview || string.IsNullOrEmpty(reason) 
                 || client.Type != UserType.Client || client.Id != Client.Id)
@@ -91,7 +99,18 @@ namespace Accessor.Planner.Domain.Model
 
             Status = StatusSolicitation.Reject;
             UpdatedAt = DateTime.Now;
-            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
+            SolicitationEndDate = solicitationEndDate;
+
+
+        }
+
+        public void Done(Provider provider)
+        {
+            if( Provider == null || ProviderId != provider.Id || Status != StatusSolicitation.Approve )
+                throw new DomainException("This Solicitation cannot be closed");
+
+            Status = StatusSolicitation.Done;
+            UpdatedAt = DateTime.Now;
         }
 
         public void Cancel(Client client, string reason)
@@ -103,7 +122,7 @@ namespace Accessor.Planner.Domain.Model
             DeletedAt = DateTime.Now;
             Activate = false;
 
-            //SolicitationHistories.Add(new SolicitationHistory(this, SubscribeType.Client));
+ 
         }
 
         private void AddRooms(List<Room> rooms)
@@ -112,10 +131,5 @@ namespace Accessor.Planner.Domain.Model
             Rooms.AddRange(rooms);
         }
 
-        private void RegisterHistory(SolicitationHistory solicitationHistory)
-        {
-            SolicitationHistories = new List<SolicitationHistory>();
-            SolicitationHistories.Add(solicitationHistory);
-        }
     }
 }
