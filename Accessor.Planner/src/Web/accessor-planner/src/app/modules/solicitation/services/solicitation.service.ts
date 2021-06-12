@@ -29,12 +29,16 @@ export class SolicitationService {
       );
   }
 
-  public approve(id: string): Observable<void> {
-    return this.http.put<void>(`Solicitations/${this.user.userId}/approve/${id}`);
+  public approve(solicitation: SolicitationResponseValue): Observable<SolicitationResponseValue> {
+    return this.http.put<SolicitationResponseValue>(`Solicitations/approve`, solicitation);
   }
 
-  public reject(id: string, reason: string): Observable<string> {
-    return this.http.put<string>(`Solicitations/${this.user.userId}/reject/${id}`, reason);
+  public reject(solicitation: SolicitationResponseValue): Observable<SolicitationResponseValue> {
+    return this.http.put<SolicitationResponseValue>(`Solicitations/reject`, solicitation);
+  }
+
+  public done(solicitation: SolicitationResponseValue): Observable<SolicitationResponseValue> {
+    return this.http.put<SolicitationResponseValue>(`Solicitations/done`, solicitation);
   }
 
   public cancel(id: string, reason: string): Observable<string> {

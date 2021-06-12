@@ -182,7 +182,7 @@
 
         <div *ngIf="status == 4  && userType == 3 && validProviderExist()" class="po-row po-mt-2 po-mb-3  operation-buttons">
             <div class="po-md-4">
-                <po-button (p-click)="openSendValue()" [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok"
+                <po-button (p-click)="done()" [p-disabled]="!buttonActivate" p-icon="po-icon po-icon-ok"
                     p-label="Encerrar solicitação" p-type="primary"></po-button>
             </div>
         </div>

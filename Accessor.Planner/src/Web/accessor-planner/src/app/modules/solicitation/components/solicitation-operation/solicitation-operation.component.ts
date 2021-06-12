@@ -122,7 +122,10 @@ export class SolicitationOperationComponent implements OnInit {
 
   public approve(): void {
     this.loading = true;
-    this.solicitationService.approve(this.solicitation.id).subscribe(response => {
+    let lastHistory = this.solicitation.solicitationHistories[this.solicitation.solicitationHistories.length -1];
+    
+    this.solicitationService.approve({ solicitationId: this.solicitation.id, userId: this.filter.profileContextId,
+      value: !isNaN(Number(lastHistory.value)) ? Number(lastHistory.value) : 0, solicitationEndDate: new Date() }).subscribe(response => {
       this.poNotification.success("Solicitação aprovada com sucesso!");
       this.emitChangeOperation();
     },
@@ -138,12 +141,33 @@ export class SolicitationOperationComponent implements OnInit {
 
   public reject(): void {
     this.loading = true;
-    this.solicitationService.reject(this.solicitation.id, "string").subscribe(response => {
+    let lastHistory = this.solicitation.solicitationHistories[this.solicitation.solicitationHistories.length -1];
+    this.solicitationService.reject({ solicitationId: this.solicitation.id, userId: this.filter.profileContextId,
+      value: !isNaN(Number(lastHistory.value)) ? Number(lastHistory.value) : 0, solicitationEndDate:  new Date() }).subscribe(response => {
       this.poNotification.success("Solicitação rejeitada com sucesso!");
       this.emitChangeOperation();
     },
     error => {
       this.poNotification.error("Erro ao rejeitar solicitação!");
+      this.loading = false;
+    },
+    () => {
+      this.buttonActivate = true;
+      this.loading = false;
+    });
+  }
+
+  public done(): void {
+    this.loading = true;
+   
+    let lastHistory = this.solicitation.solicitationHistories[this.solicitation.solicitationHistories.length -1];
+    this.solicitationService.done({ solicitationId: this.solicitation.id, userId: this.filter.profileContextId,
+      value: !isNaN(Number(lastHistory.value)) ? Number(lastHistory.value) : 0}).subscribe(response => {
+      this.poNotification.success("Solicitação encerrada com sucesso!");
+      this.emitChangeOperation();
+    },
+    error => {
+      this.poNotification.error("Erro ao encerrar solicitação!");
       this.loading = false;
     },
     () => {
@@ -207,6 +231,7 @@ export class SolicitationOperationComponent implements OnInit {
         value: this.form.controls.value.value, solicitationEndDate: this.form.controls.solicitationEndDate.value }).subscribe(response => {
 
       this.poNotification.success("Solicitação enviada com sucesso!");
+      this.form.reset();
       this.providerConfirmation.poModal.close();
       this.emitChangeOperation();
 

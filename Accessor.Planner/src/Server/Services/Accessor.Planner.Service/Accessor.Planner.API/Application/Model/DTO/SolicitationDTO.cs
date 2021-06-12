@@ -27,4 +27,9 @@ namespace Accessor.Planner.API.Application.Model.DTO
         public double Value { get; set; }
         public DateTime SolicitationEndDate { get; set; }
     }  
+
+    public class SolicitationFullResponseDTO : SolicitationResponseValueDTO
+    {
+        public string Reason { get; set; }
+    }
 }

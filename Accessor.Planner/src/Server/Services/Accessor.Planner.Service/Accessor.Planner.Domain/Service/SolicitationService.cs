@@ -84,25 +84,36 @@ namespace Accessor.Planner.Domain.Service
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task Approve(Guid userId, Guid solicitationId)
+        public async Task Approve(Guid userId, Guid solicitationId, double value, DateTime solicitationEndDate)
         {
-            var client = _clientService.GetClientByUserId(userId);
+            var client = await _clientService.GetByIdAsync(userId).ConfigureAwait(false);
             var solicitation = GetById(solicitationId);
 
-            solicitation.Approve(client);
+            solicitation.Approve(client, solicitationEndDate);
 
-            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Client));
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, value, SubscribeType.Client));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task Reject(Guid userId, Guid solicitationId, string reason)
+        public async Task Reject(Guid userId, Guid solicitationId, string reason, double value, DateTime solicitationEndDate)
         {
-            var client = _clientService.GetClientByUserId(userId);
+            var client = await _clientService.GetByIdAsync(userId).ConfigureAwait(false);
             var solicitation = GetById(solicitationId);
 
-            solicitation.Reject(client, reason);
+            solicitation.Reject(client, reason, solicitationEndDate);
 
-            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Client));
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, value, SubscribeType.Client));
+            await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task Done(Guid userId, Guid solicitationId, double value)
+        {
+            var provider = await _providerService.GetByIdAsync(userId);
+            var solicitation = GetById(solicitationId);
+
+            solicitation.Done(provider);
+
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, value, SubscribeType.Provider));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
@@ -151,12 +162,16 @@ namespace Accessor.Planner.Domain.Service
                 if (status == StatusSolicitation.OnHold)
                     return solicitations.ToList();
 
-                solicitations = solicitations.Where(s => s.AccessorId == profileContextId && !s.ProviderId.HasValue);
+                else if (status == StatusSolicitation.Done)
+                    return solicitations.Where(s => s.AccessorId == profileContextId).ToList();
+
+                    solicitations = solicitations.Where(s => s.AccessorId == profileContextId && !s.ProviderId.HasValue);
             }
             else
                 solicitations = solicitations.Where(s => s.Client.Id == profileContextId);
 
             return solicitations.ToList();
         }
+
     }
 }
