@@ -1,0 +1,7 @@
+<div *ngIf="user.type; else provider"> 
+    <app-client-data></app-client-data>
+</div>
+<ng-template #provider>
+    <app-provider-data></app-provider-data>
+</ng-template>
+

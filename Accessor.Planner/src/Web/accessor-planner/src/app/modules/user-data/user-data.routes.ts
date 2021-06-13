@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
-import { InformationClientComponent } from "./pages/information-client/information-client.component";
+import { InformationUserComponent } from "./pages/information-user/information-user.component";
 
 export const routes: Routes = [
-    { path: '' , component:  InformationClientComponent}
+    { path: '' , component:  InformationUserComponent}
 ]

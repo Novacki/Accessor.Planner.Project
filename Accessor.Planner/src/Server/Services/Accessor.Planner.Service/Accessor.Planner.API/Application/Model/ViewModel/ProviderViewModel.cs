@@ -14,6 +14,7 @@ namespace Accessor.Planner.API.Application.Model.ViewModel {
         public string SocialReason { get; set; }
         public string Cnpj { get; set; }
         public string Phone { get; set; }
+        public UserViewModel User { get; set; }
         public AddressViewModel Address { get; set; }
     }
 }

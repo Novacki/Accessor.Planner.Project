@@ -58,7 +58,7 @@ namespace Accessor.Planner.Domain.Service
             if (result == null)
                 throw new ProviderServiceException("Provider Not Found");
 
-            result.Update(provider.SocialReason, provider.FantasyName, provider.Phone);
+            result.Update(provider.SocialReason, provider.FantasyName, provider.Phone, provider.Address);
             await _providerRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 

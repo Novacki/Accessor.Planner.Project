@@ -19,8 +19,10 @@ namespace Accessor.Planner.Infrastructure.Repository
         public override IQueryable<Solicitation> GetAll()
         {
             return base.GetAll()
+                .Include(s => s.Provider.User)
                 .Include(s => s.Provider)
                 .ThenInclude(p => p.Address)
+                .Include(s => s.Client.User)
                 .Include(s => s.Client)
                 .ThenInclude(c => c.Addresses)
                 .Include(s => s.Rooms)

@@ -21,4 +21,12 @@ export class ProviderService {
   public getAll(): Observable<Provider[]> {
     return this.http.getById<Provider[]>(`Providers`);
   }
+
+  public getById(id: string): Observable<Provider> {
+    return this.http.getById<Provider>(`Providers/me/${id}`);
+  }
+
+  public update(id: string, provider: Provider): Observable<Provider> {
+    return this.http.put(`Providers/${id}`, provider);
+  }
 }

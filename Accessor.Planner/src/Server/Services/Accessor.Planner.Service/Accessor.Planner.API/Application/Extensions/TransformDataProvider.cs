@@ -24,7 +24,8 @@ namespace Accessor.Planner.API.Application.Extensions
                 Cnpj = provider.Cnpj,
                 FantasyName = provider.FantasyName,
                 SocialReason = provider.SocialReason,
-                Phone = provider.Phone
+                Phone = provider.Phone,
+                User = provider.User.ToViewModel()
             };
         }
 

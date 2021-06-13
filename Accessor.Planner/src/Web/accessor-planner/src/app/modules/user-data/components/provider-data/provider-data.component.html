@@ -1,0 +1,99 @@
+<app-loading [loading]="loading"></app-loading>
+<div class="container-fluid">
+    <main>
+        <div>
+            <div>
+                <form [formGroup]="form" (ngSubmit)="updateData()">
+                    <div class="row mt-4 mb-5">
+                        <div class="col-2">
+                            <button class="w-100 btn btn-primary btn-lg" type="submit"
+                                [disabled]="!form.valid || !form.touched">
+                                Editar
+                            </button>
+                        </div>
+                    </div>
+                    <app-divider [title]="'Dados da Empresa'"></app-divider>
+                    <div class="row mb-3">
+                        <div class="col-4">
+                            <po-input p-minlength="5" p-maxlength="30" formControlName="fantasyName"
+                                p-placeholder="Nome Fantasia" required p-label="Nome Fantasia*"></po-input>
+                            <div class="invalid" formValidator [form]="form.controls.fantasyName"
+                                [control]="form.get('fantasyName')">Campo inválido.</div>
+                        </div>
+                        <div class="col-4">
+                            <po-input p-minlength="5" p-maxlength="30" formControlName="socialReason"
+                                p-placeholder="Razão Social" required p-label="Razão Social*"></po-input>
+                            <div class="invalid" formValidator [form]="form.controls.socialReason"
+                                [control]="form.get('socialReason')">Campo inválido.</div>
+                        </div>
+                        <div class="col-4">
+                            <po-input p-readonly="true" p-minlength="18" formControlName="cnpj"
+                                p-mask="99.999.999/9999-99" id="cnpj" p-placeholder="CNPJ" required p-label="CNPJ*">
+                            </po-input>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <po-input p-maxlength="15" formControlName="phone" p-mask="(99) 99999-9999" id="phone"
+                                p-placeholder="Telefone" required p-label="Telefone*"></po-input>
+                            <div class="invalid" formValidator [form]="form" [control]="form.controls.phone">
+                                Campo inválido.
+                            </div>
+                        </div>
+                    </div>
+                    <app-divider [title]="'Dados de Endereço'"></app-divider>
+                    <div formGroupName="address">
+                        <div class="row mb-3">
+                            <div class="col-sm-6">
+                                <po-input p-minlength="5" p-maxlength="50" formControlName="street" id="street" required
+                                    p-placeholder="Rua" required p-label="Rua*"></po-input>
+                                <div class="invalid" formValidator [form]="form.controls.address"
+                                    [control]="form.controls.address.get('street')">Campo inválido.</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <po-input formControlName="complement" required p-placeholder="Complemento" required
+                                    p-label="Complemento"></po-input>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <po-input p-minlength="1" p-maxlength="10" formControlName="number"
+                                    p-placeholder="Numero" p-label="Numero*" required></po-input>
+                                <div class="invalid" formValidator [form]="form.controls.address"
+                                    [control]="form.controls.address.get('number')">Campo inválido.</div>
+                            </div>
+                            <div class="col-sm-3">
+                                <po-input p-minlength="9" formControlName="cep" p-mask="99999-999" p-placeholder="CEP"
+                                    p-label="CEP*" required></po-input>
+                                <div class="invalid" formValidator [form]="form.controls.address"
+                                    [control]="form.controls.address.get('cep')">Campo inválido.</div>
+                            </div>
+                            <div class="col-sm-3">
+                                <po-input p-minlength="1" p-maxlength="30" formControlName="state"
+                                    p-placeholder="Estado" p-label="Estado*" required></po-input>
+                                <div class="invalid" formValidator [form]="form.controls.address"
+                                    [control]="form.controls.address.get('state')">Campo inválido.</div>
+                            </div>
+                            <div class="col-sm-3">
+                                <po-input p-minlength="1" p-maxlength="30" formControlName="city" p-placeholder="Cidade"
+                                    p-label="Cidade*" required></po-input>
+                                <div class="invalid" formValidator [form]="form.controls.address"
+                                    [control]="form.controls.address.get('city')">Campo inválido.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <app-divider [title]="'Dados de Usuário'"></app-divider>
+                    <div class="row mb-3" formGroupName="user">
+                        <div p-readonly="true" class="col-sm-4">
+                            <po-input p-minlength="3" p-maxlength="20" formControlName="userName"
+                                p-placeholder="Nome de Usuário" p-label="Nome de Usuário*" required></po-input>
+                        </div>
+                        <div p-readonly="true" class="col-sm-4 email-style">
+                            <po-email formControlName="email" p-placeholder="E-mail" p-label="E-mail*" required>
+                            </po-email>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
