@@ -15,11 +15,19 @@ export class ClientService {
         return this.http.getById<Client>(`Clients/${userId}`);
     }
 
+    public getById(id: string): Observable<Client> {
+        return this.http.getById(`Clients/client-content/${id}`);
+    }
+
     public getAllByUserType(type: UserType): Observable<Client[]> {
         return this.http.get(`Clients/type/${type}`);
     }
 
     public create(client: Client): Observable<Client> {
         return this.http.post('Clients/create', client);
+    }
+
+    public update(id: string, client: Client): Observable<Client> {
+        return this.http.put(`Clients/update/${id}`, client);
     }
 }

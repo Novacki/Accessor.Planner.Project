@@ -25,7 +25,8 @@ namespace Accessor.Planner.API.Application.Extensions
                 Sex = client.Sex,
                 BirthDate = client.BirthDate,
                 Type = client.Type,
-                Addresses = client.Addresses.ToViewModel()
+                User = client.User.ToViewModel(),
+                Address = client.Addresses.ToViewModel().LastOrDefault()
             };
         }
 

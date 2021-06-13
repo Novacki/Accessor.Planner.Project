@@ -19,6 +19,21 @@ namespace Accessor.Planner.API.Controllers
             _clientService = clientService ?? throw new ArgumentNullException(nameof(clientService));
         }
 
+        [HttpGet]
+        [Route("client-content/{clientId:guid}")]
+        public async Task<IActionResult> GetById(Guid? clientId)
+        {
+            if (!clientId.HasValue)
+                return BadRequest();
+
+            var client = await _clientService.GetByIdAsync(clientId.Value);
+
+            if (client == null)
+                return NoContent();
+
+            return Ok(client.ToFullViewModel());
+        }
+
 
         [HttpGet]
         [Route("me/{id:guid}")]
@@ -50,6 +65,7 @@ namespace Accessor.Planner.API.Controllers
             return Ok(client.ToViewModel());
         }
 
+      
         [HttpPost]
         [Route("create")]
         public async Task<IActionResult> Create([FromBody] FullDataClientDTO clientDTO)
@@ -77,12 +93,12 @@ namespace Accessor.Planner.API.Controllers
 
         [HttpPut]
         [Route("update/{id:guid}")]
-        public async Task<IActionResult> Update(Guid? id, [FromBody] ClientDTO clientDTO)
+        public async Task<IActionResult> Update(Guid? id, [FromBody] FullDataClientDTO clientDTO)
         {
             if (clientDTO == null || !id.HasValue)
                 return BadRequest();
 
-            await _clientService.Update(id.Value, clientDTO.Name, clientDTO.Phone, clientDTO.BirthDate);
+            await _clientService.Update(id.Value, clientDTO.Phone, clientDTO.Address.ToAddress());
 
             return Ok();
         }

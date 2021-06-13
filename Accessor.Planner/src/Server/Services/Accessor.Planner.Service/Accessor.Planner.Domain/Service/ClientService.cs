@@ -39,11 +39,11 @@ namespace Accessor.Planner.Domain.Service
             await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task Update(Guid id, string name, string phone, DateTime birthDate)
+        public async Task Update(Guid id, string phone, Address address)
         {
             var result = GetById(id);
 
-            result.Update(name, phone, birthDate);
+            result.Update(phone, address);
             await _clientRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 

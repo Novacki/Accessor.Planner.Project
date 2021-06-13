@@ -1,24 +1,25 @@
 <app-loading [loading]="loading"></app-loading>
-<div class="container">
+<div class="container-fluid">
   <main>
-    <div class="py-5 text-center">
-      <h1>Bem vindo a melhor maneira de COMPRAR Móveis Planejados!</h1>
-      <p class="lead">Queremos te conhecer! Preencha os campos abaixo</p>
-    </div>
     <div class="form-content">
-      <form [formGroup]="form" (ngSubmit)="registerUser()">
+      <form [formGroup]="form" (ngSubmit)="updateData()">
+        <div class="row mt-4 mb-5">
+          <div class="col-2">
+            <button class="w-100 btn btn-primary btn-lg" type="submit" [disabled]="!form.valid || !form.touched">
+              Editar
+            </button>
+          </div>
+        </div>
         <app-divider [title]="'Dados Pessoais'"></app-divider>
         <div class="row g-3 mb-3">
           <div class="col-sm-6">
-            <po-input p-minlength="5" p-maxlength="30" formControlName="name" id="name" p-placeholder="Nome" required
-              p-label="Nome Completo*"></po-input>
-            <div class="invalid" formValidator [form]="form" [control]="form.controls.name">Campo inválido.</div>
+            <po-input p-readonly="true" p-minlength="5" p-maxlength="30" formControlName="name" id="name" p-placeholder="Nome" required
+              p-label="Nome Completo"></po-input>
           </div>
 
           <div class="col-sm-3">
-            <po-input p-minlength="14" formControlName="cpf" p-mask="999.999.999-99" id="cpf" p-placeholder="CPF"
-              required p-label="CPF*"></po-input>
-            <div class="invalid" formValidator [form]="form" [control]="form.controls.cpf">Campo inválido.</div>
+            <po-input  p-readonly="true" p-minlength="14" formControlName="cpf" p-mask="999.999.999-99" id="cpf" p-placeholder="CPF"
+              required p-label="CPF"></po-input>
           </div>
 
           <div class="col-sm-3">
@@ -31,19 +32,12 @@
         </div>
         <div class="row">
           <div class="col-sm-6 date-style">
-            <po-datepicker p-placeholder="Data de Nascimento" formControlName="birthDate" p-label="Data de Nascimento*" required></po-datepicker>
+            <po-datepicker p-readonly="true" p-placeholder="Data de Nascimento" formControlName="birthDate" p-label="Data de Nascimento*" required></po-datepicker>
           </div>
           <div class="col-sm-4 select-style">
-            <po-select p-placeholder="Selecione..."  formControlName="sex"  p-label="Sexo*" [p-options]="sexSelectOptions()" 
+            <po-select p-readonly="true" p-placeholder="Selecione..."  formControlName="sex"  p-label="Sexo" [p-options]="sexSelectOptions()" 
                [p-required]="true">
             </po-select>
-            <div class="invalid" formValidator [form]="form" [control]="form.controls.sex">Campo inválido..</div>
-          </div>
-          <div class="col-sm-2 select-style">
-            <po-select p-placeholder="Selecione..." formControlName="type"  p-label="Perfil*" [p-options]="userTypeSelectOptions()" 
-               [p-required]="true">
-            </po-select>
-            <div class="invalid" formValidator [form]="form" [control]="form.controls.type">Campo inválido.</div>
           </div>
         </div>
         <app-divider [title]="'Dados de Endereço'"></app-divider>
@@ -90,30 +84,14 @@
         <app-divider [title]="'Dados de Usuário'"></app-divider>
         <div class="row mb-3" formGroupName="user">
           <div class="col-sm-4">
-            <po-input p-minlength="3" p-maxlength="20" formControlName="userName" p-placeholder="Nome de Usuário"
+            <po-input p-readonly="true" p-minlength="3" p-maxlength="20" formControlName="userName" p-placeholder="Nome de Usuário"
               p-label="Nome de Usuário*" required></po-input>
-            <div class="invalid" formValidator [form]="form.controls.user"
-              [control]="form.controls.user.get('userName')">Campo inválido.</div>
           </div>
           <div class="col-sm-4 email-style">
-            <po-email formControlName="email" p-placeholder="E-mail" p-label="E-mail*" required></po-email>
-            <div class="invalid" formValidator [form]="form.controls.user" [control]="form.controls.user.get('email')">
-              Campo inválido.</div>
+            <po-email p-readonly="true" formControlName="email" p-placeholder="E-mail" p-label="E-mail" required></po-email>
           </div>
-          <div class="col-sm-4 password-style">
-            <po-password p-minlength="6" p-maxlength="20" formControlName="password" p-placeholder="Senha*"
-              name="password" p-label="Senha*" required></po-password>
-            <div class="invalid" formValidator [form]="form.controls.user"
-              [control]="form.controls.user.get('password')">Campo inválido.</div>
-          </div>
-        </div>
-        <div class="row mt-4 mb-5">
-          <button class="w-100 btn btn-primary btn-lg" type="submit" [disabled]="!form.valid">
-            Finalizar Cadastro
-          </button>
         </div>
       </form>
     </div>
-
   </main>
 </div>

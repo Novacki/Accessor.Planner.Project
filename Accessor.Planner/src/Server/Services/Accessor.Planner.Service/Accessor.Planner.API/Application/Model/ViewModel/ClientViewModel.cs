@@ -18,6 +18,7 @@ namespace Accessor.Planner.API.Application.Model.ViewModel
         public DateTime BirthDate { get; set; }
         public char Sex { get;  set; }
         public string Phone { get;  set; }
-        public List<AddressViewModel> Addresses { get; set; }
+        public UserViewModel User { get; set; }
+        public AddressViewModel Address { get; set; }
     }
 }

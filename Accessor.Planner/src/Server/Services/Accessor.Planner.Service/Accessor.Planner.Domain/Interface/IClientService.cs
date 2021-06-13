@@ -9,7 +9,7 @@ namespace Accessor.Planner.Domain.Interface
     public interface IClientService : IBaseService<Client>
     {
         Task Create(Client client);
-        Task Update(Guid id, string name, string phone, DateTime birthDate);
+        Task Update(Guid id, string phone, Address address);
         Task Delete(Guid id);
         void RemoveAddress(Guid id, int addressId);
         void AddAddress(Guid id, Address address);
