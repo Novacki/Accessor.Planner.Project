@@ -94,14 +94,32 @@ namespace Accessor.Planner.Domain.Model
         {
             if (Status != StatusSolicitation.InReview || string.IsNullOrEmpty(reason) 
                 || client.Type != UserType.Client || client.Id != Client.Id)
-
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Reject;
             UpdatedAt = DateTime.Now;
             SolicitationEndDate = solicitationEndDate;
+        }
 
+        public void CancelAccessor(Client accessor, string reason)
+        {
+            if(Status != StatusSolicitation.Reject || string.IsNullOrEmpty(reason) || accessor.Id != AccessorId)
+                throw new DomainException("Status Solicitation is Invalid");
 
+            Status = StatusSolicitation.OnHold;
+            AccessorId = null;
+            UpdatedAt = DateTime.Now;
+        }
+
+        public void Cancel(Provider provider, string reason)
+        {
+            if (Status != StatusSolicitation.Reject || string.IsNullOrEmpty(reason) || provider.Id != ProviderId)
+                throw new DomainException("Status Solicitation is Invalid");
+
+            Status = StatusSolicitation.Approve;
+            Provider = null;
+            SolicitationEndDate = null;
+            UpdatedAt = DateTime.Now;
         }
 
         public void Done(Provider provider)

@@ -45,6 +45,14 @@ export class SolicitationService {
     return this.http.put<string>(`Solicitations/${this.user.userId}/cancel/${id}`);
   }
 
+  public cancelAccessor(solicitation: SolicitationResponseValue): Observable<SolicitationResponseValue> {
+    return this.http.put<SolicitationResponseValue>(`Solicitations/cancel-accessor`, solicitation);
+  }
+
+  public cancelProvider(solicitation: SolicitationResponseValue): Observable<SolicitationResponseValue> {
+    return this.http.put<SolicitationResponseValue>(`Solicitations/cancel-provider`, solicitation);
+  }
+
   public accessorAccept(id: string): Observable<string> {
     return this.http.put<string>(`Solicitations/${this.user.userId}/accept-accessor/${id}`);
   }

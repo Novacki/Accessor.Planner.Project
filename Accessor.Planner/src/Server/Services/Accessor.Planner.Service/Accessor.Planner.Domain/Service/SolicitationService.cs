@@ -123,10 +123,31 @@ namespace Accessor.Planner.Domain.Service
             var solicitation = GetById(solicitationId);
 
             solicitation.Cancel(client, reason);
-            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Client));
+
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Client, reason));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
-       
+
+        public async Task CancelProvider(Guid providerId, Guid solicitationId, string reason, double value, DateTime solicitationEndDate)
+        {
+            var provider = await _providerService.GetByIdAsync(providerId).ConfigureAwait(false);
+            var solicitation = GetById(solicitationId);
+
+            solicitation.Cancel(provider, reason);
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, value, SubscribeType.Provider, reason));
+            await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public async Task CancelAccessor(Guid userId, Guid solicitationId, string reason)
+        {
+            var accessor = await _clientService.GetByIdAsync(userId).ConfigureAwait(false);
+            var solicitation = GetById(solicitationId);
+
+            solicitation.CancelAccessor(accessor, reason);
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Accessor, reason));
+            await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public List<Solicitation> GetAll() => _solicitationRepository.GetAll().ToList();
 
         public async Task<Solicitation> GetByIdAsync(Guid id) => await _solicitationRepository.GetByIdAsync(id).ConfigureAwait(false);
@@ -172,6 +193,5 @@ namespace Accessor.Planner.Domain.Service
 
             return solicitations.ToList();
         }
-
     }
 }
