@@ -84,25 +84,28 @@ namespace Accessor.Planner.Domain.Service
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task Approve(Guid userId, Guid solicitationId, double value, DateTime solicitationEndDate)
+        public async Task Approve(Guid userId, Guid solicitationId)
         {
             var client = await _clientService.GetByIdAsync(userId).ConfigureAwait(false);
             var solicitation = GetById(solicitationId);
 
-            solicitation.Approve(client, solicitationEndDate);
+            solicitation.Approve(client);
+            var lastValue = solicitation.SolicitationHistories.OrderBy(s => s.CreatedAt).LastOrDefault().Value;
 
-            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, value, SubscribeType.Client));
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, lastValue, SubscribeType.Client));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task Reject(Guid userId, Guid solicitationId, string reason, double value, DateTime solicitationEndDate)
+        public async Task Reject(Guid userId, Guid solicitationId, string reason)
         {
             var client = await _clientService.GetByIdAsync(userId).ConfigureAwait(false);
             var solicitation = GetById(solicitationId);
 
-            solicitation.Reject(client, reason, solicitationEndDate);
+            solicitation.Reject(client, reason);
 
-            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, value, SubscribeType.Client));
+            var lastValue = solicitation.SolicitationHistories.OrderBy(s => s.CreatedAt).LastOrDefault().Value;
+
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, lastValue, SubscribeType.Client, reason));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
@@ -112,14 +115,14 @@ namespace Accessor.Planner.Domain.Service
             var solicitation = GetById(solicitationId);
 
             solicitation.Done(provider);
-
+           
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, value, SubscribeType.Provider));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task Cancel(Guid userId, Guid solicitationId, string reason)
         {
-            var client = _clientService.GetClientByUserId(userId);
+            var client = await _clientService.GetByIdAsync(userId).ConfigureAwait(false);
             var solicitation = GetById(solicitationId);
 
             solicitation.Cancel(client, reason);
@@ -128,13 +131,14 @@ namespace Accessor.Planner.Domain.Service
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task CancelProvider(Guid providerId, Guid solicitationId, string reason, double value, DateTime solicitationEndDate)
+        public async Task CancelProvider(Guid providerId, Guid solicitationId, string reason)
         {
             var provider = await _providerService.GetByIdAsync(providerId).ConfigureAwait(false);
             var solicitation = GetById(solicitationId);
 
             solicitation.Cancel(provider, reason);
-            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, value, SubscribeType.Provider, reason));
+
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Provider, reason));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
         }
 

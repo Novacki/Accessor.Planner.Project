@@ -7,6 +7,7 @@ import { HttpService } from '../../shared/services/http.service';
 import { SolicitationFilter } from '../model/solicitation-filter.model';
 import { SolicitationOperation } from '../model/solicitation-operation.model';
 import { SolicitationResponseValue } from '../model/solicitation-response-value.model';
+import { SolicitationResponse } from '../model/solicitation-response.model';
 import { SolicitationRequest } from '../requests/solicitation-request';
 
 @Injectable({
@@ -29,28 +30,28 @@ export class SolicitationService {
       );
   }
 
-  public approve(solicitation: SolicitationResponseValue): Observable<SolicitationResponseValue> {
-    return this.http.put<SolicitationResponseValue>(`Solicitations/approve`, solicitation);
+  public approve(solicitation: SolicitationOperation): Observable<SolicitationOperation> {
+    return this.http.put<SolicitationOperation>(`Solicitations/approve`, solicitation);
   }
 
-  public reject(solicitation: SolicitationResponseValue): Observable<SolicitationResponseValue> {
-    return this.http.put<SolicitationResponseValue>(`Solicitations/reject`, solicitation);
+  public reject(solicitation: SolicitationResponse): Observable<SolicitationResponse> {
+    return this.http.put<SolicitationResponse>(`Solicitations/reject`, solicitation);
   }
 
   public done(solicitation: SolicitationResponseValue): Observable<SolicitationResponseValue> {
     return this.http.put<SolicitationResponseValue>(`Solicitations/done`, solicitation);
   }
 
-  public cancel(id: string, reason: string): Observable<string> {
-    return this.http.put<string>(`Solicitations/${this.user.userId}/cancel/${id}`);
+  public cancel(solicitation: SolicitationResponse): Observable<SolicitationResponse> {
+    return this.http.put<SolicitationResponse>(`Solicitations/cancel`, solicitation);
   }
 
-  public cancelAccessor(solicitation: SolicitationResponseValue): Observable<SolicitationResponseValue> {
-    return this.http.put<SolicitationResponseValue>(`Solicitations/cancel-accessor`, solicitation);
+  public cancelAccessor(solicitation: SolicitationResponse): Observable<SolicitationResponse> {
+    return this.http.put<SolicitationResponse>(`Solicitations/cancel-accessor`, solicitation);
   }
 
-  public cancelProvider(solicitation: SolicitationResponseValue): Observable<SolicitationResponseValue> {
-    return this.http.put<SolicitationResponseValue>(`Solicitations/cancel-provider`, solicitation);
+  public cancelProvider(solicitation: SolicitationResponse): Observable<SolicitationResponse> {
+    return this.http.put<SolicitationResponse>(`Solicitations/cancel-provider`, solicitation);
   }
 
   public accessorAccept(id: string): Observable<string> {

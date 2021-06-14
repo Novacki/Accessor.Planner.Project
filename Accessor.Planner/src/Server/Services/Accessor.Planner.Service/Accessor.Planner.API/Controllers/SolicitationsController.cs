@@ -131,26 +131,24 @@ namespace Accessor.Planner.API.Controllers
 
         [HttpPut]
         [Route("approve")]
-        public async Task<IActionResult> Approve(SolicitationResponseValueDTO solicitationDTO)
+        public async Task<IActionResult> Approve(SolicitationOperationDTO solicitationDTO)
         {
             if (solicitationDTO == null)
                 return BadRequest();
 
-            await _solicitationService.Approve(solicitationDTO.UserId, solicitationDTO.SolicitationId, 
-                solicitationDTO.Value.Value, solicitationDTO.SolicitationEndDate.Value);
+            await _solicitationService.Approve(solicitationDTO.UserId, solicitationDTO.SolicitationId);
 
             return Ok();
         }
 
         [HttpPut]
         [Route("reject")]
-        public async Task<IActionResult> Reject(SolicitationFullResponseDTO solicitationDTO)
+        public async Task<IActionResult> Reject(SolicitationResponseDTO solicitationDTO)
         {
             if (solicitationDTO == null)
                 return BadRequest();
 
-            await _solicitationService.Reject(solicitationDTO.UserId, solicitationDTO.SolicitationId, 
-                "A", solicitationDTO.Value.Value, solicitationDTO.SolicitationEndDate.Value);
+            await _solicitationService.Reject(solicitationDTO.UserId, solicitationDTO.SolicitationId, solicitationDTO.Reason);
 
             return Ok();
         }
@@ -168,19 +166,19 @@ namespace Accessor.Planner.API.Controllers
         }
 
         [HttpPut]
-        [Route("{userId:guid}/cancel/{solicitationId:guid}")]
-        public async Task<IActionResult> Cancel(Guid? userId, Guid? solicitationId)
+        [Route("cancel")]
+        public async Task<IActionResult> Cancel(SolicitationResponseDTO solicitationDTO)
         {
-            if (!userId.HasValue || !solicitationId.HasValue)
-                return BadRequest();
+            if (solicitationDTO == null)
+                return BadRequest(); 
 
-            await _solicitationService.Cancel(userId.Value, solicitationId.Value, "Adicionar");
+            await _solicitationService.Cancel(solicitationDTO.UserId, solicitationDTO.SolicitationId, solicitationDTO.Reason);
             return Ok();
         }
 
         [HttpPut]
         [Route("cancel-accessor")]
-        public async Task<IActionResult> CancelAccessor(SolicitationFullResponseDTO solicitationDTO)
+        public async Task<IActionResult> CancelAccessor(SolicitationResponseDTO solicitationDTO)
         {
             if (solicitationDTO == null)
                 return BadRequest();
@@ -191,13 +189,13 @@ namespace Accessor.Planner.API.Controllers
 
         [HttpPut]
         [Route("cancel-provider")]
-        public async Task<IActionResult> CancelProvider(SolicitationFullResponseDTO solicitationDTO)
+        public async Task<IActionResult> CancelProvider(SolicitationResponseDTO solicitationDTO)
         {
             if (solicitationDTO == null)
                 return BadRequest();
 
             await _solicitationService.CancelProvider(solicitationDTO.UserId, solicitationDTO.SolicitationId, 
-                solicitationDTO.Reason, solicitationDTO.Value.Value, solicitationDTO.SolicitationEndDate.Value);
+                solicitationDTO.Reason);
 
             return Ok();
         }

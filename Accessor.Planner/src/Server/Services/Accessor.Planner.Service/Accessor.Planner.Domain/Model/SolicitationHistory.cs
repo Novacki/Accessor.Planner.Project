@@ -9,7 +9,7 @@ namespace Accessor.Planner.Domain.Model
     public class SolicitationHistory: DefaultValues<Guid>
     {
         private SolicitationHistory() { }
-        public SolicitationHistory(Solicitation solicitation, double value,  SubscribeType type)
+        public SolicitationHistory(Solicitation solicitation, double? value,  SubscribeType type)
         {
             Id = Guid.NewGuid();
             AcessorId = solicitation.AccessorId;
@@ -37,7 +37,7 @@ namespace Accessor.Planner.Domain.Model
             Activate = true;
         }
 
-        public SolicitationHistory(Solicitation solicitation, double value, SubscribeType type, string reason)
+        public SolicitationHistory(Solicitation solicitation, double? value, SubscribeType type, string reason)
         {
             Id = Guid.NewGuid();
             AcessorId = solicitation.AccessorId;

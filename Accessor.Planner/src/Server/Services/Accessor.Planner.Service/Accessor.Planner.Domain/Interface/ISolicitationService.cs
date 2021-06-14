@@ -17,9 +17,9 @@ namespace Accessor.Planner.Domain.Interface
         Task ProviderAccept(Guid userId, Guid solicitationId);
         Task AccessorSend(Guid userId, Guid solicitationId);
         Task ProviderSend(Guid userId, Guid solicitationId, double value, DateTime solicitationEndDate);
-        Task Approve(Guid userId, Guid solicitationId, double value, DateTime solicitationEndDate);
-        Task Reject(Guid userId, Guid solicitationId, string reason, double value, DateTime solicitationEndDate);
-        Task CancelProvider(Guid providerId, Guid solicitationId, string reason, double value, DateTime solicitationEndDate);
+        Task Approve(Guid userId, Guid solicitationId);
+        Task Reject(Guid userId, Guid solicitationId, string reason);
+        Task CancelProvider(Guid providerId, Guid solicitationId, string reason);
         Task CancelAccessor(Guid userId, Guid solicitationId, string reason);
         Task Done(Guid userId, Guid solicitationId, double value);
         Task Cancel(Guid userId, Guid solicitationId, string reason);

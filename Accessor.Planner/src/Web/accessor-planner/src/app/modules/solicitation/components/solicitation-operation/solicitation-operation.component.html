@@ -135,18 +135,18 @@
                     p-label="Aprovar solicitação" p-type="primary"></po-button>
             </div>
             <div class="po-md-3">
-                <po-button (p-click)="reject()" class="reject" [p-disabled]="!buttonActivate"
+                <po-button (p-click)="openRejectFormClient()" class="reject" [p-disabled]="!buttonActivate"
                     p-icon="po-icon po-icon-close" p-label="Recusar solicitação" p-type="danger"></po-button>
             </div>
             <div class="po-md-3">
-                <po-button (p-click)="cancel()" p-icon="po-icon po-icon-delete" [p-disabled]="!buttonActivate"
+                <po-button (p-click)="openCancelFormClient()" p-icon="po-icon po-icon-delete" [p-disabled]="!buttonActivate"
                     class="cancel" p-label="Cancelar solicitação" p-type="danger"></po-button>
             </div>
         </div>
 
         <div *ngIf="status == 1 && userType == 2" class="po-row po-mt-2 po-mb-3 operation-buttons">
             <div class="po-md-4">
-                <po-button (p-click)="cancel()" p-icon="po-icon po-icon-delete" [p-disabled]="!buttonActivate"
+                <po-button (p-click)="openCancelFormClient()" p-icon="po-icon po-icon-delete" [p-disabled]="!buttonActivate"
                     class="cancel" p-label="Cancelar solicitação" p-type="danger"></po-button>
             </div>
         </div>
@@ -305,6 +305,36 @@
                     p-label="Confirmar" p-type="primary"></po-button>
                 </div>
             </ng-template>
+        </div>
+    </form>
+</app-show-informations>
+
+<app-show-informations [name]="'Cancelar Solicitação'" #cancelModalClient>
+    <form [formGroup]="formCancel">
+        <div class="row po-mb-2">
+            <po-textarea p-minlength="5" class="reason" p-rows="8" formControlName="reason" p-label="Motivo* "> </po-textarea>
+            <div class="invalid" formValidator [form]="formCancel" [control]="formCancel.controls.reason">Campo inválido.</div>
+        </div>
+        <div class="po-row">
+            <div class="col-md-4 po-mb-3">
+                <po-button (p-click)="cancel()" [p-disabled]="!formCancel.valid" p-icon="po-icon po-icon-ok"
+                    p-label="Confirmar" p-type="primary"></po-button>
+            </div>
+        </div>
+    </form>
+</app-show-informations>
+
+<app-show-informations [name]="'Cancelar Solicitação'" #rejectModalClient>
+    <form [formGroup]="formCancel">
+        <div class="row po-mb-2">
+            <po-textarea p-minlength="5" class="reason" p-rows="8" formControlName="reason" p-label="Motivo* "> </po-textarea>
+            <div class="invalid" formValidator [form]="formCancel" [control]="formCancel.controls.reason">Campo inválido.</div>
+        </div>
+        <div class="po-row">
+            <div class="col-md-4 po-mb-3">
+                <po-button (p-click)="reject()" [p-disabled]="!formCancel.valid" p-icon="po-icon po-icon-ok"
+                    p-label="Confirmar" p-type="primary"></po-button>
+            </div>
         </div>
     </form>
 </app-show-informations>

@@ -37,14 +37,13 @@ namespace Accessor.Planner.Domain.Model
         public void RemoveRooms(Room room) => Rooms.Remove(room);
 
 
-        public void Approve(Client client, DateTime solicitationEndDate)
+        public void Approve(Client client)
         {
             if (Status != StatusSolicitation.InReview || client.Type != UserType.Client || client.Id != Client.Id)
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Approve;
             UpdatedAt = DateTime.Now;
-            SolicitationEndDate = solicitationEndDate;
         }
 
         public void Accept(Client accessor)
@@ -90,7 +89,7 @@ namespace Accessor.Planner.Domain.Model
    
         }
 
-        public void Reject(Client client, string reason, DateTime solicitationEndDate)
+        public void Reject(Client client, string reason)
         {
             if (Status != StatusSolicitation.InReview || string.IsNullOrEmpty(reason) 
                 || client.Type != UserType.Client || client.Id != Client.Id)
@@ -98,7 +97,7 @@ namespace Accessor.Planner.Domain.Model
 
             Status = StatusSolicitation.Reject;
             UpdatedAt = DateTime.Now;
-            SolicitationEndDate = solicitationEndDate;
+            SolicitationEndDate = null;
         }
 
         public void CancelAccessor(Client accessor, string reason)
@@ -133,7 +132,7 @@ namespace Accessor.Planner.Domain.Model
 
         public void Cancel(Client client, string reason)
         {
-            if (string.IsNullOrEmpty(reason) || client.Type != UserType.Client || client.Id != Client.Id || SolicitationEndDate.HasValue)
+            if (string.IsNullOrEmpty(reason) || client.Type != UserType.Client || client.Id != Client.Id )
                 throw new DomainException("Status Solicitation is Invalid");
 
             Status = StatusSolicitation.Canceled;
