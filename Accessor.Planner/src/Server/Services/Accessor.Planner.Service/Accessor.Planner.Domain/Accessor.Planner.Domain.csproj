@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Notification\Notification.csproj" />
     <ProjectReference Include="..\..\Common\Service.Bus.Common\Proxy\Proxy.csproj" />
   </ItemGroup>
 

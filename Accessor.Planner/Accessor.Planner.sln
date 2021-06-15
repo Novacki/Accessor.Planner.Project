@@ -46,7 +46,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer.API", "src\S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{DF61D322-056D-4303-83B7-73DEA31FEA01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy", "src\Server\Services\Common\Service.Bus.Common\Proxy\Proxy.csproj", "{F99AE0E3-2824-43F7-8AA6-766D6474804A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Proxy", "src\Server\Services\Common\Service.Bus.Common\Proxy\Proxy.csproj", "{F99AE0E3-2824-43F7-8AA6-766D6474804A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notification", "src\Server\Services\Common\Notification\Notification.csproj", "{DFF33A47-4452-48C8-B660-B71361770BD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,6 +80,10 @@ Global
 		{F99AE0E3-2824-43F7-8AA6-766D6474804A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F99AE0E3-2824-43F7-8AA6-766D6474804A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F99AE0E3-2824-43F7-8AA6-766D6474804A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFF33A47-4452-48C8-B660-B71361770BD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFF33A47-4452-48C8-B660-B71361770BD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFF33A47-4452-48C8-B660-B71361770BD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFF33A47-4452-48C8-B660-B71361770BD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +101,7 @@ Global
 		{A0FF0058-8174-441A-B5B2-13FAEE4C26F2} = {018CDAFC-CB66-41AA-8BA6-3DB05A492D4E}
 		{DF61D322-056D-4303-83B7-73DEA31FEA01} = {EA5D6775-2965-4904-B772-AE5E753D141B}
 		{F99AE0E3-2824-43F7-8AA6-766D6474804A} = {DF61D322-056D-4303-83B7-73DEA31FEA01}
+		{DFF33A47-4452-48C8-B660-B71361770BD4} = {DF61D322-056D-4303-83B7-73DEA31FEA01}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {560403B3-F43B-42C4-A73C-BDBE0AFB4AA7}

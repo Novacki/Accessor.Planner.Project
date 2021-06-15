@@ -17,13 +17,15 @@ namespace Accessor.Planner.Domain.Service
         private readonly IClientService _clientService;
         private readonly ISolicitationHistoryService _solicitationHistoryService;
         private readonly IProviderService _providerService;
+        private readonly INotificationService _notificationService;
         public SolicitationService(ISolicitationRepository solicitationRepository, IClientService clientService, 
-            ISolicitationHistoryService solicitationHistoryService, IProviderService providerService)
+            ISolicitationHistoryService solicitationHistoryService, IProviderService providerService, INotificationService notificationService)
         {
             _solicitationRepository = solicitationRepository ?? throw new ArgumentNullException(nameof(solicitationRepository));
             _clientService = clientService ?? throw new ArgumentNullException(nameof(clientService));
             _solicitationHistoryService = solicitationHistoryService ?? throw new ArgumentNullException(nameof(solicitationHistoryService));
             _providerService = providerService ?? throw new ArgumentNullException(nameof(providerService));
+            _notificationService = notificationService ?? throw new ArgumentNullException(nameof(notificationService));
         }
 
         public async Task Create(Guid userId, List<Room> rooms)
@@ -38,6 +40,12 @@ namespace Accessor.Planner.Domain.Service
 
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Client));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            var accessors = await _clientService.GetAllByType(UserType.Accessor).ConfigureAwait(false);
+
+            accessors.ForEach(a => { 
+                _notificationService.SendEmail(a.User.Email, "Em Espera", _notificationService.GetDefaultTemplate("Em Espera", "Cliente", client.Name));
+            });
         }
 
         public async Task AccessorAccept(Guid userId, Guid solicitationId)
@@ -129,6 +137,14 @@ namespace Accessor.Planner.Domain.Service
 
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Client, reason));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            if(solicitation.AccessorId.HasValue)
+            {
+                var accessor = await _clientService.GetByIdAsync(solicitation.AccessorId.Value).ConfigureAwait(false);
+
+                _notificationService.SendEmail(accessor.User.Email, "Cancelada", _notificationService.GetRejectTemplate("Cancelada", "Cliente", client.Name, reason));
+            }
+
         }
 
         public async Task CancelProvider(Guid providerId, Guid solicitationId, string reason)
