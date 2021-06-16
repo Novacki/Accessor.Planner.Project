@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PoNotificationService, PoTableColumn } from '@po-ui/ng-components';
 import { Subject } from 'rxjs';
 import { ShowInformationsComponent } from 'src/app/Modules/shared/components/show-informations/show-informations.component';
 import { Room } from 'src/app/modules/shared/model/room.model';
+import { Solicitation } from 'src/app/modules/shared/model/solicitation.model';
 import { RoomColumn } from '../../model/room-column.model';
 import { SolicitationService } from '../../services/solicitation.service';
 import { ModalRoomComponent } from './modal-room/modal-room.component';
@@ -18,14 +19,29 @@ export class SolicitationFormComponent implements OnInit {
   constructor(
     private solicitationService: SolicitationService, 
     private router: Router,
-    private poNotification: PoNotificationService ) { }
+    private poNotification: PoNotificationService,
+    private activateRoute: ActivatedRoute ) { }
 
   public rooms: Room[] = [];
   public showRoom: Room;
+  public solicitation: Solicitation;
+  public buttonName = 'Cadastrar';
+
   @ViewChild('information') information: ShowInformationsComponent;
   @ViewChild('edit') edit: ModalRoomComponent;
 
   ngOnInit(): void {
+    this.activateRoute.params.subscribe(val => {
+      if(val.id != undefined) {
+        this.loading = true;
+        this.solicitationService.getById(val.id).subscribe(response => {
+          this.buttonName = 'Editar';
+          this.solicitation = response;
+          this.rooms = response.rooms;
+          this.loading = false;
+        });
+      }
+    });
   }
 
   public loading: boolean = false;
@@ -93,16 +109,29 @@ export class SolicitationFormComponent implements OnInit {
 
   public registerSolicitation(): void {
     this.loading = true;
-    this.solicitationService.create(this.rooms).subscribe(response => {
-      this.poNotification.success('Solicitação criada com sucesso!');
-    },
-    error => {
-      this.poNotification.error('Erro ao Salvar a solicitação!');
-      this.loading = false;
-    },() => {
-      this.loading = false;
-      this.router.navigate(['../solicitations/on-hold'])
-    });
+    if(this.solicitation) {
+      this.solicitationService.update(this.solicitation.id, this.rooms).subscribe(response => {
+        this.poNotification.success('Solicitação atualizada com sucesso!');
+      },
+      error => {
+        this.poNotification.error('Erro ao atualizar a solicitação!');
+        this.loading = false;
+      },() => {
+        this.loading = false;
+        this.router.navigate(['../solicitations/on-hold'])
+      });
+    } else {
+      this.solicitationService.create(this.rooms).subscribe(response => {
+        this.poNotification.success('Solicitação criada com sucesso!');
+      },
+      error => {
+        this.poNotification.error('Erro ao Salvar a solicitação!');
+        this.loading = false;
+      },() => {
+        this.loading = false;
+        this.router.navigate(['../solicitations/on-hold'])
+      });
+    }
   }
 
   private removeRoom(row: RoomColumn) {  

@@ -10,6 +10,7 @@ namespace Accessor.Planner.Domain.Interface
     public interface ISolicitationService : IBaseService<Solicitation>
     {
         Task Create(Guid userId, List<Room> rooms);
+        Task Update(Guid solicitationId, List<Room> rooms);
         Solicitation GetById(Guid id);
         Task<List<Solicitation>> GetSolicitationsByUserAsync(Guid userId);
         List<Solicitation> GetSolicitationsByFilter(Guid profileContextId, StatusSolicitation status, UserType? userType);

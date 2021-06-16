@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { PoModalAction, PoModalComponent, PoTableColumn } from '@po-ui/ng-components';
 import { solicitationStatusLabel, StatusSolicitation } from 'src/app/modules/shared/enum/status-solicitation';
 import { UserType } from 'src/app/modules/shared/enum/user-type';
@@ -32,7 +33,7 @@ export class SolicitationOnHoldComponent implements OnInit {
 
   @ViewChild('modal') modal: SolicitationOperationComponent;
 
-  constructor(private solicitationService: SolicitationService, private clientService: ClientService, private providerServide: ProviderService) { }
+  constructor(private solicitationService: SolicitationService, private clientService: ClientService, private providerServide: ProviderService, private router: Router) { }
   private clients: Client[];
   private providers: Provider[];
 
@@ -67,6 +68,7 @@ export class SolicitationOnHoldComponent implements OnInit {
             icon: 'po-icon po-icon-edit',
             tooltip: 'Editar',
             value: 'edit',
+            action: this.editSolicitation.bind(this)
           },
           {
             icon: 'po-icon po-icon-export',
@@ -93,6 +95,10 @@ export class SolicitationOnHoldComponent implements OnInit {
   
   private openModalOperation(row: SolicitationColumn): void {
     this.modal.openModal(row, this.filter);
+  }
+
+  private editSolicitation(row: SolicitationColumn): void {
+    this.router.navigate([`solicitations/${row.id}`]);
   }
 
   public getSolicitations(): void {

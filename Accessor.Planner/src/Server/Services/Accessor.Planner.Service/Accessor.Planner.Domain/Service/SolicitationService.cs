@@ -46,6 +46,19 @@ namespace Accessor.Planner.Domain.Service
             _notificationService.SendDeafault(accessors, "Em Espera", "Cliente", client.Name);
         }
 
+        public async Task Update(Guid solicitationId, List<Room> rooms)
+        {
+            var solicitation = GetById(solicitationId);
+
+            if (solicitation == null)
+               throw new SolicitationServiceException("Solicitation Not Found");
+
+            solicitation.Update(rooms);
+
+            await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Client));
+            await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public async Task AccessorAccept(Guid userId, Guid solicitationId)
         {
             var client = _clientService.GetClientByUserId(userId);

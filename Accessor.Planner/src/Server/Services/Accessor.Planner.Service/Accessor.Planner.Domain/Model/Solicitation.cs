@@ -36,7 +36,14 @@ namespace Accessor.Planner.Domain.Model
 
         public void RemoveRooms(Room room) => Rooms.Remove(room);
 
+        public void Update(List<Room> rooms)
+        {
+            if (rooms == null)
+                throw new DomainException("Value is Null");
 
+            Rooms = rooms;
+            UpdatedAt = DateTime.Now;
+        }
         public void Approve(Client client)
         {
             if (Status != StatusSolicitation.InReview || client.Type != UserType.Client || client.Id != Client.Id)

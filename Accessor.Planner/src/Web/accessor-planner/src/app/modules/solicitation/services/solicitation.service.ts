@@ -23,11 +23,19 @@ export class SolicitationService {
     return this.http.post<SolicitationRequest>('Solicitations/create', new SolicitationRequest(`${this.user.userId}`, rooms));
   }
 
+  public update(id: string, rooms: Room[]): Observable<SolicitationRequest> {
+    return this.http.put<SolicitationRequest>(`Solicitations/update/${id}`, new SolicitationRequest(`${this.user.userId}`, rooms));
+  }
+
   public get(filter: SolicitationFilter):Observable<Solicitation[]> {
     return this.http.get<Solicitation>
       (
         `Solicitations/filter?profileContextId=${filter.profileContextId}&status=${filter.status}&userType=${filter.userType}`
       );
+  }
+
+  public getById(id: string):Observable<Solicitation> {
+    return this.http.getById<Solicitation>(`Solicitations/solicitation/${id}`);
   }
 
   public approve(solicitation: SolicitationOperation): Observable<SolicitationOperation> {

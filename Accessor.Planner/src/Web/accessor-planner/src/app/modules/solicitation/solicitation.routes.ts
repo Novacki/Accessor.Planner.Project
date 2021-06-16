@@ -33,4 +33,5 @@ export const routes: Routes = [
     { path: 'accessor-approved', data: { breadcrumb: 'Solicitações Aprovadas' }, component: SolicitationAccessorApprovedComponent},
     { path: 'accessor-canceled', data: { breadcrumb: 'Solicitações Canceladas' }, component: SolicitationAccessorCanceledComponent},
     { path: 'accessor-done', data: { breadcrumb: 'Solicitações Encerradas' }, component: SolicitationAccessorDoneComponent},
+    { path: ':id', data: { breadcrumb: 'Nova Solicitação' }, component: SolicitationFormComponent },
 ]

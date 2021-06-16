@@ -82,6 +82,18 @@ namespace Accessor.Planner.API.Controllers
         }
 
         [HttpPut]
+        [Route("update/{id:guid}")]
+        public async Task<IActionResult> Update(Guid? id, [FromBody] SolicitationDTO solicitationDTO)
+        {
+            if (!id.HasValue || solicitationDTO == null)
+                return BadRequest();
+
+            await _solicitationService.Update(id.Value, solicitationDTO.Rooms.ToRoom());
+
+            return Ok();
+        }
+
+        [HttpPut]
         [Route("{userId:guid}/accept-accessor/{solicitationId:guid}")]
         public async Task<IActionResult> AccessorAccept(Guid? userId, Guid? solicitationId)
         {
