@@ -43,9 +43,7 @@ namespace Accessor.Planner.Domain.Service
 
             var accessors = await _clientService.GetAllByType(UserType.Accessor).ConfigureAwait(false);
 
-            accessors.ForEach(a => { 
-                _notificationService.SendEmail(a.User.Email, "Em Espera", _notificationService.GetDefaultTemplate("Em Espera", "Cliente", client.Name));
-            });
+            _notificationService.SendDeafault(accessors, "Em Espera", "Cliente", client.Name);
         }
 
         public async Task AccessorAccept(Guid userId, Guid solicitationId)
@@ -57,6 +55,8 @@ namespace Accessor.Planner.Domain.Service
 
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Accessor));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            _notificationService.SendDeafault(solicitation.Client, "Aceita", "Acessor", client.Name);
         }
 
         public async Task ProviderAccept(Guid userId, Guid solicitationId)
@@ -68,6 +68,8 @@ namespace Accessor.Planner.Domain.Service
 
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Provider));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            _notificationService.SendDeafault(solicitation.Client, "Aceita", "Fornecedor", provider.FantasyName);
         }
 
         public async Task AccessorSend(Guid userId, Guid solicitationId)
@@ -79,6 +81,8 @@ namespace Accessor.Planner.Domain.Service
 
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Accessor));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            _notificationService.SendDeafault(solicitation.Client, "Em Análise", "Acessor", client.Name);
         }
 
         public async Task ProviderSend(Guid userId, Guid solicitationId, double value, DateTime solicitationEndDate)
@@ -90,6 +94,8 @@ namespace Accessor.Planner.Domain.Service
 
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, value ,SubscribeType.Provider));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            _notificationService.SendDeafault(solicitation.Client, "Em Análise", "Fornecedor", provider.FantasyName);
         }
 
         public async Task Approve(Guid userId, Guid solicitationId)
@@ -102,6 +108,19 @@ namespace Accessor.Planner.Domain.Service
 
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, lastValue, SubscribeType.Client));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            if(solicitation.ProviderId.HasValue)
+            {
+              _notificationService.SendDeafault(solicitation.Provider, "Aprovada", "Cliente", client.Name);
+            }
+            else
+            {
+                var accessor = await _clientService.GetByIdAsync(solicitation.AccessorId.Value).ConfigureAwait(false);
+                var providers = _providerService.GetAll();
+
+                _notificationService.SendDeafault(providers, "Em Espera", "Cliente", client.Name);
+                _notificationService.SendDeafault(accessor, "Aprovada", "Cliente", client.Name);
+            }
         }
 
         public async Task Reject(Guid userId, Guid solicitationId, string reason)
@@ -115,6 +134,16 @@ namespace Accessor.Planner.Domain.Service
 
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, lastValue, SubscribeType.Client, reason));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            if (solicitation.ProviderId.HasValue)
+            {
+                _notificationService.SendRejectMail(solicitation.Provider, "Rejeitada", "Cliente", client.Name, reason);
+            }
+            else
+            {
+                var accessor = await _clientService.GetByIdAsync(solicitation.AccessorId.Value).ConfigureAwait(false);
+                _notificationService.SendRejectMail(accessor, "Rejeitada", "Cliente", client.Name, reason);
+            }
         }
 
         public async Task Done(Guid userId, Guid solicitationId, double value)
@@ -126,6 +155,9 @@ namespace Accessor.Planner.Domain.Service
            
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, value, SubscribeType.Provider));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            var clients = new List<Client>() { solicitation.Client, await _clientService.GetByIdAsync(solicitation.AccessorId.Value).ConfigureAwait(false) };
+            _notificationService.SendDeafault(clients, "Encerrada", "Fornecedor", provider.FantasyName);
         }
 
         public async Task Cancel(Guid userId, Guid solicitationId, string reason)
@@ -141,31 +173,46 @@ namespace Accessor.Planner.Domain.Service
             if(solicitation.AccessorId.HasValue)
             {
                 var accessor = await _clientService.GetByIdAsync(solicitation.AccessorId.Value).ConfigureAwait(false);
+                _notificationService.SendRejectMail(accessor, "Cancelada", "Cliente", client.Name, reason);
+            } 
 
-                _notificationService.SendEmail(accessor.User.Email, "Cancelada", _notificationService.GetRejectTemplate("Cancelada", "Cliente", client.Name, reason));
+            if (solicitation.ProviderId.HasValue)
+            {
+                _notificationService.SendRejectMail(solicitation.Provider, "Cancelada", "Cliente", client.Name, reason);
             }
 
         }
 
         public async Task CancelProvider(Guid providerId, Guid solicitationId, string reason)
         {
-            var provider = await _providerService.GetByIdAsync(providerId).ConfigureAwait(false);
+            var providers = _providerService.GetAll();
+            var provider = providers.FirstOrDefault(p => p.Id == providerId);
+
             var solicitation = GetById(solicitationId);
 
             solicitation.Cancel(provider, reason);
 
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Provider, reason));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            _notificationService.SendRejectMail(solicitation.Client, "Cancelada", "Fornecedor", provider.FantasyName, reason);
+            _notificationService.SendDeafault(providers, "Em Espera", "Cliente", solicitation.Client.Name);
         }
 
         public async Task CancelAccessor(Guid userId, Guid solicitationId, string reason)
         {
-            var accessor = await _clientService.GetByIdAsync(userId).ConfigureAwait(false);
+            var accessors = await _clientService.GetAllByType(UserType.Accessor).ConfigureAwait(false);
+            var accessor = accessors.FirstOrDefault(accessor => accessor.Id == userId);
+
             var solicitation = GetById(solicitationId);
 
             solicitation.CancelAccessor(accessor, reason);
+
             await _solicitationHistoryService.Create(new SolicitationHistory(solicitation, SubscribeType.Accessor, reason));
             await _solicitationRepository.UnitOfWork.SaveChangesAsync().ConfigureAwait(false);
+
+            _notificationService.SendRejectMail(solicitation.Client, "Cancelada", "Accessor", accessor.Name, reason);
+            _notificationService.SendDeafault(accessors, "Em Espera", "Cliente", solicitation.Client.Name);
         }
 
         public List<Solicitation> GetAll() => _solicitationRepository.GetAll().ToList();

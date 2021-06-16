@@ -17,7 +17,7 @@ namespace Accessor.Planner.Infrastructure.Repository
 
         public override IQueryable<Client> GetAll() => base.GetAll().Include(c => c.Addresses).Include(c => c.Solicitations).Include(c => c.User);
 
-        public async Task<List<Client>> GetAllByType(UserType type) => await _entities.Where(c => c.Type == type).ToListAsync();
+        public async Task<List<Client>> GetAllByType(UserType type) => await _entities.Where(c => c.Type == type).Include(c => c.User).ToListAsync();
         
         public override async Task<Client> GetByIdAsync(Guid id) => await _entities.Where(c => c.Id == id).Include(c => c.Addresses).Include(c => c.User)
             .Include(c => c.Solicitations).FirstOrDefaultAsync().ConfigureAwait(false);

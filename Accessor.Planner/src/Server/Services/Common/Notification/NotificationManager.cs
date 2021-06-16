@@ -9,7 +9,7 @@ namespace Notification
 {
     public interface INotificationManager
     {
-        public bool Send(string to, string subject, string body, bool isBodyHtml = true, bool defaultCredentials = true);
+        public bool Send(string to, string subject, string body, bool isBodyHtml = true, bool defaultCredentials = false);
     }
     public class NotificationManager : INotificationManager
     {
@@ -23,7 +23,7 @@ namespace Notification
             SmtpClient = new SmtpClient(_notificationSettings.Host, _notificationSettings.Port);
         }
 
-        public bool Send(string to, string subject, string body, bool isBodyHtml = true, bool defaultCredentials = true)
+        public bool Send(string to, string subject, string body, bool isBodyHtml = true, bool defaultCredentials = false)
         {
             EmailMessage = new MailMessage(_notificationSettings.From, to, subject, body);
             EmailMessage.IsBodyHtml = isBodyHtml;
@@ -32,7 +32,7 @@ namespace Notification
 
             try
             {
-                SmtpClient.UseDefaultCredentials = !defaultCredentials;
+                SmtpClient.UseDefaultCredentials = defaultCredentials;
                 SmtpClient.Credentials = new NetworkCredential(_notificationSettings.Credential.Email, _notificationSettings.Credential.Password);
                 SmtpClient.EnableSsl = true;
                 SmtpClient.Send(EmailMessage);
