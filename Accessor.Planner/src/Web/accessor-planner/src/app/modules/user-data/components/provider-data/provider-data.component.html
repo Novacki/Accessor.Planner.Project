@@ -15,13 +15,13 @@
                     <app-divider [title]="'Dados da Empresa'"></app-divider>
                     <div class="row mb-3">
                         <div class="col-4">
-                            <po-input p-minlength="5" p-maxlength="30" formControlName="fantasyName"
+                            <po-input p-readonly="true" p-minlength="5" p-maxlength="30" formControlName="fantasyName"
                                 p-placeholder="Nome Fantasia" required p-label="Nome Fantasia*"></po-input>
                             <div class="invalid" formValidator [form]="form.controls.fantasyName"
                                 [control]="form.get('fantasyName')">Campo inválido.</div>
                         </div>
                         <div class="col-4">
-                            <po-input p-minlength="5" p-maxlength="30" formControlName="socialReason"
+                            <po-input p-readonly="true" p-minlength="5" p-maxlength="30" formControlName="socialReason"
                                 p-placeholder="Razão Social" required p-label="Razão Social*"></po-input>
                             <div class="invalid" formValidator [form]="form.controls.socialReason"
                                 [control]="form.get('socialReason')">Campo inválido.</div>
@@ -84,12 +84,12 @@
                     </div>
                     <app-divider [title]="'Dados de Usuário'"></app-divider>
                     <div class="row mb-3" formGroupName="user">
-                        <div p-readonly="true" class="col-sm-4">
-                            <po-input p-minlength="3" p-maxlength="20" formControlName="userName"
+                        <div class="col-sm-4">
+                            <po-input p-readonly="true" p-minlength="3" p-maxlength="20" formControlName="userName"
                                 p-placeholder="Nome de Usuário" p-label="Nome de Usuário*" required></po-input>
                         </div>
-                        <div p-readonly="true" class="col-sm-4 email-style">
-                            <po-email formControlName="email" p-placeholder="E-mail" p-label="E-mail*" required>
+                        <div class="col-sm-4 email-style">
+                            <po-email p-readonly="true" formControlName="email" p-placeholder="E-mail" p-label="E-mail*" required>
                             </po-email>
                         </div>
                     </div>
