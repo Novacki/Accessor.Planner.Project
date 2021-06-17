@@ -14,11 +14,12 @@ namespace Accessor.Planner.Infrastructure.Repository
     {
         public ProviderRepository(ApplicationDataContext context) : base(context) { }
 
-        public override IQueryable<Provider> GetAll() => base.GetAll().Include(provider => provider.Address);
+        public override IQueryable<Provider> GetAll() => base.GetAll().Include(provider => provider.Address).Include(provider => provider.User);
 
         public async Task<Provider> GetByUserIdAsync(Guid id) => await _entities.Where(p => p.User.Id == id).Include(provider => provider.Address).FirstOrDefaultAsync().ConfigureAwait(false);
 
-        public override async Task<Provider> GetByIdAsync(Guid id) => await _entities.Where(provider => provider.Id == id).Include(provider => provider.Address).FirstOrDefaultAsync();
+        public override async Task<Provider> GetByIdAsync(Guid id) => await _entities.Where(provider => provider.Id == id).Include(provider => provider.User)
+            .Include(provider => provider.Address).FirstOrDefaultAsync();
 
     }
 }

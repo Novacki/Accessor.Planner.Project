@@ -9,7 +9,7 @@ namespace Accessor.Planner.Domain.Model
     public class SolicitationHistory: DefaultValues<Guid>
     {
         private SolicitationHistory() { }
-        public SolicitationHistory(Solicitation solicitation, double value,  SubscribeType type)
+        public SolicitationHistory(Solicitation solicitation, double? value,  SubscribeType type)
         {
             Id = Guid.NewGuid();
             AcessorId = solicitation.AccessorId;
@@ -18,6 +18,35 @@ namespace Accessor.Planner.Domain.Model
             Value = value;
             Status = solicitation.Status;
             Type = type;
+            CreatedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
+            Activate = true;
+        }
+
+        public SolicitationHistory(Solicitation solicitation, SubscribeType type, string reason)
+        {
+            Id = Guid.NewGuid();
+            AcessorId = solicitation.AccessorId;
+            ProviderId = solicitation.ProviderId;
+            Solicitation = solicitation;
+            Status = solicitation.Status;
+            Type = type;
+            Reason = reason;
+            CreatedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
+            Activate = true;
+        }
+
+        public SolicitationHistory(Solicitation solicitation, double? value, SubscribeType type, string reason)
+        {
+            Id = Guid.NewGuid();
+            AcessorId = solicitation.AccessorId;
+            ProviderId = solicitation.ProviderId;
+            Solicitation = solicitation;
+            Value = value;
+            Status = solicitation.Status;
+            Type = type;
+            Reason = reason;
             CreatedAt = DateTime.Now;
             UpdatedAt = DateTime.Now;
             Activate = true;
@@ -38,6 +67,7 @@ namespace Accessor.Planner.Domain.Model
 
         public Guid? AcessorId { get; private set; }
         public Guid? ProviderId { get; private set; }
+        public string Reason { get; private set; }
         public double? Value { get; private set; }
         public StatusSolicitation Status { get; private set; }
         public SubscribeType Type { get; private set; }

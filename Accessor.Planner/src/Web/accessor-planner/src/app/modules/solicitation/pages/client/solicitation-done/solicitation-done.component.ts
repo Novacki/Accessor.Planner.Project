@@ -69,11 +69,6 @@ export class SolicitationDoneComponent implements OnInit {
         type: 'icon',
         icons: [
           {
-            icon: 'po-icon po-icon-edit',
-            tooltip: 'Editar',
-            value: 'edit',
-          },
-          {
             icon: 'po-icon po-icon-export',
             tooltip: 'Operações',
             value: 'view',

@@ -1,0 +1,75 @@
+.email-style ::ng-deep .po-field-icon {
+    color: maroon;
+}
+  
+.password-style ::ng-deep .po-field-icon {
+    color: maroon;
+}
+
+.select-style ::ng-deep .po-icon.po-icon-arrow-up:before {
+    color: maroon;
+}
+  
+.select-style ::ng-deep .po-icon.po-icon-arrow-down:before {
+    color: maroon;
+}
+
+.select-style ::ng-deep .po-select-container.po-select-show>.po-select-button {
+    color: maroon;
+    border: 1px maroon solid;
+}
+
+.select-style ::ng-deep .po-select-container .po-select-item-selected{
+    color: maroon;
+}
+
+.select-style ::ng-deep .po-select-button{
+    color: maroon;
+}
+
+.select-style ::ng-deep .po-select-item-selected .po-select-item{
+    color: white;
+    background-color: maroon;
+}
+
+.select-style ::ng-deep .po-select-item{
+    color: maroon;
+}
+
+.select-style ::ng-deep .po-select:focus+.po-select-container .po-select-button {
+    color: maroon;
+    border: 1px maroon solid;
+}
+
+.date-style ::ng-deep .po-icon.po-icon-arrow-right:before {
+    color: maroon;
+}
+
+.date-style ::ng-deep .po-icon.po-icon-arrow-left:before{
+    color: maroon;
+}
+
+.date-style ::ng-deep .po-icon.po-icon-calendar:before {
+    color: maroon;
+}
+.date-style ::ng-deep .po-calendar-nav .po-calendar-nav-title{
+    color: maroon;
+}
+
+.btn {
+    color: white;
+    border-color: white;
+    background-color: brown;
+}
+  
+.btn:hover {
+    background-color: rgb(70, 65, 65);
+}
+  
+.invalid {
+    opacity: 0;
+}
+  
+::ng-deep .po-page-content::-webkit-scrollbar-thumb {
+    background-color: maroon;
+}

@@ -25,6 +25,9 @@ export class SolicitationOperationComponent implements OnInit {
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
   @ViewChild('providerConfirmation') providerConfirmation: ShowInformationsComponent;
   @ViewChild('historySolicitation') historySolicitation: ShowInformationsComponent;
+  @ViewChild('cancelModal') cancelModal: ShowInformationsComponent;
+  @ViewChild('cancelModalClient') cancelModalClient: ShowInformationsComponent;
+  @ViewChild('rejectModalClient') rejectModalClient: ShowInformationsComponent;
 
   public status: StatusSolicitation; 
   public userType: UserType;
@@ -32,9 +35,10 @@ export class SolicitationOperationComponent implements OnInit {
   public value: string;
   public loading: boolean = false;
   public form: FormGroup;
-
+  public formCancel: FormGroup;
   ngOnInit(): void {
     this.contructForm();
+    this.contructFormCancel();
   }
 
   public solicitation: SolicitationColumn;
@@ -65,6 +69,18 @@ export class SolicitationOperationComponent implements OnInit {
 
   openHistory() {
     this.historySolicitation.poModal.open();
+  }
+
+  openCancelForm(): void {
+    this.cancelModal.poModal.open();
+  }
+
+  openCancelFormClient(): void {
+    this.cancelModalClient.poModal.open();
+  }
+
+  openRejectFormClient(): void {
+    this.rejectModalClient.poModal.open();
   }
 
   public getColumnsRoom(): Array<PoTableColumn> {
@@ -106,7 +122,46 @@ export class SolicitationOperationComponent implements OnInit {
   }
 
   public cancel(): void {
-    this.solicitationService.cancel(this.solicitation.id, "string").subscribe(response => {
+    this.solicitationService.cancel({solicitationId: this.solicitation.id, 
+      userId: this.filter.profileContextId, reason: this.formCancel.controls.reason.value }).subscribe(response => {
+      this.cancelModalClient.poModal.close();
+      this.formCancel.reset();
+      this.poNotification.success("Solicitação cancelada com sucesso!");
+      this.emitChangeOperation();
+    },
+    error => {
+      this.poNotification.error("Erro ao cancelar solicitação!");
+      this.loading = false;
+    },
+    () => {
+      this.buttonActivate = true;
+      this.loading = false;
+    });
+  }
+
+  public cancelAccessor(): void {
+    this.solicitationService.cancelAccessor({ userId: this.filter.profileContextId, solicitationId: this.solicitation.id,
+      reason: this.formCancel.controls.reason.value }).subscribe(() => {
+      this.cancelModal.poModal.close();
+      this.poNotification.success("Solicitação cancelada com sucesso!");
+      this.emitChangeOperation();
+    },
+    error => {
+      this.poNotification.error("Erro ao cancelar solicitação!");
+      this.loading = false;
+    },
+    () => {
+      this.buttonActivate = true;
+      this.loading = false;
+    });
+  }
+
+  public cancelProvider(): void {
+    let lastHistory = this.solicitation.solicitationHistories[this.solicitation.solicitationHistories.length -1];
+
+    this.solicitationService.cancelProvider({ userId: this.filter.profileContextId, solicitationId: this.solicitation.id,
+      reason: this.formCancel.controls.reason.value }).subscribe(() => {
+      this.cancelModal.poModal.close();
       this.poNotification.success("Solicitação cancelada com sucesso!");
       this.emitChangeOperation();
     },
@@ -124,10 +179,10 @@ export class SolicitationOperationComponent implements OnInit {
     this.loading = true;
     let lastHistory = this.solicitation.solicitationHistories[this.solicitation.solicitationHistories.length -1];
     
-    this.solicitationService.approve({ solicitationId: this.solicitation.id, userId: this.filter.profileContextId,
-      value: !isNaN(Number(lastHistory.value)) ? Number(lastHistory.value) : 0, solicitationEndDate: new Date() }).subscribe(response => {
-      this.poNotification.success("Solicitação aprovada com sucesso!");
-      this.emitChangeOperation();
+    this.solicitationService.approve({ solicitationId: this.solicitation.id, 
+        userId: this.filter.profileContextId }).subscribe(response => {
+       this.poNotification.success("Solicitação aprovada com sucesso!");
+       this.emitChangeOperation();
     },
     error => {
       this.poNotification.error("Erro ao aprovar solicitação!");
@@ -142,8 +197,9 @@ export class SolicitationOperationComponent implements OnInit {
   public reject(): void {
     this.loading = true;
     let lastHistory = this.solicitation.solicitationHistories[this.solicitation.solicitationHistories.length -1];
-    this.solicitationService.reject({ solicitationId: this.solicitation.id, userId: this.filter.profileContextId,
-      value: !isNaN(Number(lastHistory.value)) ? Number(lastHistory.value) : 0, solicitationEndDate:  new Date() }).subscribe(response => {
+    this.solicitationService.reject({ solicitationId: this.solicitation.id, userId: this.filter.profileContextId, reason: this.formCancel.controls.reason.value }).subscribe(response => {
+      this.rejectModalClient.poModal.close();
+      this.formCancel.reset();
       this.poNotification.success("Solicitação rejeitada com sucesso!");
       this.emitChangeOperation();
     },
@@ -162,7 +218,7 @@ export class SolicitationOperationComponent implements OnInit {
    
     let lastHistory = this.solicitation.solicitationHistories[this.solicitation.solicitationHistories.length -1];
     this.solicitationService.done({ solicitationId: this.solicitation.id, userId: this.filter.profileContextId,
-      value: !isNaN(Number(lastHistory.value)) ? Number(lastHistory.value) : 0}).subscribe(response => {
+      value: !isNaN(Number(lastHistory.value)) ? Number(lastHistory.value) : 0, solicitationEndDate: new Date(this.solicitation.solicitationEndDate)}).subscribe(response => {
       this.poNotification.success("Solicitação encerrada com sucesso!");
       this.emitChangeOperation();
     },
@@ -264,6 +320,12 @@ export class SolicitationOperationComponent implements OnInit {
     this.form = this.fb.group({
       value: [null, Validators.required],
       solicitationEndDate: [null, [Validators.required]]
+    });
+  }
+
+  private contructFormCancel(): void {
+    this.formCancel = this.fb.group({
+      reason: [null, Validators.required],
     });
   }
 

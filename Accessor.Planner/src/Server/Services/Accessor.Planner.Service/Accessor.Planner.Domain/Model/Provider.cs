@@ -33,13 +33,14 @@ namespace Accessor.Planner.Domain.Model
         public List<Solicitation> Solicitations { get; private set; }
 
 
-        public void Update(string socialReason, string fantasyName, string phone)
+        public void Update(string socialReason, string fantasyName, string phone, Address address)
         {
-            if (string.IsNullOrEmpty(socialReason) || string.IsNullOrEmpty(fantasyName) || string.IsNullOrEmpty(phone))
+            if (string.IsNullOrEmpty(socialReason) || string.IsNullOrEmpty(fantasyName) || string.IsNullOrEmpty(phone) || address == null)
                 throw new DomainException("Value is Null");
 
             SocialReason = socialReason;
             FantasyName = fantasyName;
+            Address = address;
             Phone = phone;
         }
 

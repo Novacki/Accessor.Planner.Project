@@ -67,7 +67,7 @@ namespace Accessor.Planner.API.Controllers
             if (provider == null)
                 return NoContent();
 
-            return Ok(provider.ToViewModel());
+            return Ok(provider.ToFullViewModel());
         }
 
         [HttpPost]

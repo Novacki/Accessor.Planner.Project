@@ -74,13 +74,13 @@
                 [control]="form.controls.address.get('cep')">Campo inválido.</div>
             </div>
             <div class="col-sm-3">
-              <po-input p-minlength="5" p-maxlength="30" formControlName="state" 
+              <po-input p-minlength="1" p-maxlength="30" formControlName="state" 
                 p-placeholder="Estado" p-label="Estado*" required></po-input>
               <div class="invalid" formValidator [form]="form.controls.address"
                 [control]="form.controls.address.get('state')">Campo inválido.</div>
             </div>
             <div class="col-sm-3">
-              <po-input p-minlength="5" p-maxlength="30" formControlName="city" p-placeholder="Cidade" p-label="Cidade*"
+              <po-input p-minlength="1" p-maxlength="30" formControlName="city" p-placeholder="Cidade" p-label="Cidade*"
                 required></po-input>
               <div class="invalid" formValidator [form]="form.controls.address"
                 [control]="form.controls.address.get('city')">Campo inválido.</div>

@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Notification;
+using Notification.Settings;
 using Proxy;
 using Proxy.Settings;
 using System;
@@ -60,6 +62,7 @@ namespace Accessor.Planner.API
             DataInject(services);
             ServicesInject(services);
             IntegrationInject(services);
+            NotificationInject(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,6 +108,7 @@ namespace Accessor.Planner.API
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IIntegrationService, IntegrationService>();
             services.AddScoped<ISolicitationHistoryService, SolicitationHistoryService>();
+            services.AddScoped<INotificationService, NotificationService>();
         }
 
         public void IntegrationInject(IServiceCollection services)
@@ -115,6 +119,16 @@ namespace Accessor.Planner.API
             var application = new ProxyApplication(proxySettings);
 
             services.AddSingleton<IProxyApplication>(application);
+        }
+
+        public void NotificationInject(IServiceCollection services)
+        {
+            var notificationSettings = new NotificationSettings();
+            Configuration.GetSection(nameof(NotificationSettings)).Bind(notificationSettings);
+
+            var notificationManager = new NotificationManager(notificationSettings);
+
+            services.AddSingleton<INotificationManager>(notificationManager);
         }
     }
 }

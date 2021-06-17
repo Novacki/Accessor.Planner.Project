@@ -310,6 +310,9 @@ namespace Accessor.Planner.Infrastructure.Migrations
                     b.Property<Guid?>("ProviderId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Reason")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("SolicitationId")
                         .HasColumnType("uniqueidentifier");
 

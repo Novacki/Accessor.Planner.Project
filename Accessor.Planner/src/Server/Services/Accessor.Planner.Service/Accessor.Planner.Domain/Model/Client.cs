@@ -3,6 +3,7 @@ using Accessor.Planner.Domain.Model.Commom;
 using Accessor.Planner.Domain.Model.Enum;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Accessor.Planner.Domain.Model
@@ -42,14 +43,14 @@ namespace Accessor.Planner.Domain.Model
         public void AddAddress(Address address) => Addresses.Add(address);
         public void RemoveAddress(Address address) => Addresses.Remove(address);
 
-        public void Update(string name, string phone, DateTime birthDate)
+        public void Update(string phone, Address address)
         {
-            if (string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(name) || birthDate == null)
+            if (string.IsNullOrEmpty(phone) || address == null)
                 throw new DomainException("Phone or Birth Date or Name is Null");
 
-            BirthDate = birthDate;
+         
             Phone = phone;
-            Name = name;
+            AddAddress(address);
         }
 
         public void Delete()

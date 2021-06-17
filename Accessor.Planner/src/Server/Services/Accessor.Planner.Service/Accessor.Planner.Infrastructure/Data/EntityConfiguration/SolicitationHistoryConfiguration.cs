@@ -15,6 +15,9 @@ namespace Accessor.Planner.Infrastructure.Data.EntityConfiguration
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+            builder.Property(solicitationHistory => solicitationHistory.Reason)
+                .HasColumnType("nvarchar(max)");
+
             builder.Property(solicitationHistory => solicitationHistory.AcessorId)
                 .HasColumnType("uniqueidentifier");
 

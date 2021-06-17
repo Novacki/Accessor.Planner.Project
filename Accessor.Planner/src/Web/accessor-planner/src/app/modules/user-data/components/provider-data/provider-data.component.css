@@ -1,0 +1,25 @@
+.email-style ::ng-deep .po-field-icon {
+    color: maroon;
+}
+  
+.password-style ::ng-deep .po-field-icon {
+    color: maroon;
+}
+  
+.invalid {
+    opacity: 0;
+}
+
+.btn {
+    color: white;
+    border-color: white;
+    background-color: brown;
+}
+  
+.btn:hover {
+    background-color: rgb(70, 65, 65);
+}
+
+::ng-deep .po-page-content::-webkit-scrollbar-thumb {
+    background-color: maroon;
+}
