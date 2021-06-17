@@ -103,6 +103,6 @@ namespace Accessor.Planner.Domain.Service
         public async Task<Client> GetClientByUserIdAsync(Guid id) => await _clientRepository.GetByUserIdAsync(id).ConfigureAwait(false);
 
         public async Task<List<Client>> GetAllByType(UserType type) => await _clientRepository.GetAllByType(type).ConfigureAwait(false);
-       
+
     }
 }

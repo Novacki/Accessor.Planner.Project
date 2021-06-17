@@ -30,6 +30,22 @@ namespace Accessor.Planner.API.Application.Extensions
             };
         }
 
+        public static List<FullDataClientViewModel> ToFullViewModel(this List<Client> clients)
+        {
+            return clients.Select(c => new FullDataClientViewModel()
+            {
+                Address = c.Addresses.ToViewModel().LastOrDefault(),
+                BirthDate = c.BirthDate,
+                Cpf = c.Cpf,
+                Name = c.Name,
+                Id = c.Id,
+                Phone = c.Phone,
+                Sex = c.Sex,
+                Type = c.Type,
+                User = c.User.ToViewModel()
+            }).ToList();
+        }
+
         public static DataClientViewModel ToViewModel(this Client client)
         {
             return new DataClientViewModel()

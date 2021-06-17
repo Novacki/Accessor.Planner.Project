@@ -6,7 +6,7 @@ const commomMenus: Array<PoMenuItem> =  [
       { label: 'Meus Dados', link:'user-information' },
       { label: 'Sair', icon:'po-icon po-icon-exit', link:'../home' }
     ]},
-    { label:'Dasboard', icon:'po-icon po-icon-chart-area', shortLabel: 'Dash' }
+    // { label:'Dasboard', icon:'po-icon po-icon-chart-area', shortLabel: 'Dash' }
 ]
 
 const clientMenus: Array<PoMenuItem> = commomMenus.concat([
@@ -20,14 +20,10 @@ const clientMenus: Array<PoMenuItem> = commomMenus.concat([
       { label: 'Encerradas', link:'solicitations/done' }
     ]},
     { label: 'Acessores', icon: 'po-icon po-icon-weight', shortLabel: 'Acessor', subItems: [
-      { label: 'Todos' },
-      { label: 'Favoritos' },
-      { label: 'Atuando' }
+      { label: 'Todos', link: 'clients' },
     ]},
     { label: 'Fornecedores', icon: 'po-icon po-icon-pallet-partial', shortLabel: 'Fornecedor', subItems: [
-        { label: 'Todos' },
-        { label: 'Favoritos' },
-        { label: 'Atuando' }
+        { label: 'Todos', link: 'providers' },
     ]},
 ]);
 
@@ -35,7 +31,6 @@ const workerMenus: Array<PoMenuItem> = commomMenus.concat([
     { label: 'Solicitações', icon: 'po-icon po-icon-list', shortLabel: 'Solicitação', subItems: [
         { label: 'Novas', link:'solicitations/news' },
         { label: 'Para Enviar', link:'solicitations/to-send' },
-        { label: 'Acionado', link:'' },
         { label: 'Em Análise', link:'solicitations/in-review' },
         { label: 'Aprovadas', link:'solicitations/accessor-approved' },
         { label: 'Recusadas', link:'solicitations/accessor-rejected' },
@@ -43,14 +38,10 @@ const workerMenus: Array<PoMenuItem> = commomMenus.concat([
         { label: 'Canceladas', link:'solicitations/accessor-canceled' }
     ]},
     { label: 'Clientes', icon: 'po-icon po-icon-users', shortLabel: 'Cliente', subItems: [
-      { label: 'Todos' },
-      { label: 'Favoritos' },
-      { label: 'Atuando' }
+      { label: 'Todos', link: 'clients' },
     ]},
     { label: 'Fornecedores', icon: 'po-icon po-icon-pallet-partial', shortLabel: 'Fornecedor', subItems: [
-        { label: 'Todos' },
-        { label: 'Favoritos' },
-        { label: 'Em Negociação' }
+      { label: 'Todos', link: 'providers' },
     ]},
 ]);
 

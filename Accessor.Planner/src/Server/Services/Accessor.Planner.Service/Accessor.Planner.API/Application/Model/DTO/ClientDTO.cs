@@ -21,4 +21,10 @@ namespace Accessor.Planner.API.Application.Model.DTO
         public AddressDTO Address { get; set; }
 
     }
+
+    public class NegociationClientDTO
+    {
+        public Guid Id  { get; set; }
+        public int Type { get; set; }
+    }
 }

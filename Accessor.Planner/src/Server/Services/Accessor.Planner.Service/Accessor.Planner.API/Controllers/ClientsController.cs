@@ -34,7 +34,6 @@ namespace Accessor.Planner.API.Controllers
             return Ok(client.ToFullViewModel());
         }
 
-
         [HttpGet]
         [Route("me/{id:guid}")]
         public async Task<IActionResult> Get(Guid? id)
@@ -90,6 +89,20 @@ namespace Accessor.Planner.API.Controllers
             return Ok(clients.ToViewModel());
         }
 
+        [HttpGet]
+        [Route("full-data/type/{type:int}")]
+        public async Task<IActionResult> GetFullDataByUserType(int? type)
+        {
+            if (!type.HasValue)
+                return BadRequest();
+
+            var clients = await _clientService.GetAllByType(TransformDataEnums.GetTypeUser(type.Value));
+
+            if (clients == null || clients.Count == 0)
+                return NotFound();
+
+            return Ok(clients.ToFullViewModel());
+        }
 
         [HttpPut]
         [Route("update/{id:guid}")]

@@ -23,6 +23,10 @@ export class ClientService {
         return this.http.get(`Clients/type/${type}`);
     }
 
+    public getAllFullDataByUserType(type: UserType): Observable<Client[]> {
+        return this.http.get(`Clients/full-data/type/${type}`);
+    }
+
     public create(client: Client): Observable<Client> {
         return this.http.post('Clients/create', client);
     }
