@@ -15,7 +15,7 @@
 }
 
 ::ng-deep .po-icon.po-icon-upload-cloud:before {
-    font-size: 45px;
+    font-size: 55px;
     text-align: center;
     color: brown;
 }
@@ -26,9 +26,29 @@
 }
 
 .description {
-    resize: none
+    resize: none;
 }
 
 .invalid {
     opacity: 0;
+}
+
+.upload-rooms {
+    padding: 1%;
+}
+
+.description-position {
+    padding: 1%;
+}
+
+.upload-rooms ::ng-deep .po-upload-drag-drop-area-select-files {
+    color: brown;
+}
+
+.po-icon.po-icon-eye:before {
+    font-size: 25px;
+}
+
+.position-view {
+    margin-left: 1%;
 }

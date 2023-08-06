@@ -4,6 +4,7 @@ import { PoModalAction, PoModalComponent, PoNotificationService, PoTableColumn, 
 import { ShowInformationsComponent } from 'src/app/Modules/shared/components/show-informations/show-informations.component';
 import { Furniture } from 'src/app/modules/shared/model/furniture.model';
 import { Room } from 'src/app/modules/shared/model/room.model';
+import { StorageFiles } from 'src/app/modules/shared/model/storage.model';
 import { FurnitureColumn } from '../../../model/furniture-column.model';
 
 @Component({
@@ -18,7 +19,7 @@ export class ModalRoomComponent implements OnInit {
   
   @Output() public roomRegister = new EventEmitter<Room>();
   @Output() public roomEdit = new EventEmitter<Room>();
-  
+
   private room: Room;
   private formValid: boolean = true;
   private initialRooms: string;
@@ -34,10 +35,13 @@ export class ModalRoomComponent implements OnInit {
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
   @ViewChild('upload', { static: true }) upload: PoUploadComponent;
   @ViewChild('information') information: ShowInformationsComponent;
-
+  @ViewChild('files') files: ShowInformationsComponent;
+  
   public form: FormGroup;
   public furnitures: Furniture[] = [];
   public showFurniture: Furniture;
+  public uploadRestrictions = { allowedExtensions: ['.png', '.jpg', '.pdf', '.jpag'] };
+  public slideFiles: Array<string>;
 
   ngOnInit(): void {
     this.generateForm();
@@ -47,6 +51,7 @@ export class ModalRoomComponent implements OnInit {
     this.form = this.fb.group({
       name:['', Validators.required],
       metreage:['', Validators.required],
+      storage:[''],
       description:['', Validators.required]
     });
   }
@@ -223,5 +228,16 @@ export class ModalRoomComponent implements OnInit {
 
   private restoreFurnitures(): void {
     this.roomEdit.emit(JSON.parse(this.initialRooms) as Room);
+  }
+
+  public selectFile(): void {
+    this.upload.selectFiles();
+  }
+
+  public openFiles(): void {
+    let files: StorageFiles[] = this.form.get('storage').value;
+    console.log(this.form.get('storage').value)
+    this.slideFiles = files.map(f => f.uid);
+    this.files.poModal.open();
   }
 }

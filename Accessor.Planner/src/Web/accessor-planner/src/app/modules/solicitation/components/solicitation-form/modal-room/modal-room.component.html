@@ -7,24 +7,34 @@
     <form [formGroup]="form">
         <app-divider></app-divider>
         <div class="po-row mt-3 po-mb-2 d-flex justify-content-center">
-            <div class="col-md-5 po-ml-4 po-mr-3">
+            <div class="col-md-8">
                 <po-input p-minlength="2" p-maxlength="30" formControlName="name" id="name" p-placeholder="Comodo"
                     required p-label="Comodo*"></po-input>
                 <div class="invalid" formValidator [form]="form" [control]="form.controls.name">Campo inválido.</div>
             </div>
-            <div class="col-md-3 po-mr-5">
+            <div class="col-md-3 po-ml-2">
                 <po-decimal p-min="0" formControlName="metreage" p-placeholder="M²"  p-label="M²*"> </po-decimal>
                 <div class="invalid" formValidator [form]="form" [control]="form.controls.metreage">Campo inválido.</div>
             </div>
-            <div class="col-md-2 po-ml-3 po-mt-3 file">
-                <span class="po-icon po-icon-upload-cloud po-clickable" (click)="upload.selectFiles()"></span>
-                <!-- <po-upload #upload name="project" p-hide-select-button
-                    p-hide-send-button p-required p-url="https://thf.totvs.com.br/sample/api/uploads/addFile">
-                </po-upload> -->
-            </div>
         </div>
-        <div class="po-row d-flex justify-content-center">
-            <div class="col-md-11 po-mb-2">
+        <div class="position-view">
+            <span (click)="openFiles()" class="po-icon po-icon-eye"></span>
+        </div>
+        <div class="upload-rooms">
+            <!-- <span class="po-icon po-icon-upload-cloud po-clickable" (click)="selectFile()"></span> -->
+            <po-upload name="upload-solicitation" 
+                formControlName="storage"
+                p-hide-select-button
+                p-drag-drop="true"
+                p-drag-drop-height="10"
+                p-multiple="true"
+                p-url=" "
+                [p-restrictions]="uploadRestrictions"
+                p-hide-send-button p-required>
+            </po-upload>
+        </div>
+        <div class="po-row description-position">
+            <div class="col-md-12 po-mt-2 po-mb-2">
                 <po-textarea p-minlength="5" class="description" p-rows="8" formControlName="description" p-label="Descrição* "> </po-textarea>
                 <div class="invalid" formValidator [form]="form" [control]="form.controls.description">Campo inválido.</div>
             </div>
@@ -49,4 +59,8 @@
             </div>
         </div>
     </div>
+</app-show-informations>
+
+<app-show-informations [name]="'Arquivos'" #files>
+    <po-slide [p-slides]="slideFiles"> </po-slide>
 </app-show-informations>
